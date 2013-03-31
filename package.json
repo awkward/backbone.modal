@@ -1,0 +1,13 @@
+{
+  "name": "Backbone.Modal",
+  "version": "0.0.1",
+  "description": "Backbone Modal extension",
+  "dependencies": {
+    "grunt": "0.4.x",
+    "grunt-contrib-coffee": "0.6.x",
+    "grunt-regarde": "0.1.x",
+    "grunt-contrib-livereload": "0.1.x"
+  },
+  "devDependencies": {},
+  "author": "David van Leeuwen"
+}
