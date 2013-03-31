@@ -1,6 +1,9 @@
 # NPM
 node_modules
 
+# Grunt
+.grunt
+
 # SASS/SCSS cache files
 *.scssc
 *.sassc
