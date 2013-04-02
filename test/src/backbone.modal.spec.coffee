@@ -1,40 +1,46 @@
 describe 'Backbone.Modal', ->
-  view = {}
+  view  = {}
+  modal = {}
 
   beforeEach ->
-    view = new Backbone.Modal
+    class modal extends Backbone.Modal
+      viewContainer: ''
+      cancelEl: ''
+      submitEl: ''
       template: -> ''
       views:
-        view: -> ''
+        'click .class':
+          view: -> ''
+        'click #id':
+          view: -> ''
+
+    view = new modal()
 
   afterEach ->
-    view = {}
+    modal = {}
+    view  = {}
 
   it "should have Backbone defined", ->
     expect(Backbone).toBeDefined()
 
   it 'should throw an exception if there is no template or views present', ->
-    delete view.views
-    delete view.template
-    expect(view.render).toThrow()
+    delete modal::views
+    delete modal::template
 
-  it 'should throw an exception if a template is defined and no viewContainer is present', ->
+    expect(-> view.render()).toThrow()
 
-  it 'should throw an exception if no cancelEl is defined', ->
+  it 'should throw an exception if a template and views are defined and no viewContainer is present', ->
+    delete modal::viewContainer
 
-  it 'should throw an exception if no submitEl is defined', ->
+    expect(-> view.render()).toThrow()
 
   describe 'views:', ->
-    it 'should throw an exception if no view is defined within views', ->
-
-    it 'checks for a showOn selector to open it', ->
-
-    it 'should be possible to pass an array with multiple events in it', ->
+    it 'binds the event to the selector to open a view', ->
 
     it "checks if it's a Backbone.View or just a HTML template that is passed along", ->
 
-    describe '#open', ->
-      it 'opens a specific view', ->
+  describe '#openAt', ->
+    it 'opens a view at the specified index', ->
 
   describe '#render', ->
     it 'renders the modal and internal views', ->
@@ -50,6 +56,7 @@ describe 'Backbone.Modal', ->
   describe '#beforeSubmit', ->
 
   describe '#submit', ->
+    it 'calls submit when submitEl is triggered or ENTER is pressed'
 
   describe 'when the modal switches between a view', ->
     it 'animates between views', ->

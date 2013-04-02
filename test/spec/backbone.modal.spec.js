@@ -1,42 +1,77 @@
 (function() {
+  var __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
   describe('Backbone.Modal', function() {
-    var view;
+    var modal, view;
 
     view = {};
+    modal = {};
     beforeEach(function() {
-      return view = new Backbone.Modal({
-        template: function() {
-          return '';
-        },
-        views: {
-          view: function() {
-            return '';
-          }
+      var _ref;
+
+      modal = (function(_super) {
+        __extends(modal, _super);
+
+        function modal() {
+          _ref = modal.__super__.constructor.apply(this, arguments);
+          return _ref;
         }
-      });
+
+        modal.prototype.viewContainer = '';
+
+        modal.prototype.cancelEl = '';
+
+        modal.prototype.submitEl = '';
+
+        modal.prototype.template = function() {
+          return '';
+        };
+
+        modal.prototype.views = {
+          'click .class': {
+            view: function() {
+              return '';
+            }
+          },
+          'click #id': {
+            view: function() {
+              return '';
+            }
+          }
+        };
+
+        return modal;
+
+      })(Backbone.Modal);
+      return view = new modal();
     });
     afterEach(function() {
+      modal = {};
       return view = {};
     });
     it("should have Backbone defined", function() {
       return expect(Backbone).toBeDefined();
     });
     it('should throw an exception if there is no template or views present', function() {
-      delete view.views;
-      delete view.template;
-      return expect(view.render).toThrow();
+      delete modal.prototype.views;
+      delete modal.prototype.template;
+      return expect(function() {
+        return view.render();
+      }).toThrow();
     });
-    it('should throw an exception if a template is defined and no viewContainer is present', function() {});
-    it('should throw an exception if no cancelEl is defined', function() {});
-    it('should throw an exception if no submitEl is defined', function() {});
+    it('should throw an exception if a template and views are defined and no viewContainer is present', function() {
+      delete modal.prototype.viewContainer;
+      return expect(function() {
+        return view.render();
+      }).toThrow();
+    });
     describe('views:', function() {
-      it('should throw an exception if no view is defined within views', function() {});
-      it('checks for a showOn selector to open it', function() {});
-      it('should be possible to pass an array with multiple events in it', function() {});
-      it("checks if it's a Backbone.View or just a HTML template that is passed along", function() {});
-      return describe('#open', function() {
-        return it('opens a specific view', function() {});
-      });
+      it('binds the event to the selector to open a view', function() {});
+      return it("checks if it's a Backbone.View or just a HTML template that is passed along", function() {});
+    });
+    describe('#openAt', function() {
+      return it('opens a view at the specified index', function() {});
     });
     describe('#render', function() {
       return it('renders the modal and internal views', function() {});
@@ -49,7 +84,9 @@
       return it('calls cancel when cancelEl is triggered or ESC is pressed');
     });
     describe('#beforeSubmit', function() {});
-    describe('#submit', function() {});
+    describe('#submit', function() {
+      return it('calls submit when submitEl is triggered or ENTER is pressed');
+    });
     return describe('when the modal switches between a view', function() {
       return it('animates between views', function() {});
     });
