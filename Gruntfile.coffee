@@ -29,6 +29,7 @@ module.exports = (grunt) ->
           specs: 'test/spec/**/*.js'
           outfile: 'test/spec.html'
           host: 'http://127.0.0.1:8000/'
+          vendor: ['examples/vendor/jquery-1.9.1.js', 'examples/vendor/underscore.js', 'examples/vendor/backbone.js']
 
     coffee:
       main:

@@ -1,1 +1,1 @@
-(function(){}).call(this);
+(function(){var o={}.hasOwnProperty,t=function(t,n){function e(){this.constructor=t}for(var r in n)o.call(n,r)&&(t[r]=n[r]);return e.prototype=n.prototype,t.prototype=new e,t.__super__=n.prototype,t};if("undefined"==typeof Backbone||null===Backbone)throw Error("Backbone is not defined. Please include the latest version from http://documentcloud.github.com/backbone/backbone.js");Backbone.Modal=function(o){function n(){}return t(n,o),n.prototype.render=function(){throw Error("test")},n}(Backbone.View)}).call(this);
