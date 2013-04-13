@@ -1,24 +1,27 @@
 describe 'Backbone.Modal', ->
-  view  = {}
   modal = {}
 
   beforeEach ->
+    class backboneView extends Backbone.View
+
     class modal extends Backbone.Modal
       viewContainer: ''
       cancelEl: ''
       submitEl: ''
-      template: -> ''
+      template: -> '<a class="class"></a><a id="id"></a><a data-event="true"></a>'
       views:
         'click .class':
-          view: -> ''
+          view: new backboneView
         'click #id':
-          view: -> ''
-
-    view = new modal()
+          view: -> '<p>html</p>'
+        'click [data-event]':
+          view: -> new Backbone.View(option: true)
+      render: -> 
+        @$el.html @template()
+        return this
 
   afterEach ->
     modal = {}
-    view  = {}
 
   it "should have Backbone defined", ->
     expect(Backbone).toBeDefined()
@@ -27,20 +30,43 @@ describe 'Backbone.Modal', ->
     delete modal::views
     delete modal::template
 
-    expect(-> view.render()).toThrow()
+    expect(-> new modal()).toThrow()
 
   it 'should throw an exception if a template and views are defined and no viewContainer is present', ->
     delete modal::viewContainer
 
-    expect(-> view.render()).toThrow()
+    expect(-> new modal).toThrow()
 
   describe 'views:', ->
-    it 'binds the event to the selector to open a view', ->
+    view = {}
 
-    it "checks if it's a Backbone.View or just a HTML template that is passed along", ->
+    beforeEach ->
+      view = new modal()
+      view.render()
+
+      for key of view.views
+        match     = key.match(/^(\S+)\s*(.*)$/)
+        trigger   = match[1]
+        selector  = match[2]
+        view.$(selector).trigger(trigger)
+
+    # it 'binds the event to the selector to open a view', ->
+    #   spyOn(modal, 'triggerView') # private method, doesn't work
+
+    #   expect(modal.calls.length).toEqual(2)
+
+    it "#buildView: checks if it's a Backbone.View or just a HTML template that is passed along", ->
+      for key of view.views
+        v = view.buildView(view.views[key].view)
+        if _.isFunction(v)
+          expect(_.isString(v.render().el))
+        else
+          expect(_.isString(v))
 
   describe '#openAt', ->
     it 'opens a view at the specified index', ->
+      view = new modal()
+      expect(view.openAt(1)).toBe(view.views['click #id'])
 
   describe '#render', ->
     it 'renders the modal and internal views', ->

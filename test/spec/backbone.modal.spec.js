@@ -3,19 +3,29 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   describe('Backbone.Modal', function() {
-    var modal, view;
+    var modal;
 
-    view = {};
     modal = {};
     beforeEach(function() {
-      var _ref;
+      var backboneView, _ref, _ref1;
 
-      modal = (function(_super) {
+      backboneView = (function(_super) {
+        __extends(backboneView, _super);
+
+        function backboneView() {
+          _ref = backboneView.__super__.constructor.apply(this, arguments);
+          return _ref;
+        }
+
+        return backboneView;
+
+      })(Backbone.View);
+      return modal = (function(_super) {
         __extends(modal, _super);
 
         function modal() {
-          _ref = modal.__super__.constructor.apply(this, arguments);
-          return _ref;
+          _ref1 = modal.__super__.constructor.apply(this, arguments);
+          return _ref1;
         }
 
         modal.prototype.viewContainer = '';
@@ -25,30 +35,38 @@
         modal.prototype.submitEl = '';
 
         modal.prototype.template = function() {
-          return '';
+          return '<a class="class"></a><a id="id"></a><a data-event="true"></a>';
         };
 
         modal.prototype.views = {
           'click .class': {
-            view: function() {
-              return '';
-            }
+            view: new backboneView
           },
           'click #id': {
             view: function() {
-              return '';
+              return '<p>html</p>';
+            }
+          },
+          'click [data-event]': {
+            view: function() {
+              return new Backbone.View({
+                option: true
+              });
             }
           }
+        };
+
+        modal.prototype.render = function() {
+          this.$el.html(this.template());
+          return this;
         };
 
         return modal;
 
       })(Backbone.Modal);
-      return view = new modal();
     });
     afterEach(function() {
-      modal = {};
-      return view = {};
+      return modal = {};
     });
     it("should have Backbone defined", function() {
       return expect(Backbone).toBeDefined();
@@ -57,21 +75,55 @@
       delete modal.prototype.views;
       delete modal.prototype.template;
       return expect(function() {
-        return view.render();
+        return new modal();
       }).toThrow();
     });
     it('should throw an exception if a template and views are defined and no viewContainer is present', function() {
       delete modal.prototype.viewContainer;
       return expect(function() {
-        return view.render();
+        return new modal;
       }).toThrow();
     });
     describe('views:', function() {
-      it('binds the event to the selector to open a view', function() {});
-      return it("checks if it's a Backbone.View or just a HTML template that is passed along", function() {});
+      var view;
+
+      view = {};
+      beforeEach(function() {
+        var key, match, selector, trigger, _results;
+
+        view = new modal();
+        view.render();
+        _results = [];
+        for (key in view.views) {
+          match = key.match(/^(\S+)\s*(.*)$/);
+          trigger = match[1];
+          selector = match[2];
+          _results.push(view.$(selector).trigger(trigger));
+        }
+        return _results;
+      });
+      return it("#buildView: checks if it's a Backbone.View or just a HTML template that is passed along", function() {
+        var key, v, _results;
+
+        _results = [];
+        for (key in view.views) {
+          v = view.buildView(view.views[key].view);
+          if (_.isFunction(v)) {
+            _results.push(expect(_.isString(v.render().el)));
+          } else {
+            _results.push(expect(_.isString(v)));
+          }
+        }
+        return _results;
+      });
     });
     describe('#openAt', function() {
-      return it('opens a view at the specified index', function() {});
+      return it('opens a view at the specified index', function() {
+        var view;
+
+        view = new modal();
+        return expect(view.openAt(1)).toBe(view.views['click #id']);
+      });
     });
     describe('#render', function() {
       return it('renders the modal and internal views', function() {});
