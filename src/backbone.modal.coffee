@@ -9,11 +9,23 @@ class Backbone.Modal extends Backbone.View
     @setUIElements()
     @delegateModalEvents()
 
+  render: ->
+    # use openAt or overwrite this with your own functionality
+    data = @serializeData()
+    @$el.html @template(data) if @template
+
+    @$el.show()
+    @openAt(0)
+    return this
+
   setUIElements: ->
     # get modal options
-    template        = @getOption('template')
+    @template       = @getOption('template')
     @views          = @getOption('views')
     @viewContainer  = @getOption('viewContainer')
+
+    # hide modal
+    @$el.hide()
 
     throw new Error('No template or views defined for Backbone.Modal') if _.isUndefined(@template) and _.isUndefined(@views)
     throw new Error('No viewContainer defined for Backbone.Modal') if @template and @views and _.isUndefined(@viewContainer)
@@ -26,14 +38,28 @@ class Backbone.Modal extends Backbone.View
     else
       return @[option]
 
+  serializeData: ->
+    # return the appropriate data for this view
+    data = {}
+
+    if @model
+      data = @model.toJSON()
+    else if @collection
+      data = {items: @collection.toJSON()}
+
+    return data
+
   delegateModalEvents: ->
     # get elements
     cancelEl = @getOption('cancelEl')
     submitEl = @getOption('submitEl')
 
     # set event handlers for submit and cancel
-    @$el.on 'click', submitEl, @triggerSubmit
-    @$el.on 'click', cancelEl, @triggerSubmit
+    @$el.on 'click', submitEl, => @triggerSubmit
+    @$el.on 'click', cancelEl, => @triggerSubmit
+
+    # check for key events
+    $('body').on 'keyup', => @checkKey
 
     # set event handlers for views
     for key of @views
@@ -41,28 +67,60 @@ class Backbone.Modal extends Backbone.View
       trigger   = match[1]
       selector  = match[2]  
       
-      @$el.on trigger, selector, @views[key], @triggerView
+      @$el.on trigger, selector, @views[key], => @triggerView
+
+  checkKey: (e) ->
+    switch e.keyCode
+      when 27 then @triggerCancel()
+      when 13 then @triggerSubmit()
 
   buildView: (viewType) ->
     # returns a Backbone.View instance, a function or an object
     if _.isFunction(viewType)
+      data = @serializeData()
+
       if new viewType instanceof Backbone.View
-        return new viewType(@options)
+        view = new viewType(data)
+        return {el: view.$el, view: view}
       else
-        return viewType(@options)
+        return {el: viewType(data)}
 
-    return viewType
+    return {view: viewType, el: viewType.$el}
 
-  triggerView: (e) =>
+  triggerView: (e) ->
+    # trigger what view should be rendered
     e.preventDefault?()
-    options = e.data
-    # console.log @buildView(options.view)
+    options       = e.data
+    instance      = @buildView(options.view)
+    @currentView  = instance.view
+
+    @$(@viewContainer).html instance.el
 
   triggerSubmit: (e) ->
-    e.preventDefault()
+    # triggers submit
+    e?.preventDefault()
+
+    if @beforeSubmit
+      return if @beforeSubmit() is false
+
+    @submit?()
+    @close()
 
   triggerCancel: (e) ->
-    e.preventDefault()
+    # triggers cancel
+    e?.preventDefault()
+
+    if @beforeCancel
+      return if @beforeCancel() is false
+
+    @cancel?()
+    @close()
+
+  close: ->
+    # closes view
+    $('body').off 'keyup', => @checkKey
+    @currentView?.remove?()
+    @remove()
 
   openAt: (index) ->
     # loop through views and trigger the index
@@ -71,5 +129,7 @@ class Backbone.Modal extends Backbone.View
       view = @views[key] if i is index
       i++
 
-    @triggerView(data: view) if view
+    if view
+      @triggerView(data: view)
+      return view
     

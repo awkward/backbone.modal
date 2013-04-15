@@ -5,10 +5,10 @@ describe 'Backbone.Modal', ->
     class backboneView extends Backbone.View
 
     class modal extends Backbone.Modal
-      viewContainer: ''
+      viewContainer: 'div'
       cancelEl: ''
       submitEl: ''
-      template: -> '<a class="class"></a><a id="id"></a><a data-event="true"></a>'
+      template: -> '<a class="class"></a><a id="id"></a><div></div><a data-event="true"></a>'
       views:
         'click .class':
           view: new backboneView
@@ -16,9 +16,6 @@ describe 'Backbone.Modal', ->
           view: -> '<p>html</p>'
         'click [data-event]':
           view: -> new Backbone.View(option: true)
-      render: -> 
-        @$el.html @template()
-        return this
 
   afterEach ->
     modal = {}
@@ -63,13 +60,24 @@ describe 'Backbone.Modal', ->
         else
           expect(_.isString(v))
 
+    it "#length should return the length of the total views", ->
+
+
   describe '#openAt', ->
     it 'opens a view at the specified index', ->
       view = new modal()
       expect(view.openAt(1)).toBe(view.views['click #id'])
 
+  describe '#next', ->
+
+  describe '#previous', ->
+
+  describe '#currentIndex', ->
+
   describe '#render', ->
     it 'renders the modal and internal views', ->
+      view = new modal()
+      expect(_.isString(view.render().el))
 
   describe '#beforeCancel', ->
     it "calls this method when it's defined", ->

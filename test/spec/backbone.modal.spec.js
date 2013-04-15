@@ -28,14 +28,14 @@
           return _ref1;
         }
 
-        modal.prototype.viewContainer = '';
+        modal.prototype.viewContainer = 'div';
 
         modal.prototype.cancelEl = '';
 
         modal.prototype.submitEl = '';
 
         modal.prototype.template = function() {
-          return '<a class="class"></a><a id="id"></a><a data-event="true"></a>';
+          return '<a class="class"></a><a id="id"></a><div></div><a data-event="true"></a>';
         };
 
         modal.prototype.views = {
@@ -54,11 +54,6 @@
               });
             }
           }
-        };
-
-        modal.prototype.render = function() {
-          this.$el.html(this.template());
-          return this;
         };
 
         return modal;
@@ -102,7 +97,7 @@
         }
         return _results;
       });
-      return it("#buildView: checks if it's a Backbone.View or just a HTML template that is passed along", function() {
+      it("#buildView: checks if it's a Backbone.View or just a HTML template that is passed along", function() {
         var key, v, _results;
 
         _results = [];
@@ -116,6 +111,7 @@
         }
         return _results;
       });
+      return it("#length should return the length of the total views", function() {});
     });
     describe('#openAt', function() {
       return it('opens a view at the specified index', function() {
@@ -125,8 +121,16 @@
         return expect(view.openAt(1)).toBe(view.views['click #id']);
       });
     });
+    describe('#next', function() {});
+    describe('#previous', function() {});
+    describe('#currentIndex', function() {});
     describe('#render', function() {
-      return it('renders the modal and internal views', function() {});
+      return it('renders the modal and internal views', function() {
+        var view;
+
+        view = new modal();
+        return expect(_.isString(view.render().el));
+      });
     });
     describe('#beforeCancel', function() {
       it("calls this method when it's defined", function() {});
