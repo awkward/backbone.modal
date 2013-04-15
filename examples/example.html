@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta content="text/html;charset=UTF-8" http-equiv="Content-Type"/>
+    <title>Create a modal</title>
+
+    <script type="text/javascript" src="vendor/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="vendor/underscore.js"></script>
+    <script type="text/javascript" src="vendor/backbone.js"></script>
+
+    <script type="text/javascript" src="../backbone.modal-min.js"></script>
+</head>
+<body>
+  <script type="text/template" id="modal-template">
+    <div class="modal-view"></div>
+  </script>
+
+  <script type="text/template" id="modal-view1-template">
+    <div class="modal-section">
+      <input type="text" value="" placeholder="Name your project" />
+      <a href="#" id="second">Next view</a>
+    </div>
+  </script>
+
+  <script type="text/template" id="modal-view2-template">
+    This is the second view.
+    <a href="#" id="first">Next view</a>
+  </script>
+
+  <script>
+    jQuery(function($) {
+      // create a modal view class
+      var Modal = Backbone.Modal.extend({
+        template: _.template($('#modal-template').html()),
+
+        viewContainer: '.modal-view',
+
+        views: {
+          'click #first': {
+            view: _.template($('#modal-view1-template').html())
+          },
+          'click #second': {
+            view: _.template($('#modal-view2-template').html())
+          }
+        }
+      });
+
+      // render an instance of your modal
+      var modalView = new Modal;
+      $('body').append(modalView.render().el);
+    });
+  </script>
+</body>
+</html>

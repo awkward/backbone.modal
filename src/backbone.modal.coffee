@@ -55,19 +55,22 @@ class Backbone.Modal extends Backbone.View
     submitEl = @getOption('submitEl')
 
     # set event handlers for submit and cancel
-    @$el.on 'click', submitEl, => @triggerSubmit
-    @$el.on 'click', cancelEl, => @triggerSubmit
+    if submitEl
+      @$el.on 'click', submitEl, (e) => @triggerSubmit(e)
+
+    if cancelEl
+      @$el.on 'click', cancelEl, (e) => @triggerSubmit(e)
 
     # check for key events
-    $('body').on 'keyup', => @checkKey
+    $('body').on 'keyup', (e) => @checkKey(e)
 
     # set event handlers for views
     for key of @views
       match     = key.match(/^(\S+)\s*(.*)$/)
       trigger   = match[1]
-      selector  = match[2]  
+      selector  = match[2]
       
-      @$el.on trigger, selector, @views[key], => @triggerView
+      @$el.on trigger, selector, @views[key], (e) => @triggerView(e)
 
   checkKey: (e) ->
     switch e.keyCode
@@ -89,12 +92,15 @@ class Backbone.Modal extends Backbone.View
 
   triggerView: (e) ->
     # trigger what view should be rendered
-    e.preventDefault?()
+    e?.preventDefault?()
     options       = e.data
     instance      = @buildView(options.view)
     @currentView  = instance.view
 
-    @$(@viewContainer).html instance.el
+    if @viewContainer
+      @$(@viewContainer).html instance.el
+    else
+      @$el.html instance.el
 
   triggerSubmit: (e) ->
     # triggers submit
@@ -118,7 +124,7 @@ class Backbone.Modal extends Backbone.View
 
   close: ->
     # closes view
-    $('body').off 'keyup', => @checkKey
+    $('body').off 'keyup', (e) => @checkKey(e)
     @currentView?.remove?()
     @remove()
 

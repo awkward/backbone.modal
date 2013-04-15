@@ -75,22 +75,26 @@
 
       cancelEl = this.getOption('cancelEl');
       submitEl = this.getOption('submitEl');
-      this.$el.on('click', submitEl, function() {
-        return _this.triggerSubmit;
-      });
-      this.$el.on('click', cancelEl, function() {
-        return _this.triggerSubmit;
-      });
-      $('body').on('keyup', function() {
-        return _this.checkKey;
+      if (submitEl) {
+        this.$el.on('click', submitEl, function(e) {
+          return _this.triggerSubmit(e);
+        });
+      }
+      if (cancelEl) {
+        this.$el.on('click', cancelEl, function(e) {
+          return _this.triggerSubmit(e);
+        });
+      }
+      $('body').on('keyup', function(e) {
+        return _this.checkKey(e);
       });
       _results = [];
       for (key in this.views) {
         match = key.match(/^(\S+)\s*(.*)$/);
         trigger = match[1];
         selector = match[2];
-        _results.push(this.$el.on(trigger, selector, this.views[key], function() {
-          return _this.triggerView;
+        _results.push(this.$el.on(trigger, selector, this.views[key], function(e) {
+          return _this.triggerView(e);
         }));
       }
       return _results;
@@ -131,13 +135,19 @@
     Modal.prototype.triggerView = function(e) {
       var instance, options;
 
-      if (typeof e.preventDefault === "function") {
-        e.preventDefault();
+      if (e != null) {
+        if (typeof e.preventDefault === "function") {
+          e.preventDefault();
+        }
       }
       options = e.data;
       instance = this.buildView(options.view);
       this.currentView = instance.view;
-      return this.$(this.viewContainer).html(instance.el);
+      if (this.viewContainer) {
+        return this.$(this.viewContainer).html(instance.el);
+      } else {
+        return this.$el.html(instance.el);
+      }
     };
 
     Modal.prototype.triggerSubmit = function(e) {
@@ -174,8 +184,8 @@
       var _ref,
         _this = this;
 
-      $('body').off('keyup', function() {
-        return _this.checkKey;
+      $('body').off('keyup', function(e) {
+        return _this.checkKey(e);
       });
       if ((_ref = this.currentView) != null) {
         if (typeof _ref.remove === "function") {
