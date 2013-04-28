@@ -7,8 +7,8 @@ describe 'Backbone.Modal', ->
     class modal extends Backbone.Modal
       viewContainer: 'div'
       cancelEl: '.close'
-      submitEl: ''
-      template: -> '<a class="class"></a><a id="id"></a><div></div><a data-event="true"></a><a class="close"></a>'
+      submitEl: '.submit'
+      template: -> '<a class="class"></a><a id="id"></a><div></div><a data-event="true"></a><a class="close"></a><a class="submit"></a>'
       views:
         'click .class':
           view: new backboneView
@@ -129,7 +129,7 @@ describe 'Backbone.Modal', ->
       expect(view.submit.calls.length).toEqual(0)
 
   describe '#submit', ->
-    it 'should be called when submitEl is triggered'
+    it 'should be called when submitEl is triggered', ->
       view = new modal()
       spyOn(view, 'submit')
       view.render().$(view.submitEl).click()

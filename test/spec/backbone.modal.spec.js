@@ -32,10 +32,10 @@
 
         modal.prototype.cancelEl = '.close';
 
-        modal.prototype.submitEl = '';
+        modal.prototype.submitEl = '.submit';
 
         modal.prototype.template = function() {
-          return '<a class="class"></a><a id="id"></a><div></div><a data-event="true"></a><a class="close"></a>';
+          return '<a class="class"></a><a id="id"></a><div></div><a data-event="true"></a><a class="close"></a><a class="submit"></a>';
         };
 
         modal.prototype.views = {
@@ -218,7 +218,14 @@
       });
     });
     describe('#submit', function() {
-      return it('calls submit when submitEl is triggered or ENTER is pressed');
+      return it('should be called when submitEl is triggered', function() {
+        var view;
+
+        view = new modal();
+        spyOn(view, 'submit');
+        view.render().$(view.submitEl).click();
+        return expect(view.submit.calls.length).toEqual(1);
+      });
     });
     return describe('#animate', function() {
       return it('should do all the animation work', function() {});
