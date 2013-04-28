@@ -22,6 +22,7 @@ class Backbone.Modal extends Backbone.View
     # get modal options
     @template       = @getOption('template')
     @views          = @getOption('views')
+    @views.length   = _.size(@views)
     @viewContainer  = @getOption('viewContainer')
 
     # hide modal
@@ -59,18 +60,19 @@ class Backbone.Modal extends Backbone.View
       @$el.on 'click', submitEl, (e) => @triggerSubmit(e)
 
     if cancelEl
-      @$el.on 'click', cancelEl, (e) => @triggerSubmit(e)
+      @$el.on 'click', cancelEl, (e) => @triggerCancel(e)
 
     # check for key events
     $('body').on 'keyup', (e) => @checkKey(e)
 
     # set event handlers for views
     for key of @views
-      match     = key.match(/^(\S+)\s*(.*)$/)
-      trigger   = match[1]
-      selector  = match[2]
-      
-      @$el.on trigger, selector, @views[key], (e) => @triggerView(e)
+      unless key is 'length'
+        match     = key.match(/^(\S+)\s*(.*)$/)
+        trigger   = match[1]
+        selector  = match[2]
+        
+        @$el.on trigger, selector, @views[key], (e) => @triggerView(e)
 
   checkKey: (e) ->
     switch e.keyCode
@@ -79,6 +81,7 @@ class Backbone.Modal extends Backbone.View
 
   buildView: (viewType) ->
     # returns a Backbone.View instance, a function or an object
+    return unless viewType
     if _.isFunction(viewType)
       data = @serializeData()
 
@@ -132,10 +135,23 @@ class Backbone.Modal extends Backbone.View
     # loop through views and trigger the index
     i = 0
     for key of @views
-      view = @views[key] if i is index
-      i++
+      unless key is 'length'
+        view = @views[key] if i is index
+        i++
 
     if view
+      @currentIndex = index
       @triggerView(data: view)
-      return view
+    
+    return this
+
+  next: ->
+    @openAt(@currentIndex+1) if @currentIndex+1 < @views.length-1
+
+  previous: ->
+    @openAt(@currentIndex-1) if @currentIndex-1 < @views.length-1
+
+
+  animate: ->
+    # do the animation stuff here
     

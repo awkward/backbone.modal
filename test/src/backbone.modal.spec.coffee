@@ -61,18 +61,31 @@ describe 'Backbone.Modal', ->
           expect(_.isString(v))
 
     it "#length should return the length of the total views", ->
-
+      expect(view.views.length).toEqual(3)
 
   describe '#openAt', ->
     it 'opens a view at the specified index', ->
       view = new modal()
-      expect(view.openAt(1)).toBe(view.views['click #id'])
+      view.openAt(1)
+      expect(view.currentIndex).toBe(1)
 
   describe '#next', ->
+    it 'should open the next view', ->
+      view = new modal()
+      view.render().next()
+      expect(view.currentIndex).toBe(1)
 
   describe '#previous', ->
+    it 'should open the previous view', ->
+      view = new modal()
+      view.render().openAt(2).previous()
+      expect(view.currentIndex).toBe(1)
 
   describe '#currentIndex', ->
+    it 'should return the index of the current view', ->
+      view = new modal()
+      view.render().openAt(2)
+      expect(view.currentIndex).toBe(2)
 
   describe '#render', ->
     it 'renders the modal and internal views', ->
@@ -92,5 +105,5 @@ describe 'Backbone.Modal', ->
   describe '#submit', ->
     it 'calls submit when submitEl is triggered or ENTER is pressed'
 
-  describe 'when the modal switches between a view', ->
-    it 'animates between views', ->
+  describe '#animate', ->
+    it 'should do all the animation work', ->

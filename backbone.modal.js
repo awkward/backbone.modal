@@ -34,6 +34,7 @@
     Modal.prototype.setUIElements = function() {
       this.template = this.getOption('template');
       this.views = this.getOption('views');
+      this.views.length = _.size(this.views);
       this.viewContainer = this.getOption('viewContainer');
       this.$el.hide();
       if (_.isUndefined(this.template) && _.isUndefined(this.views)) {
@@ -82,7 +83,7 @@
       }
       if (cancelEl) {
         this.$el.on('click', cancelEl, function(e) {
-          return _this.triggerSubmit(e);
+          return _this.triggerCancel(e);
         });
       }
       $('body').on('keyup', function(e) {
@@ -90,12 +91,16 @@
       });
       _results = [];
       for (key in this.views) {
-        match = key.match(/^(\S+)\s*(.*)$/);
-        trigger = match[1];
-        selector = match[2];
-        _results.push(this.$el.on(trigger, selector, this.views[key], function(e) {
-          return _this.triggerView(e);
-        }));
+        if (key !== 'length') {
+          match = key.match(/^(\S+)\s*(.*)$/);
+          trigger = match[1];
+          selector = match[2];
+          _results.push(this.$el.on(trigger, selector, this.views[key], function(e) {
+            return _this.triggerView(e);
+          }));
+        } else {
+          _results.push(void 0);
+        }
       }
       return _results;
     };
@@ -112,6 +117,9 @@
     Modal.prototype.buildView = function(viewType) {
       var data, view;
 
+      if (!viewType) {
+        return;
+      }
       if (_.isFunction(viewType)) {
         data = this.serializeData();
         if (new viewType instanceof Backbone.View) {
@@ -200,18 +208,35 @@
 
       i = 0;
       for (key in this.views) {
-        if (i === index) {
-          view = this.views[key];
+        if (key !== 'length') {
+          if (i === index) {
+            view = this.views[key];
+          }
+          i++;
         }
-        i++;
       }
       if (view) {
+        this.currentIndex = index;
         this.triggerView({
           data: view
         });
-        return view;
+      }
+      return this;
+    };
+
+    Modal.prototype.next = function() {
+      if (this.currentIndex + 1 < this.views.length - 1) {
+        return this.openAt(this.currentIndex + 1);
       }
     };
+
+    Modal.prototype.previous = function() {
+      if (this.currentIndex - 1 < this.views.length - 1) {
+        return this.openAt(this.currentIndex - 1);
+      }
+    };
+
+    Modal.prototype.animate = function() {};
 
     return Modal;
 

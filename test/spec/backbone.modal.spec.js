@@ -111,19 +111,46 @@
         }
         return _results;
       });
-      return it("#length should return the length of the total views", function() {});
+      return it("#length should return the length of the total views", function() {
+        return expect(view.views.length).toEqual(3);
+      });
     });
     describe('#openAt', function() {
       return it('opens a view at the specified index', function() {
         var view;
 
         view = new modal();
-        return expect(view.openAt(1)).toBe(view.views['click #id']);
+        view.openAt(1);
+        return expect(view.currentIndex).toBe(1);
       });
     });
-    describe('#next', function() {});
-    describe('#previous', function() {});
-    describe('#currentIndex', function() {});
+    describe('#next', function() {
+      return it('should open the next view', function() {
+        var view;
+
+        view = new modal();
+        view.render().next();
+        return expect(view.currentIndex).toBe(1);
+      });
+    });
+    describe('#previous', function() {
+      return it('should open the previous view', function() {
+        var view;
+
+        view = new modal();
+        view.render().openAt(2).previous();
+        return expect(view.currentIndex).toBe(1);
+      });
+    });
+    describe('#currentIndex', function() {
+      return it('should return the index of the current view', function() {
+        var view;
+
+        view = new modal();
+        view.render().openAt(2);
+        return expect(view.currentIndex).toBe(2);
+      });
+    });
     describe('#render', function() {
       return it('renders the modal and internal views', function() {
         var view;
@@ -143,8 +170,8 @@
     describe('#submit', function() {
       return it('calls submit when submitEl is triggered or ENTER is pressed');
     });
-    return describe('when the modal switches between a view', function() {
-      return it('animates between views', function() {});
+    return describe('#animate', function() {
+      return it('should do all the animation work', function() {});
     });
   });
 
