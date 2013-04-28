@@ -30,12 +30,12 @@
 
         modal.prototype.viewContainer = 'div';
 
-        modal.prototype.cancelEl = '';
+        modal.prototype.cancelEl = '.close';
 
         modal.prototype.submitEl = '';
 
         modal.prototype.template = function() {
-          return '<a class="class"></a><a id="id"></a><div></div><a data-event="true"></a>';
+          return '<a class="class"></a><a id="id"></a><div></div><a data-event="true"></a><a class="close"></a>';
         };
 
         modal.prototype.views = {
@@ -55,6 +55,22 @@
             }
           }
         };
+
+        modal.prototype._shouldCancel = true;
+
+        modal.prototype._shouldSubmit = true;
+
+        modal.prototype.beforeCancel = function() {
+          return this._shouldCancel;
+        };
+
+        modal.prototype.beforeSubmit = function() {
+          return this._shouldSubmit;
+        };
+
+        modal.prototype.cancel = function() {};
+
+        modal.prototype.submit = function() {};
 
         return modal;
 
@@ -84,18 +100,12 @@
 
       view = {};
       beforeEach(function() {
-        var key, match, selector, trigger, _results;
-
-        view = new modal();
+        return view = new modal();
+      });
+      it('should trigger the first view when rendered', function() {
+        spyOn(view, 'triggerView');
         view.render();
-        _results = [];
-        for (key in view.views) {
-          match = key.match(/^(\S+)\s*(.*)$/);
-          trigger = match[1];
-          selector = match[2];
-          _results.push(view.$(selector).trigger(trigger));
-        }
-        return _results;
+        return expect(view.triggerView).toHaveBeenCalled();
       });
       it("#buildView: checks if it's a Backbone.View or just a HTML template that is passed along", function() {
         var key, v, _results;
@@ -160,13 +170,53 @@
       });
     });
     describe('#beforeCancel', function() {
-      it("calls this method when it's defined", function() {});
-      return it('stops the cancel when it returns false', function() {});
+      it("should call this method when it's defined", function() {
+        var view;
+
+        view = new modal();
+        spyOn(view, 'beforeCancel');
+        view.render().triggerCancel();
+        return expect(view.beforeCancel).toHaveBeenCalled();
+      });
+      return it('stops the cancel when it returns false', function() {
+        var view;
+
+        view = new modal();
+        spyOn(view, 'close');
+        view._shouldCancel = false;
+        view.render().triggerCancel();
+        return expect(view.close.calls.length).toEqual(0);
+      });
     });
     describe('#cancel', function() {
-      return it('calls cancel when cancelEl is triggered or ESC is pressed');
+      return it('should be called when cancelEl is triggered', function() {
+        var view;
+
+        view = new modal();
+        spyOn(view, 'cancel');
+        view.render().$(view.cancelEl).click();
+        return expect(view.cancel.calls.length).toEqual(1);
+      });
     });
-    describe('#beforeSubmit', function() {});
+    describe('#beforeSubmit', function() {
+      it("should call this method when it's defined", function() {
+        var view;
+
+        view = new modal();
+        spyOn(view, 'beforeSubmit');
+        view.render().triggerSubmit();
+        return expect(view.beforeSubmit).toHaveBeenCalled();
+      });
+      return it('stops the submit when it returns false', function() {
+        var view;
+
+        view = new modal();
+        spyOn(view, 'submit');
+        view._shouldSubmit = false;
+        view.render().triggerSubmit();
+        return expect(view.submit.calls.length).toEqual(0);
+      });
+    });
     describe('#submit', function() {
       return it('calls submit when submitEl is triggered or ENTER is pressed');
     });
