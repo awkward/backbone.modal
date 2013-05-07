@@ -7,10 +7,16 @@
     <script type="text/javascript" src="vendor/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="vendor/underscore.js"></script>
     <script type="text/javascript" src="vendor/backbone.js"></script>
+    <script type="text/javascript" src="vendor/marionette.js"></script>
 
     <script type="text/javascript" src="../backbone.modal-min.js"></script>
+    <script type="text/javascript" src="../backbone.marionette.modals-min.js"></script>
 </head>
 <body>
+  <script type="text/template" id="modals-template">
+    <div class="modals-container"></div>
+  </script>
+
   <script type="text/template" id="modal-template">
     <div class="modal-view"></div>
   </script>
@@ -29,6 +35,17 @@
 
   <script>
     jQuery(function($) {
+      // create a layout class
+      var Layout = Backbone.Marionette.Layout.extend({
+        template: _.template($('#modals-template').html()),
+        regions: {
+          modals: {
+            selector:   '.modals-container',
+            regionType: Backbone.Marionette.Modals
+          }  
+        }
+      });
+
       // create a modal view class
       var Modal = Backbone.Modal.extend({
         template: _.template($('#modal-template').html()),
@@ -45,9 +62,11 @@
         }
       });
 
-      // render an instance of your modal
-      var modalView = new Modal();
-      $('body').append(modalView.render().el);
+      var myLayout = new Layout();
+      $('body').append(myLayout.render().el);
+
+      myLayout.modals.show(new Modal());
+      myLayout.modals.show(new Modal());
     });
   </script>
 </body>

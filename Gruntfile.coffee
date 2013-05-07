@@ -18,23 +18,27 @@ module.exports = (grunt) ->
             ]
 
     uglify:
-      main:
+      modal:
         src: 'backbone.modal.js'
         dest: 'backbone.modal-min.js'
+      modals:
+        src: 'backbone.marionette.modals.js'
+        dest: 'backbone.marionette.modals-min.js'
 
     jasmine:
-      main:
-        src: 'backbone.modal.js'
+      all:
+        src: ['backbone.modal.js', 'backbone.marionette.modals.js']
         options:
           specs: 'test/spec/**/*.js'
           outfile: 'test/spec.html'
           host: 'http://127.0.0.1:8000/'
-          vendor: ['examples/vendor/jquery-1.9.1.js', 'examples/vendor/underscore.js', 'examples/vendor/backbone.js']
+          vendor: ['examples/vendor/jquery-1.9.1.js', 'examples/vendor/underscore.js', 'examples/vendor/backbone.js', 'examples/vendor/marionette.js']
 
     coffee:
-      main:
+      all:
         files:
           'backbone.modal.js': 'src/backbone.modal.coffee'
+          'backbone.marionette.modals.js': 'src/backbone.marionette.modals.coffee'
       specs:
         files:
           grunt.file.expandMapping(['test/src/**/*.coffee'], 'test/spec/', 
@@ -58,4 +62,4 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-jasmine'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
 
-  grunt.registerTask 'watch', ['connect', 'coffee', 'uglify', 'jasmine:main:build', 'livereload-start', 'open', 'regarde']
+  grunt.registerTask 'watch', ['connect', 'coffee', 'uglify', 'jasmine:all:build', 'livereload-start', 'open', 'regarde']

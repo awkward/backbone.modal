@@ -32,9 +32,13 @@
     };
 
     Modal.prototype.setUIElements = function() {
+      var _ref;
+
       this.template = this.getOption('template');
       this.views = this.getOption('views');
-      this.views.length = _.size(this.views);
+      if ((_ref = this.views) != null) {
+        _ref.length = _.size(this.views);
+      }
       this.viewContainer = this.getOption('viewContainer');
       this.$el.hide();
       if (_.isUndefined(this.template) && _.isUndefined(this.views)) {

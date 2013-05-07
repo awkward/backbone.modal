@@ -22,7 +22,7 @@ class Backbone.Modal extends Backbone.View
     # get modal options
     @template       = @getOption('template')
     @views          = @getOption('views')
-    @views.length   = _.size(@views)
+    @views?.length  = _.size(@views)
     @viewContainer  = @getOption('viewContainer')
 
     # hide modal
