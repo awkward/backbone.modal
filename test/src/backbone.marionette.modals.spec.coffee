@@ -27,10 +27,16 @@ describe 'Backbone.Marionette.Modals', ->
       myLayout.modals.show(new modal())
       expect(myLayout.modals.zIndex).toBe(1)
 
+    it 'should disable modals with zIndex < modal', ->
+
+
   describe '#close', ->
     it 'should only close the last modal', ->
       myLayout.modals.close()
       expect(myLayout.modals.zIndex).toBe(0)
+
+    it 'should enable the last modal', ->
+      
 
   describe '#closeAll', ->
     it 'should close all the modals', ->

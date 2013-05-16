@@ -63,16 +63,18 @@
     })(Backbone.Modal);
     myLayout = new layout();
     describe('#show', function() {
-      return it('should stack a modal view', function() {
+      it('should stack a modal view', function() {
         myLayout.modals.show(new modal());
         return expect(myLayout.modals.zIndex).toBe(1);
       });
+      return it('should disable modals with zIndex < modal', function() {});
     });
     describe('#close', function() {
-      return it('should only close the last modal', function() {
+      it('should only close the last modal', function() {
         myLayout.modals.close();
         return expect(myLayout.modals.zIndex).toBe(0);
       });
+      return it('should enable the last modal', function() {});
     });
     return describe('#closeAll', function() {
       return it('should close all the modals', function() {

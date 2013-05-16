@@ -16,6 +16,16 @@ module.exports = (grunt) ->
                 res.writeHead(200)
                 res.end(data)
             ]
+      examples:
+        options:
+          port: 5000
+          base: './examples/'
+          middleware: (connect, options) ->
+            [connect.static(options.base), (req, res, next) ->
+              fs.readFile "#{options.base}/example.html", (err, data) ->
+                res.writeHead(200)
+                res.end(data)
+            ]
 
     uglify:
       modal:
@@ -39,6 +49,9 @@ module.exports = (grunt) ->
         files:
           'backbone.modal.js': 'src/backbone.modal.coffee'
           'backbone.marionette.modals.js': 'src/backbone.marionette.modals.coffee'
+          
+          'examples/vendor/backbone.modal.js': 'src/backbone.modal.coffee'
+          'examples/vendor/backbone.marionette.modals.js': 'src/backbone.marionette.modals.coffee'
       specs:
         files:
           grunt.file.expandMapping(['test/src/**/*.coffee'], 'test/spec/', 
@@ -46,10 +59,25 @@ module.exports = (grunt) ->
               return destBase + destPath.slice(9, destPath.length).replace(/\.coffee$/, '.js')
           )
 
+    sass:
+      compile:
+        files:
+          'backbone.modal.css': 'src/backbone.modal.sass'
+          'examples/vendor/backbone.modal.css': 'src/backbone.modal.sass'
+
+    concurrent:
+      compile: ['coffee', 'sass']
+
     regarde:
       livereloadJS:
         files: ['test/**/*.js']
         tasks: ['livereload']
+      livereloadCSS:
+        files: ['examples/vendor/backbone.modal.css']
+        tasks: ['livereload:backbone.modal.css']
+      sass:
+        files: ['src/**/*.sass']
+        tasks: ['sass']
       coffee:
         files: ['src/**/*.coffee', 'test/src/**/*.coffee']
         tasks: ['uglify', 'coffee']
@@ -61,5 +89,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-livereload'
   grunt.loadNpmTasks 'grunt-contrib-jasmine'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
+  grunt.loadNpmTasks 'grunt-contrib-sass'
+  grunt.loadNpmTasks 'grunt-concurrent'
 
-  grunt.registerTask 'watch', ['connect', 'coffee', 'uglify', 'jasmine:all:build', 'livereload-start', 'open', 'regarde']
+  grunt.registerTask 'watch', ['connect', 'concurrent', 'uglify', 'jasmine:all:build', 'livereload-start', 'open', 'regarde']
