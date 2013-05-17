@@ -23,8 +23,12 @@
       var data;
 
       data = this.serializeData();
+      this.$el.addClass('bb-modal');
       if (this.template) {
         this.$el.html(this.template(data));
+      }
+      if (this.viewContainer) {
+        this.$(this.viewContainer).addClass('bb-modal-view-container');
       }
       this.$el.show();
       this.openAt(0);

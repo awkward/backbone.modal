@@ -12,7 +12,10 @@ class Backbone.Modal extends Backbone.View
   render: ->
     # use openAt or overwrite this with your own functionality
     data = @serializeData()
+
+    @$el.addClass('bb-modal')
     @$el.html @template(data) if @template
+    @$(@viewContainer).addClass('bb-modal-view-container') if @viewContainer
 
     @$el.show()
     @openAt(0)
