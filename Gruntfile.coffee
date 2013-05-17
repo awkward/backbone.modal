@@ -70,7 +70,7 @@ module.exports = (grunt) ->
 
     regarde:
       livereloadJS:
-        files: ['test/**/*.js']
+        files: ['test/**/*.js', 'examples/vendor/*.js']
         tasks: ['livereload']
       livereloadCSS:
         files: ['examples/vendor/backbone.modal.css']
