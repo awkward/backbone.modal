@@ -4,3 +4,39 @@
 .bb-modal {
   background: white;
   box-shadow: 0 0px 6px rgba(0, 0, 0, 0.6), 0 1px 2px rgba(0, 0, 0, 0.9); }
+
+.bb-modal-bottombar,
+.bb-modal-titlebar {
+  padding: 18px; }
+
+.bb-modal-bottombar {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  text-align: right; }
+
+.bb-modal-titlebar {
+  color: #222222;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+
+.titlebar-title {
+  padding: 0;
+  margin: 0;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 1em; }
+
+.bb-modal-button {
+  display: inline-block;
+  border: 1px solid #c3c3c3;
+    border-bottom: 1px solid #9e9e9e;
+  color: rgba(65, 66, 69, 0.9);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  position: relative;
+  line-height: 1em;
+  display: inline-block;
+  padding: 7px 13px;
+  border-radius: 3px;
+  background: #eeeded;
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.12); }

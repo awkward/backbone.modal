@@ -1,4 +1,5 @@
 module.exports = (grunt) ->
+module.exports = (grunt) ->
   fs = require('fs')
 
   grunt.initConfig
@@ -66,6 +67,7 @@ module.exports = (grunt) ->
           'backbone.modal.theme.css': 'src/backbone.modal.theme.sass'
           'examples/vendor/backbone.modal.css': 'src/backbone.modal.sass'
           'examples/vendor/backbone.modal.theme.css': 'src/backbone.modal.theme.sass'
+          'examples/style.css': 'src/style.sass'
 
     concurrent:
       compile: ['coffee', 'sass']

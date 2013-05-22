@@ -1,21 +1,36 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+
 <head>
-    <meta content="text/html;charset=UTF-8" http-equiv="Content-Type"/>
-    <title>Create a modal</title>
+  <meta content="text/html;charset=UTF-8" http-equiv="Content-Type"/>
+  <title>Create a modal</title>
 
-    <script type="text/javascript" src="vendor/jquery-1.9.1.js"></script>
-    <script type="text/javascript" src="vendor/underscore.js"></script>
-    <script type="text/javascript" src="vendor/backbone.js"></script>
+  <script type="text/javascript" src="vendor/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="vendor/underscore.js"></script>
+  <script type="text/javascript" src="vendor/backbone.js"></script>
 
-    <!-- Adding Backbone.Modal extension here -->
-    <link type="text/css" rel="stylesheet" href="vendor/backbone.modal.css">
-    <link type="text/css" rel="stylesheet" href="vendor/backbone.modal.theme.css">
-    <script type="text/javascript" src="vendor/backbone.modal.js"></script>
+  <!-- Adding Backbone.Modal extension here -->
+  <link type="text/css" rel="stylesheet" href="vendor/backbone.modal.css">
+  <link type="text/css" rel="stylesheet" href="vendor/backbone.modal.theme.css">
+  <script type="text/javascript" src="vendor/backbone.modal.js"></script>
+
+  <!-- Custom style -->
+  <link type="text/css" rel="stylesheet" href="style.css">
+
+
 </head>
+
+
 <body>
   <script type="text/template" id="modal-template">
+    <div class="bb-modal-titlebar">
+      <h2 class="titlebar-title">Manage profiles</h2>
+    </div>
     <div class="my-container"></div>
+    <div class="bb-modal-bottombar">
+      <a href="#" class="bb-modal-button">Done</a>
+    </div>
   </script>
 
   <script type="text/template" id="modal-view1-template">
