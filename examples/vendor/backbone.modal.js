@@ -10,6 +10,8 @@
   Backbone.Modal = (function(_super) {
     __extends(Modal, _super);
 
+    Modal.prototype.prefix = 'bb-modal';
+
     function Modal() {
       var args;
 
@@ -20,15 +22,17 @@
     }
 
     Modal.prototype.render = function() {
-      var data;
+      var data, modalEL;
 
       data = this.serializeData();
-      this.$el.addClass('bb-modal');
+      this.$el.addClass("" + this.prefix + "-wrapper");
+      modalEL = $('<div />').addClass(this.prefix);
       if (this.template) {
-        this.$el.html(this.template(data));
+        modalEL.html(this.template(data));
       }
+      this.$el.append(modalEL);
       if (this.viewContainer) {
-        this.$(this.viewContainer).addClass('bb-modal-view-container');
+        this.$(this.viewContainer).addClass("" + this.prefix + "-views");
       }
       this.$el.show();
       this.openAt(0);

@@ -49,12 +49,12 @@ module.exports = (grunt) ->
         files:
           'backbone.modal.js': 'src/backbone.modal.coffee'
           'backbone.marionette.modals.js': 'src/backbone.marionette.modals.coffee'
-          
+
           'examples/vendor/backbone.modal.js': 'src/backbone.modal.coffee'
           'examples/vendor/backbone.marionette.modals.js': 'src/backbone.marionette.modals.coffee'
       specs:
         files:
-          grunt.file.expandMapping(['test/src/**/*.coffee'], 'test/spec/', 
+          grunt.file.expandMapping(['test/src/**/*.coffee'], 'test/spec/',
             rename: (destBase, destPath) ->
               return destBase + destPath.slice(9, destPath.length).replace(/\.coffee$/, '.js')
           )
@@ -63,7 +63,9 @@ module.exports = (grunt) ->
       compile:
         files:
           'backbone.modal.css': 'src/backbone.modal.sass'
+          'backbone.modal.theme.css': 'src/backbone.modal.theme.sass'
           'examples/vendor/backbone.modal.css': 'src/backbone.modal.sass'
+          'examples/vendor/backbone.modal.theme.css': 'src/backbone.modal.theme.sass'
 
     concurrent:
       compile: ['coffee', 'sass']

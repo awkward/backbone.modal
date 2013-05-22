@@ -10,18 +10,17 @@
 
     <!-- Adding Backbone.Modal extension here -->
     <link type="text/css" rel="stylesheet" href="vendor/backbone.modal.css">
+    <link type="text/css" rel="stylesheet" href="vendor/backbone.modal.theme.css">
     <script type="text/javascript" src="vendor/backbone.modal.js"></script>
-
 </head>
 <body>
   <script type="text/template" id="modal-template">
-    <div class="modal-view"></div>
+    <div class="my-container"></div>
   </script>
 
   <script type="text/template" id="modal-view1-template">
     <div class="modal-section">
-      <input type="text" value="" placeholder="Name your project" />
-      <a href="#" id="second">Next view</a>
+      <input type="text" placeholder="Name your project"/>
     </div>
   </script>
 
@@ -36,7 +35,7 @@
       var Modal = Backbone.Modal.extend({
         template: _.template($('#modal-template').html()),
 
-        viewContainer: '.modal-view',
+        viewContainer: '.my-container',
 
         views: {
           'click #first': {

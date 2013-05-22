@@ -1,7 +1,8 @@
 unless Backbone?
-  throw new Error("Backbone is not defined. Please include the latest version from http://documentcloud.github.com/backbone/backbone.js") 
+  throw new Error("Backbone is not defined. Please include the latest version from http://documentcloud.github.com/backbone/backbone.js")
 
 class Backbone.Modal extends Backbone.View
+  prefix: 'bb-modal'
   constructor: ->
     args = Array::slice.apply(arguments)
     Backbone.View::constructor.apply(this, args)
@@ -13,9 +14,11 @@ class Backbone.Modal extends Backbone.View
     # use openAt or overwrite this with your own functionality
     data = @serializeData()
 
-    @$el.addClass('bb-modal')
-    @$el.html @template(data) if @template
-    @$(@viewContainer).addClass('bb-modal-view-container') if @viewContainer
+    @$el.addClass("#{@prefix}-wrapper")
+    modalEL = $('<div />').addClass(@prefix)
+    modalEL.html @template(data) if @template
+    @$el.append modalEL
+    @$(@viewContainer).addClass("#{@prefix}-views") if @viewContainer
 
     @$el.show()
     @openAt(0)
@@ -74,7 +77,7 @@ class Backbone.Modal extends Backbone.View
         match     = key.match(/^(\S+)\s*(.*)$/)
         trigger   = match[1]
         selector  = match[2]
-        
+
         @$el.on trigger, selector, @views[key], (e) => @triggerView(e)
 
   checkKey: (e) ->
@@ -145,7 +148,7 @@ class Backbone.Modal extends Backbone.View
     if view
       @currentIndex = index
       @triggerView(data: view)
-    
+
     return this
 
   next: ->
@@ -157,4 +160,3 @@ class Backbone.Modal extends Backbone.View
 
   animate: ->
     # do the animation stuff here
-    
