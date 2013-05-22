@@ -25,6 +25,9 @@
   font-size: 16px;
   line-height: 1em; }
 
+.bb-modal-tabbar ul {
+  list-style: none; }
+
 .bb-modal-button {
   display: inline-block;
   border: 1px solid #c3c3c3;

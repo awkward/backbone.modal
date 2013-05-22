@@ -77,8 +77,8 @@ module.exports = (grunt) ->
         files: ['test/**/*.js', 'examples/vendor/*.js']
         tasks: ['livereload']
       livereloadCSS:
-        files: ['examples/vendor/backbone.modal.css']
-        tasks: ['livereload:backbone.modal.css']
+        files: ['examples/vendor/backbone.modal.css', 'examples/vendor/backbone.modal.theme.css', 'examples/style.css']
+        tasks: ['livereload:backbone.modal.css', 'livereload:examples/vendor/backbone.modal.theme.css', 'livereload:examples/style.css']
       sass:
         files: ['src/**/*.sass']
         tasks: ['sass']
