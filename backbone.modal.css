@@ -1,3 +1,6 @@
+.bb-modal-wrapper * {
+  box-sizing: border-box; }
+
 .bb-modal-wrapper {
   position: fixed;
   left: 0;
@@ -7,8 +10,7 @@
   z-index: 100;
   padding: 50px 20px;
   overflow-x: auto;
-  overflow-y: scroll;
-  box-sizing: border-box; }
+  overflow-y: scroll; }
 
 .bb-modal {
   width: 550px;
@@ -17,5 +19,4 @@
 
 .bb-modal-views {
   width: 100%;
-  padding: 20px;
   box-sizing: border-box; }

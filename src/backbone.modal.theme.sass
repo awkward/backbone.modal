@@ -1,3 +1,7 @@
+// ----------------------------------------------------------------------------
+// DEFAULT STYLING
+// ----------------------------------------------------------------------------
+
 // Backdrop
 .bb-modal-wrapper
   background: rgba(0,0,0,.75)
@@ -7,21 +11,22 @@
   background: white
   box-shadow: 0 0px 6px rgba(0,0,0,.6), 0 1px 2px rgba(0,0,0,.9)
 
-// COMPONENTS
+// ----------------------------------------------------------------------------
+// MODAL COMPONENTS
+// ----------------------------------------------------------------------------
+
 .bb-modal-bottombar,
 .bb-modal-titlebar
   padding: 18px
 
-// Bottombar
-.bb-modal-bottombar
-  border-top: 1px solid rgba(0,0,0,.1)
-  padding: 18px
-  text-align: right
+.bb-modal-titlebar,
+.bb-modal-tabbar
+  border-bottom: 1px solid rgba(0,0,0,.1)
+
 
 // Titlebar
 .bb-modal-titlebar
   color: #222
-  border-bottom: 1px solid rgba(0,0,0,.1)
 
 .titlebar-title
   padding: 0
@@ -35,8 +40,40 @@
 .bb-modal-tabbar
   ul
     list-style: none
+    text-align: center
+    padding: 0
+    margin: 0
 
+.tabbar-tab
+  display: inline-block
+  padding: 15px 10px
 
+  a
+    font:
+      size: 16px
+      weight: bold
+    color: #999
+
+    &:hover,
+    &.active
+      color: #222
+
+// Bottombar
+.bb-modal-bottombar
+  border-top: 1px solid rgba(0,0,0,.1)
+  padding: 18px
+  text-align: right
+  margin-top: 25px
+
+// ----------------------------------------------------------------------------
+// MODULES
+// ----------------------------------------------------------------------------
+
+// Group (clearfix)
+.bb-modal-group
+  content: ""
+  display: table
+  clear: both
 
 // Buttons
 .bb-modal-button
@@ -55,3 +92,70 @@
   border-radius: 3px
   background: #EEEDED
   box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.12)
+
+
+// Section
+.bb-modal-section
+  padding: 0 25px
+  margin-top: 25px
+
+.bb-modal-section-info
+  margin-bottom: 15px
+
+.section-title
+  font:
+    size: 18px
+    weight: 500
+  margin: 0
+  margin-bottom: 2px
+  padding: 0
+
+.section-description
+  font:
+    size: 14px
+  padding: 0
+  margin: 0
+  color: #666
+
+.section-row
+  width: 100%
+  margin-bottom: 15px
+
+  &:last-child
+    margin-bottom: 0
+
+.section-column
+  width: calc(50% - 8px)
+  float: left
+
+  &:first-child
+    margin-right: 8px
+
+  &:last-child
+    margin-left: 8px
+
+
+// Form elements
+label
+  font:
+    size: 13px
+    weight: 500
+  color: #666
+  line-height: 24px
+
+input
+  height: 35px
+  width: 100%
+  padding: 0 10px
+  outline: 0
+  font-size: 13px
+  font-family: "Helvetica Neue"
+  color: #333
+  border: none
+  background: #F5F5F6
+  border-radius: 3px
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.45), inset 0 0 2px rgba(0,0,0,.349)
+
+  &:focus
+    box-shadow: inset 0 1px 2px rgba(30, 88, 190, 0.8), inset 0 0 2px rgba(7, 34, 81, 0.78), 0 0 2px #4585f1
+    color: #000

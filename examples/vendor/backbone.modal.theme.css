@@ -9,14 +9,12 @@
 .bb-modal-titlebar {
   padding: 18px; }
 
-.bb-modal-bottombar {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 18px;
-  text-align: right; }
+.bb-modal-titlebar,
+.bb-modal-tabbar {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
 
 .bb-modal-titlebar {
-  color: #222222;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+  color: #222222; }
 
 .titlebar-title {
   padding: 0;
@@ -26,7 +24,31 @@
   line-height: 1em; }
 
 .bb-modal-tabbar ul {
-  list-style: none; }
+  list-style: none;
+  text-align: center;
+  padding: 0;
+  margin: 0; }
+
+.tabbar-tab {
+  display: inline-block;
+  padding: 15px 10px; }
+  .tabbar-tab a {
+    font-size: 16px;
+    font-weight: bold;
+    color: #999999; }
+    .tabbar-tab a:hover, .tabbar-tab a.active {
+      color: #222222; }
+
+.bb-modal-bottombar {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  text-align: right;
+  margin-top: 25px; }
+
+.bb-modal-group {
+  content: "";
+  display: table;
+  clear: both; }
 
 .bb-modal-button {
   display: inline-block;
@@ -43,3 +65,59 @@
   border-radius: 3px;
   background: #eeeded;
   box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.12); }
+
+.bb-modal-section {
+  padding: 0 25px;
+  margin-top: 25px; }
+
+.bb-modal-section-info {
+  margin-bottom: 15px; }
+
+.section-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+  margin-bottom: 2px;
+  padding: 0; }
+
+.section-description {
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+  color: #666666; }
+
+.section-row {
+  width: 100%;
+  margin-bottom: 15px; }
+  .section-row:last-child {
+    margin-bottom: 0; }
+
+.section-column {
+  width: calc(50% - 8px);
+  float: left; }
+  .section-column:first-child {
+    margin-right: 8px; }
+  .section-column:last-child {
+    margin-left: 8px; }
+
+label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #666666;
+  line-height: 24px; }
+
+input {
+  height: 35px;
+  width: 100%;
+  padding: 0 10px;
+  outline: 0;
+  font-size: 13px;
+  font-family: "Helvetica Neue";
+  color: #333333;
+  border: none;
+  background: #f5f5f6;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.45), inset 0 0 2px rgba(0, 0, 0, 0.349); }
+  input:focus {
+    box-shadow: inset 0 1px 2px rgba(30, 88, 190, 0.8), inset 0 0 2px rgba(7, 34, 81, 0.78), 0 0 2px #4585f1;
+    color: black; }

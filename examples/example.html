@@ -24,16 +24,15 @@
 
 <body>
   <script type="text/template" id="modal-template">
-
     <!-- <div class="bb-modal-titlebar">
     <h2 class="titlebar-title">Manage profiles</h2>
     </div> -->
 
     <div class="bb-modal-tabbar">
       <ul>
-        <li class="tabbar-tab">Tab 1</li>
-        <li class="tabbar-tab">Tab 2</li>
-        <li class="tabbar-tab">Tab 3</li>
+        <li class="tabbar-tab"><a href="#">General</a></li>
+        <li class="tabbar-tab"><a href="#" class="active">Account</a></li>
+        <li class="tabbar-tab"><a href="#">Billing</a></li>
       </ul>
     </div>
 
@@ -44,8 +43,25 @@
   </script>
 
   <script type="text/template" id="modal-view1-template">
-    <div class="modal-section">
-      <input type="text" placeholder="Name your project"/>
+    <div class="bb-modal-section">
+      <div class="bb-modal-section-info">
+        <h3 class="section-title">Credentials</h3>
+        <p class="section-description">Please fill in your personal information</h3>
+      </div>
+      <div class="section-row">
+        <label for="username">Username</label>
+        <input class="bb-modal-input" type="text" placeholder="Username" id="username"/>
+      </div>
+      <div class="section-row bb-modal-group">
+        <div class="section-column">
+          <label for="username">Password</label>
+          <input class="bb-modal-input" type="password" placeholder="Password" id="password"/>
+        </div>
+        <div class="section-column">
+          <label for="password-repeat">Password Repeat</label>
+          <input class="bb-modal-input" type="password" placeholder="Password repeat" id="password-repeat"/>
+        </div>
+      </div>
     </div>
   </script>
 
