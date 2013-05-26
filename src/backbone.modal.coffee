@@ -15,10 +15,13 @@ class Backbone.Modal extends Backbone.View
     data = @serializeData()
 
     @$el.addClass("#{@prefix}-wrapper")
-    modalEL = $('<div />').addClass(@prefix)
-    modalEL.html @template(data) if @template
-    @$el.append modalEL
-    @$(@viewContainer).addClass("#{@prefix}-views") if @viewContainer
+    modalEl = $('<div />').addClass(@prefix)
+    modalEl.html @template(data) if @template
+    @$el.html modalEl
+
+    if @viewContainer
+      @viewContainerEl = modalEl.find(@viewContainer)
+      @viewContainerEl.addClass("#{@prefix}-views") 
 
     @$el.show()
     @openAt(0)
@@ -106,8 +109,8 @@ class Backbone.Modal extends Backbone.View
     instance      = @buildView(options.view)
     @currentView  = instance.view
 
-    if @viewContainer
-      @$(@viewContainer).html instance.el
+    if @viewContainerEl
+      @$(@viewContainerEl).html instance.el
     else
       @$el.html instance.el
 

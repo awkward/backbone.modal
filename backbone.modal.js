@@ -22,17 +22,18 @@
     }
 
     Modal.prototype.render = function() {
-      var data, modalEL;
+      var data, modalEl;
 
       data = this.serializeData();
       this.$el.addClass("" + this.prefix + "-wrapper");
-      modalEL = $('<div />').addClass(this.prefix);
+      modalEl = $('<div />').addClass(this.prefix);
       if (this.template) {
-        modalEL.html(this.template(data));
+        modalEl.html(this.template(data));
       }
-      this.$el.append(modalEL);
+      this.$el.html(modalEl);
       if (this.viewContainer) {
-        this.$(this.viewContainer).addClass("" + this.prefix + "-views");
+        this.viewContainerEl = modalEl.find(this.viewContainer);
+        this.viewContainerEl.addClass("" + this.prefix + "-views");
       }
       this.$el.show();
       this.openAt(0);
@@ -163,8 +164,8 @@
       options = e.data;
       instance = this.buildView(options.view);
       this.currentView = instance.view;
-      if (this.viewContainer) {
-        return this.$(this.viewContainer).html(instance.el);
+      if (this.viewContainerEl) {
+        return this.$(this.viewContainerEl).html(instance.el);
       } else {
         return this.$el.html(instance.el);
       }
