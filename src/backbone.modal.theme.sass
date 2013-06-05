@@ -159,3 +159,69 @@ input
   &:focus
     box-shadow: inset 0 1px 2px rgba(30, 88, 190, 0.8), inset 0 0 2px rgba(7, 34, 81, 0.78), 0 0 2px #4585f1
     color: #000
+
+// Animation Keyframes
+@-webkit-keyframes framer-animation-1-1
+  0%
+    -webkit-transform: matrix(0.99, 0, 0, 0.99, 0, 43)
+    opacity: 0
+  100%
+    -webkit-transform: matrix(1, 0, 0, 1, 0, 50)
+    opacity: 1
+  5.88235%
+    -webkit-transform: matrix(0.99096, 0, 0, 0.99096, 0, 43.67414)
+    opacity: 0.09631
+  11.76471%
+    -webkit-transform: matrix(0.99188, 0, 0, 0.99188, 0, 44.31234)
+    opacity: 0.18748
+  17.64706%
+    -webkit-transform: matrix(0.99275, 0, 0, 0.99275, 0, 44.92214)
+    opacity: 0.27459
+  23.52941%
+    -webkit-transform: matrix(0.99358, 0, 0, 0.99358, 0, 45.50529)
+    opacity: 0.3579
+  29.41176%
+    -webkit-transform: matrix(0.99437, 0, 0, 0.99437, 0, 46.06209)
+    opacity: 0.43744
+  35.29412%
+    -webkit-transform: matrix(0.99513, 0, 0, 0.99513, 0, 46.59208)
+    opacity: 0.51315
+  41.17647%
+    -webkit-transform: matrix(0.99585, 0, 0, 0.99585, 0, 47.09433)
+    opacity: 0.5849
+  47.05882%
+    -webkit-transform: matrix(0.99653, 0, 0, 0.99653, 0, 47.56743)
+    opacity: 0.65249
+  52.94118%
+    -webkit-transform: matrix(0.99716, 0, 0, 0.99716, 0, 48.00957)
+    opacity: 0.71565
+  58.82353%
+    -webkit-transform: matrix(0.99774, 0, 0, 0.99774, 0, 48.41843)
+    opacity: 0.77406
+  64.70588%
+    -webkit-transform: matrix(0.99827, 0, 0, 0.99827, 0, 48.7912)
+    opacity: 0.82731
+  70.58824%
+    -webkit-transform: matrix(0.99875, 0, 0, 0.99875, 0, 49.12439)
+    opacity: 0.87491
+  76.47059%
+    -webkit-transform: matrix(0.99916, 0, 0, 0.99916, 0, 49.41369)
+    opacity: 0.91624
+  82.35294%
+    -webkit-transform: matrix(0.99951, 0, 0, 0.99951, 0, 49.65374)
+    opacity: 0.95053
+  88.23529%
+    -webkit-transform: matrix(0.99977, 0, 0, 0.99977, 0, 49.83777)
+    opacity: 0.97682
+  94.11765%
+    -webkit-transform: matrix(0.99994, 0, 0, 0.99994, 0, 49.95704)
+    opacity: 0.99386
+
+
+.modal-fadeIn
+  -webkit-animation-duration: 0.3s
+  -webkit-animation-name: framer-animation-1-1
+  -webkit-animation-timing-function: linear
+  -webkit-animation-fill-mode: both
+  -webkit-transform-origin: 50% 50%
+  -webkit-backface-visibility: hidden
