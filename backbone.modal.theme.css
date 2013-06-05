@@ -1,5 +1,6 @@
 .bb-modal-wrapper {
-  background: rgba(0, 0, 0, 0.75); }
+  background: rgba(0, 0, 0, 0.75);
+  -webkit-transition: background-color 0.3s; }
 
 .bb-modal {
   background: white;
@@ -195,7 +196,7 @@ input {
     -webkit-transform: matrix(0.99994, 0, 0, 0.99994, 0, 49.95704);
     opacity: 0.99386; } }
 
-.modal-fadeIn {
+.bb-modal-fadeIn {
   -webkit-animation-duration: 0.3s;
   -webkit-animation-name: framer-animation-1-1;
   -webkit-animation-timing-function: linear;
