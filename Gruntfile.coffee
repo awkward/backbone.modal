@@ -23,7 +23,7 @@ module.exports = (grunt) ->
           base: './examples/'
           middleware: (connect, options) ->
             [connect.static(options.base), (req, res, next) ->
-              fs.readFile "#{options.base}/example.html", (err, data) ->
+              fs.readFile "#{options.base}/example_marionette.html", (err, data) ->
                 res.writeHead(200)
                 res.end(data)
             ]
@@ -96,4 +96,5 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-sass'
   grunt.loadNpmTasks 'grunt-concurrent'
 
-  grunt.registerTask 'watch', ['connect', 'concurrent', 'uglify', 'jasmine:all:build', 'livereload-start', 'open', 'regarde']
+  grunt.registerTask 'build', ['concurrent', 'uglify', 'jasmine:all:build']
+  grunt.registerTask 'watch', ['connect', 'build', 'livereload-start', 'open', 'regarde']

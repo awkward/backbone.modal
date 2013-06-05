@@ -1,5 +1,6 @@
 (function() {
-  var __hasProp = {}.hasOwnProperty,
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
@@ -13,16 +14,18 @@
     Modal.prototype.prefix = 'bb-modal';
 
     function Modal() {
-      var args;
-
-      args = Array.prototype.slice.apply(arguments);
-      Backbone.View.prototype.constructor.apply(this, args);
+      this.triggerCancel = __bind(this.triggerCancel, this);
+      this.triggerSubmit = __bind(this.triggerSubmit, this);
+      this.triggerView = __bind(this.triggerView, this);
+      this.clickOutside = __bind(this.clickOutside, this);
+      this.checkKey = __bind(this.checkKey, this);      this.args = Array.prototype.slice.apply(arguments);
+      Backbone.View.prototype.constructor.apply(this, this.args);
       this.setUIElements();
       this.delegateModalEvents();
     }
 
     Modal.prototype.render = function() {
-      var data, modalEl;
+      var data, modalEl, _ref;
 
       data = this.serializeData();
       this.$el.addClass("" + this.prefix + "-wrapper");
@@ -31,12 +34,21 @@
         modalEl.html(this.template(data));
       }
       this.$el.html(modalEl);
+      $('body').on('keyup', this.checkKey);
+      $('body').on('click', this.clickOutside);
       if (this.viewContainer) {
         this.viewContainerEl = modalEl.find(this.viewContainer);
         this.viewContainerEl.addClass("" + this.prefix + "-views");
+      } else {
+        this.viewContainerEl = modalEl;
       }
       this.$el.show();
-      this.openAt(0);
+      if (((_ref = this.views) != null ? _ref.length : void 0) > 0) {
+        this.openAt(0);
+      }
+      if (typeof this.onRender === "function") {
+        this.onRender();
+      }
       return this;
     };
 
@@ -74,43 +86,61 @@
 
       data = {};
       if (this.model) {
-        data = this.model.toJSON();
-      } else if (this.collection) {
-        data = {
+        data = _.extend(data, this.model.toJSON());
+      }
+      if (this.collection) {
+        data = _.extend(data, {
           items: this.collection.toJSON()
-        };
+        });
       }
       return data;
     };
 
     Modal.prototype.delegateModalEvents = function() {
-      var cancelEl, key, match, selector, submitEl, trigger, _results,
-        _this = this;
+      var cancelEl, key, match, selector, submitEl, trigger, _results;
 
+      this.active = true;
       cancelEl = this.getOption('cancelEl');
       submitEl = this.getOption('submitEl');
       if (submitEl) {
-        this.$el.on('click', submitEl, function(e) {
-          return _this.triggerSubmit(e);
-        });
+        this.$el.on('click', submitEl, this.triggerSubmit);
       }
       if (cancelEl) {
-        this.$el.on('click', cancelEl, function(e) {
-          return _this.triggerCancel(e);
-        });
+        this.$el.on('click', cancelEl, this.triggerCancel);
       }
-      $('body').on('keyup', function(e) {
-        return _this.checkKey(e);
-      });
       _results = [];
       for (key in this.views) {
         if (key !== 'length') {
           match = key.match(/^(\S+)\s*(.*)$/);
           trigger = match[1];
           selector = match[2];
-          _results.push(this.$el.on(trigger, selector, this.views[key], function(e) {
-            return _this.triggerView(e);
-          }));
+          _results.push(this.$el.on(trigger, selector, this.views[key], this.triggerView));
+        } else {
+          _results.push(void 0);
+        }
+      }
+      return _results;
+    };
+
+    Modal.prototype.undelegateModalEvents = function() {
+      var cancelEl, key, match, selector, submitEl, trigger, _results;
+
+      this.active = false;
+      cancelEl = this.getOption('cancelEl');
+      submitEl = this.getOption('submitEl');
+      if (submitEl) {
+        this.$el.off('click', submitEl, this.triggerSubmit);
+      }
+      if (cancelEl) {
+        this.$el.off('click', cancelEl, this.triggerCancel);
+      }
+      _results = [];
+      for (key in this.views) {
+        if (key !== 'length') {
+          match = key.match(/^(\S+)\s*(.*)$/);
+          trigger = match[1];
+          selector = match[2];
+          _results.push(this.$el.off(trigger, selector, this.views[key], this.triggerView));
         } else {
           _results.push(void 0);
         }
@@ -119,31 +149,38 @@
     };
 
     Modal.prototype.checkKey = function(e) {
-      switch (e.keyCode) {
-        case 27:
-          return this.triggerCancel();
-        case 13:
-          return this.triggerSubmit();
+      if (this.active) {
+        switch (e.keyCode) {
+          case 27:
+            return this.triggerCancel(null, true);
+          case 13:
+            return this.triggerSubmit(null, true);
+        }
+      }
+    };
+
+    Modal.prototype.clickOutside = function(e) {
+      if ($(e.target).hasClass("" + this.prefix + "-wrapper") && this.active) {
+        return this.triggerCancel(null, true);
       }
     };
 
     Modal.prototype.buildView = function(viewType) {
-      var data, view;
+      var view;
 
       if (!viewType) {
         return;
       }
       if (_.isFunction(viewType)) {
-        data = this.serializeData();
-        if (new viewType instanceof Backbone.View) {
-          view = new viewType(data);
+        view = new viewType(this.args[0]);
+        if (view instanceof Backbone.View) {
           return {
-            el: view.$el,
+            el: view.render().$el,
             view: view
           };
         } else {
           return {
-            el: viewType(data)
+            el: viewType(this.args[0])
           };
         }
       }
@@ -163,15 +200,63 @@
       }
       options = e.data;
       instance = this.buildView(options.view);
-      this.currentView = instance.view;
-      if (this.viewContainerEl) {
-        return this.$(this.viewContainerEl).html(instance.el);
+      this.currentView = instance.view || instance.el;
+      if (options.onActive) {
+        if (_.isFunction(options.onActive)) {
+          options.onActive(this);
+        } else if (_.isString(options.onActive)) {
+          this[options.onActive].call(this, options);
+        }
+      }
+      if (this.shouldAnimate) {
+        return this.animateToView(instance.el);
       } else {
-        return this.$el.html(instance.el);
+        this.shouldAnimate = true;
+        return this.$(this.viewContainerEl).html(instance.el);
       }
     };
 
-    Modal.prototype.triggerSubmit = function(e) {
+    Modal.prototype.animateToView = function(view) {
+      var container, newHeight, previousHeight, tester,
+        _this = this;
+
+      tester = $('<tester/>');
+      tester.html(this.$el.clone().css({
+        top: -9999,
+        left: -9999
+      }));
+      if ($('tester').length !== 0) {
+        $('tester').replaceWith(tester);
+      } else {
+        $('body').append(tester);
+      }
+      if (this.viewContainer) {
+        container = tester.find(this.viewContainer);
+      } else {
+        container = tester;
+      }
+      container.removeAttr("style");
+      previousHeight = container.outerHeight();
+      container.html(view);
+      newHeight = container.outerHeight();
+      if (previousHeight === newHeight) {
+        return this.$(this.viewContainerEl).html(view);
+      } else {
+        this.$(this.viewContainerEl).css({
+          opacity: 0
+        });
+        return this.$(this.viewContainerEl).animate({
+          height: newHeight
+        }, 100, function() {
+          _this.$(_this.viewContainerEl).css({
+            opacity: 1
+          });
+          return _this.$(_this.viewContainerEl).html(view);
+        });
+      }
+    };
+
+    Modal.prototype.triggerSubmit = function(e, keyEvent) {
       if (e != null) {
         e.preventDefault();
       }
@@ -183,10 +268,13 @@
       if (typeof this.submit === "function") {
         this.submit();
       }
+      if (keyEvent) {
+        this.trigger('modal:close');
+      }
       return this.close();
     };
 
-    Modal.prototype.triggerCancel = function(e) {
+    Modal.prototype.triggerCancel = function(e, keyEvent) {
       if (e != null) {
         e.preventDefault();
       }
@@ -198,16 +286,17 @@
       if (typeof this.cancel === "function") {
         this.cancel();
       }
+      if (keyEvent) {
+        this.trigger('modal:close');
+      }
       return this.close();
     };
 
     Modal.prototype.close = function() {
-      var _ref,
-        _this = this;
+      var _ref;
 
-      $('body').off('keyup', function(e) {
-        return _this.checkKey(e);
-      });
+      $('body').off('keyup', this.checkKey);
+      $('body').off('click', this.clickOutside);
       if ((_ref = this.currentView) != null) {
         if (typeof _ref.remove === "function") {
           _ref.remove();
@@ -248,8 +337,6 @@
         return this.openAt(this.currentIndex - 1);
       }
     };
-
-    Modal.prototype.animate = function() {};
 
     return Modal;
 

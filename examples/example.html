@@ -30,9 +30,9 @@
 
     <div class="bb-modal-tabbar">
       <ul>
-        <li class="tabbar-tab"><a href="#">General</a></li>
-        <li class="tabbar-tab"><a href="#" class="active">Account</a></li>
-        <li class="tabbar-tab"><a href="#">Billing</a></li>
+        <li class="tabbar-tab"><a href="#" class="general">General</a></li>
+        <li class="tabbar-tab"><a href="#" class="account active">Account</a></li>
+        <li class="tabbar-tab"><a href="#" class="billing">Billing</a></li>
       </ul>
     </div>
 
@@ -67,7 +67,7 @@
 
   <script type="text/template" id="modal-view2-template">
     This is the second view.
-    <a href="#" id="first">Next view</a>
+    <a href="#" id="general">First view</a>
   </script>
 
   <script>
@@ -79,10 +79,13 @@
         viewContainer: '.my-container',
 
         views: {
-          'click #first': {
+          'click .general': {
             view: _.template($('#modal-view1-template').html())
           },
-          'click #second': {
+          'click .account': {
+            view: _.template($('#modal-view2-template').html())
+          },
+          'click .billing': {
             view: _.template($('#modal-view2-template').html())
           }
         }

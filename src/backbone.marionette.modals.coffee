@@ -9,6 +9,7 @@ class Backbone.Marionette.Modals extends Backbone.Marionette.Region
     @ensureEl()
 
     modal.render()
+    @$el.show()
     @$el.append modal.el
     
     Marionette.triggerMethod.call(modal, "show")
@@ -16,10 +17,14 @@ class Backbone.Marionette.Modals extends Backbone.Marionette.Region
 
     @currentView = modal
 
+    m.undelegateModalEvents() for m in @modals
+
+    modal.on('modal:close', @close)
+
     @modals.push(modal)
     @zIndex++
 
-  close: ->
+  close: =>
     modal = @currentView
     return if !modal or modal.isClosed
 
@@ -28,12 +33,19 @@ class Backbone.Marionette.Modals extends Backbone.Marionette.Region
     else if modal.remove
       modal.remove()
 
+    modal.off('modal:close', @close)
+
     @modals.splice(_.indexOf(@modals, modal), 1)
 
     @zIndex--
 
     @currentView = @modals[@zIndex-1]
 
+    if @zIndex is 0
+      @$el.hide()
+    else
+      _.last(@modals).delegateModalEvents()
+      
     Marionette.triggerMethod.call(this, "close")
 
   closeAll: ->
