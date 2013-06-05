@@ -32,6 +32,8 @@ class Backbone.Modal extends Backbone.View
     @$el.show()
     @openAt(0) if @views?.length > 0
     @onRender?()
+
+    modalEl.addClass('bb-modal-fadeIn')
     return this
 
   setUIElements: ->
@@ -205,6 +207,7 @@ class Backbone.Modal extends Backbone.View
     $('body').off 'keyup', @checkKey
     $('body').off 'click', @clickOutside
     @currentView?.remove?()
+    @shouldAnimate = false
     @remove()
 
   openAt: (index) ->

@@ -49,6 +49,7 @@
       if (typeof this.onRender === "function") {
         this.onRender();
       }
+      modalEl.addClass('bb-modal-fadeIn');
       return this;
     };
 
@@ -302,6 +303,7 @@
           _ref.remove();
         }
       }
+      this.shouldAnimate = false;
       return this.remove();
     };
 

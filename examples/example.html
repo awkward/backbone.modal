@@ -23,6 +23,10 @@
 
 
 <body>
+  <a href="#" class="open">Open modal</a>
+
+  <div class="app"></div>
+
   <script type="text/template" id="modal-template">
     <!-- <div class="bb-modal-titlebar">
     <h2 class="titlebar-title">Manage profiles</h2>
@@ -99,7 +103,10 @@
 
       // render an instance of your modal
       var modalView = new Modal();
-      $('body').append(modalView.render().el);
+
+      $('.open').on('click', function(){
+        $('.app').html(modalView.render().el);
+      });
     });
   </script>
 </body>
