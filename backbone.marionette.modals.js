@@ -21,15 +21,28 @@
     Modals.prototype.zIndex = 0;
 
     Modals.prototype.show = function(modal, options) {
-      var m, _i, _len, _ref1;
+      var lastModal, m, secondLastModal, _i, _len, _ref1;
 
       if (options == null) {
         options = {};
       }
       this.ensureEl();
+      if (this.modals.length > 0) {
+        lastModal = _.last(this.modals);
+        lastModal.modalEl.addClass("" + lastModal.prefix + "-animation-stacked");
+        secondLastModal = this.modals[this.modals.length - 1];
+        if (secondLastModal != null) {
+          secondLastModal.modalEl.removeClass("" + secondLastModal.prefix + "-animation-stacked-reverse");
+        }
+      }
       modal.render();
       this.$el.show();
       this.$el.append(modal.el);
+      if (this.modals.length > 0) {
+        modal.$el.css({
+          background: 'none'
+        });
+      }
       Marionette.triggerMethod.call(modal, "show");
       Marionette.triggerMethod.call(this, "show", modal);
       this.currentView = modal;
@@ -44,7 +57,8 @@
     };
 
     Modals.prototype.close = function() {
-      var modal;
+      var lastModal, modal,
+        _this = this;
 
       modal = this.currentView;
       if (!modal || modal.isClosed) {
@@ -59,10 +73,15 @@
       this.modals.splice(_.indexOf(this.modals, modal), 1);
       this.zIndex--;
       this.currentView = this.modals[this.zIndex - 1];
-      if (this.zIndex === 0) {
-        this.$el.hide();
-      } else {
-        _.last(this.modals).delegateModalEvents();
+      lastModal = _.last(this.modals);
+      if (lastModal) {
+        lastModal.modalEl.addClass("" + lastModal.prefix + "-animation-stacked-reverse");
+        _.delay(function() {
+          return lastModal.modalEl.removeClass("" + lastModal.prefix + "-animation-stacked");
+        }, 300);
+        if (this.zIndex !== 0) {
+          lastModal.delegateModalEvents();
+        }
       }
       return Marionette.triggerMethod.call(this, "close");
     };

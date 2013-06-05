@@ -10,30 +10,35 @@ class Backbone.Modal extends Backbone.View
     @setUIElements()
     @delegateModalEvents()
 
-  render: ->
+  render: (options = {}) ->
     # use openAt or overwrite this with your own functionality
     data = @serializeData()
 
     @$el.addClass("#{@prefix}-wrapper")
-    modalEl = $('<div />').addClass(@prefix)
-    modalEl.html @template(data) if @template
-    @$el.html modalEl
+    @modalEl = $('<div />').addClass(@prefix)
+    @modalEl.html @template(data) if @template
+    @$el.html @modalEl
 
     # global events for key and click outside the modal
     $('body').on 'keyup', @checkKey
     $('body').on 'click', @clickOutside
 
     if @viewContainer
-      @viewContainerEl = modalEl.find(@viewContainer)
+      @viewContainerEl = @modalEl.find(@viewContainer)
       @viewContainerEl.addClass("#{@prefix}-views")
     else
-      @viewContainerEl = modalEl
+      @viewContainerEl = @modalEl
 
     @$el.show()
     @openAt(0) if @views?.length > 0
     @onRender?()
 
-    modalEl.addClass('bb-modal-fadeIn')
+    @modalEl.css(opacity: 0)
+    @$el.fadeIn
+      duration: 100
+      complete: => 
+        @modalEl.addClass("#{@prefix}-animation-open")
+
     return this
 
   setUIElements: ->
@@ -206,9 +211,15 @@ class Backbone.Modal extends Backbone.View
     # closes view
     $('body').off 'keyup', @checkKey
     $('body').off 'click', @clickOutside
-    @currentView?.remove?()
+
     @shouldAnimate = false
-    @remove()
+    @modalEl.addClass('bb-modal-animation-close')
+    @$el.fadeOut(duration: 200)
+      
+    _.delay =>
+      @currentView?.remove?()
+      @remove()
+    , 200
 
   openAt: (index) ->
     # loop through views and trigger the index

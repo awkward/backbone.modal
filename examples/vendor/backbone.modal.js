@@ -24,23 +24,27 @@
       this.delegateModalEvents();
     }
 
-    Modal.prototype.render = function() {
-      var data, modalEl, _ref;
+    Modal.prototype.render = function(options) {
+      var data, _ref,
+        _this = this;
 
+      if (options == null) {
+        options = {};
+      }
       data = this.serializeData();
       this.$el.addClass("" + this.prefix + "-wrapper");
-      modalEl = $('<div />').addClass(this.prefix);
+      this.modalEl = $('<div />').addClass(this.prefix);
       if (this.template) {
-        modalEl.html(this.template(data));
+        this.modalEl.html(this.template(data));
       }
-      this.$el.html(modalEl);
+      this.$el.html(this.modalEl);
       $('body').on('keyup', this.checkKey);
       $('body').on('click', this.clickOutside);
       if (this.viewContainer) {
-        this.viewContainerEl = modalEl.find(this.viewContainer);
+        this.viewContainerEl = this.modalEl.find(this.viewContainer);
         this.viewContainerEl.addClass("" + this.prefix + "-views");
       } else {
-        this.viewContainerEl = modalEl;
+        this.viewContainerEl = this.modalEl;
       }
       this.$el.show();
       if (((_ref = this.views) != null ? _ref.length : void 0) > 0) {
@@ -49,7 +53,15 @@
       if (typeof this.onRender === "function") {
         this.onRender();
       }
-      modalEl.addClass('bb-modal-fadeIn');
+      this.modalEl.css({
+        opacity: 0
+      });
+      this.$el.fadeIn({
+        duration: 100,
+        complete: function() {
+          return _this.modalEl.addClass("" + _this.prefix + "-animation-open");
+        }
+      });
       return this;
     };
 
@@ -294,17 +306,25 @@
     };
 
     Modal.prototype.close = function() {
-      var _ref;
+      var _this = this;
 
       $('body').off('keyup', this.checkKey);
       $('body').off('click', this.clickOutside);
-      if ((_ref = this.currentView) != null) {
-        if (typeof _ref.remove === "function") {
-          _ref.remove();
-        }
-      }
       this.shouldAnimate = false;
-      return this.remove();
+      this.modalEl.addClass('bb-modal-animation-close');
+      this.$el.fadeOut({
+        duration: 200
+      });
+      return _.delay(function() {
+        var _ref;
+
+        if ((_ref = _this.currentView) != null) {
+          if (typeof _ref.remove === "function") {
+            _ref.remove();
+          }
+        }
+        return _this.remove();
+      }, 200);
     };
 
     Modal.prototype.openAt = function(index) {
