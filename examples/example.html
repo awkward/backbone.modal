@@ -30,9 +30,9 @@
 
     <div class="bb-modal-tabbar">
       <ul>
-        <li class="tabbar-tab"><a href="#">General</a></li>
-        <li class="tabbar-tab"><a href="#" class="active">Account</a></li>
-        <li class="tabbar-tab"><a href="#">Billing</a></li>
+        <li class="tabbar-tab"><a href="#" id="tab1" class="active">Tab 1</a></li>
+        <li class="tabbar-tab"><a href="#" id="tab2">Tab 2</a></li>
+        <li class="tabbar-tab"><a href="#" id="tab3">Tab 3</a></li>
       </ul>
     </div>
 
@@ -42,6 +42,7 @@
     </div>
   </script>
 
+  <!-- Tab 1 -->
   <script type="text/template" id="modal-view1-template">
     <div class="bb-modal-section">
       <div class="bb-modal-section-info">
@@ -65,9 +66,14 @@
     </div>
   </script>
 
+  <!-- Tab 2 -->
   <script type="text/template" id="modal-view2-template">
     This is the second view.
-    <a href="#" id="first">Next view</a>
+  </script>
+
+  <!-- Tab 3 -->
+  <script type="text/template" id="modal-view3-template">
+    This is the third view.
   </script>
 
   <script>
@@ -79,11 +85,14 @@
         viewContainer: '.my-container',
 
         views: {
-          'click #first': {
+          'click #tab1': {
             view: _.template($('#modal-view1-template').html())
           },
-          'click #second': {
+          'click #tab2': {
             view: _.template($('#modal-view2-template').html())
+          },
+          'click #tab3': {
+            view: _.template($('#modal-view3-template').html())
           }
         }
       });
