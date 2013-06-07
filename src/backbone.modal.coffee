@@ -96,32 +96,13 @@ class Backbone.Modal extends Backbone.View
 
   undelegateModalEvents: ->
     @active = false
-
-    # get elements
-    cancelEl = @getOption('cancelEl')
-    submitEl = @getOption('submitEl')
-
-    # set event handlers for submit and cancel
-    if submitEl
-      @$el.off 'click', submitEl, @triggerSubmit
-
-    if cancelEl
-      @$el.off 'click', cancelEl, @triggerCancel
-
-    # set event handlers for views
-    for key of @views
-      unless key is 'length'
-        match     = key.match(/^(\S+)\s*(.*)$/)
-        trigger   = match[1]
-        selector  = match[2]
-
-        @$el.off trigger, selector, @views[key], @triggerView
+    @$el.off()
 
   checkKey: (e) =>
     if @active
       switch e.keyCode
-        when 27 then @triggerCancel(null, true)
-        when 13 then @triggerSubmit(null, true)
+        when 27 then @triggerCancel()
+        when 13 then @triggerSubmit()
 
   clickOutside: (e) =>
     @triggerCancel(null, true) if $(e.target).hasClass("#{@prefix}-wrapper") and @active
@@ -183,7 +164,7 @@ class Backbone.Modal extends Backbone.View
         @$(@viewContainerEl).css(opacity: 1)
         @$(@viewContainerEl).html view
 
-  triggerSubmit: (e, keyEvent) =>
+  triggerSubmit: (e) =>
     # triggers submit
     e?.preventDefault()
 
@@ -192,10 +173,10 @@ class Backbone.Modal extends Backbone.View
 
     @submit?()
 
-    @trigger('modal:close') if keyEvent
+    @trigger('modal:close')
     @close()
 
-  triggerCancel: (e, keyEvent) =>
+  triggerCancel: (e) =>
     # triggers cancel
     e?.preventDefault()
 
@@ -204,7 +185,7 @@ class Backbone.Modal extends Backbone.View
 
     @cancel?()
 
-    @trigger('modal:close') if keyEvent
+    @trigger('modal:close')
     @close()
 
   close: ->

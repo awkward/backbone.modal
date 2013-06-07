@@ -43,7 +43,7 @@
     </div>
 
     <div class="my-container">
-      <a href="#" class="open-2">Open second modal</a>
+      
     </div>
     <div class="bb-modal-bottombar">
       <a href="#" class="bb-modal-button">Done</a>
@@ -74,6 +74,20 @@
     </div>
   </script>
 
+  <script type="text/template" id="modal-tab1">
+    <h2>Tab 1</h2>
+    <a href="#" class="open-2">Open second modal</a>
+  </script>
+  <script type="text/template" id="modal-tab2">
+    <h2>Tab 2</h2>
+    <p>Some other nice content here.</p>
+    <a href="#" class="open-2">Open second modal</a>
+  </script>
+  <script type="text/template" id="modal-tab3">
+    <h2>Tab 3</h2>
+    <a href="#" class="open-2">Open second modal</a>
+  </script>
+
   <script type="text/template" id="modal-template2">
     <div class="bb-modal-section">
       <div class="bb-modal-section-info">
@@ -90,6 +104,9 @@
           <input class="bb-modal-input" type="password" placeholder="Password" id="password"/>
         </div>
       </div>
+    </div>
+    <div class="bb-modal-bottombar">
+      <a href="#" class="bb-modal-button">Done</a>
     </div>
   </script>
 
@@ -109,10 +126,35 @@
       // create a modal view class
       var Modal1 = Backbone.Modal.extend({
         template: _.template($('#modal-template1').html()),
+        viewContainer: '.my-container',
+        submitEl: '.bb-modal-button',
+        views: {
+          'click #tab1': {
+            name: 'tab1',
+            view: _.template($('#modal-tab1').html()),
+            onActive: 'setActive'
+          },
+          'click #tab2': {
+            name: 'tab2',
+            view: _.template($('#modal-tab2').html()),
+            onActive: 'setActive'
+          },
+          'click #tab3': {
+            name: 'tab3',
+            view: _.template($('#modal-tab3').html()),
+            onActive: 'setActive'
+          }
+        },
+        setActive: function(options) {
+          console.log('set active');
+          this.$('.tabbar-tab a').removeClass('active');
+          this.$('#'+options.name).addClass('active');
+        }
       });
 
       var Modal2 = Backbone.Modal.extend({
         template: _.template($('#modal-template2').html()),
+        submitEl: '.bb-modal-button'
       });
 
       var myLayout = new Layout();

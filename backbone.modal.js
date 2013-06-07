@@ -136,38 +136,17 @@
     };
 
     Modal.prototype.undelegateModalEvents = function() {
-      var cancelEl, key, match, selector, submitEl, trigger, _results;
-
       this.active = false;
-      cancelEl = this.getOption('cancelEl');
-      submitEl = this.getOption('submitEl');
-      if (submitEl) {
-        this.$el.off('click', submitEl, this.triggerSubmit);
-      }
-      if (cancelEl) {
-        this.$el.off('click', cancelEl, this.triggerCancel);
-      }
-      _results = [];
-      for (key in this.views) {
-        if (key !== 'length') {
-          match = key.match(/^(\S+)\s*(.*)$/);
-          trigger = match[1];
-          selector = match[2];
-          _results.push(this.$el.off(trigger, selector, this.views[key], this.triggerView));
-        } else {
-          _results.push(void 0);
-        }
-      }
-      return _results;
+      return this.$el.off();
     };
 
     Modal.prototype.checkKey = function(e) {
       if (this.active) {
         switch (e.keyCode) {
           case 27:
-            return this.triggerCancel(null, true);
+            return this.triggerCancel();
           case 13:
-            return this.triggerSubmit(null, true);
+            return this.triggerSubmit();
         }
       }
     };
@@ -269,7 +248,7 @@
       }
     };
 
-    Modal.prototype.triggerSubmit = function(e, keyEvent) {
+    Modal.prototype.triggerSubmit = function(e) {
       if (e != null) {
         e.preventDefault();
       }
@@ -281,13 +260,11 @@
       if (typeof this.submit === "function") {
         this.submit();
       }
-      if (keyEvent) {
-        this.trigger('modal:close');
-      }
+      this.trigger('modal:close');
       return this.close();
     };
 
-    Modal.prototype.triggerCancel = function(e, keyEvent) {
+    Modal.prototype.triggerCancel = function(e) {
       if (e != null) {
         e.preventDefault();
       }
@@ -299,9 +276,7 @@
       if (typeof this.cancel === "function") {
         this.cancel();
       }
-      if (keyEvent) {
-        this.trigger('modal:close');
-      }
+      this.trigger('modal:close');
       return this.close();
     };
 
