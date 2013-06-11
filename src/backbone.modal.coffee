@@ -161,7 +161,7 @@ class Backbone.Modal extends Backbone.View
       @$(@viewContainerEl).css(opacity: 0)
 
       @$(@viewContainerEl).animate {height: newHeight}, 100, =>
-        @$(@viewContainerEl).css(opacity: 1)
+        @$(@viewContainerEl).removeAttr('style')
         @$(@viewContainerEl).html view
 
   triggerSubmit: (e) =>

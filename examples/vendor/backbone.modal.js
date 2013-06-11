@@ -240,9 +240,7 @@
         return this.$(this.viewContainerEl).animate({
           height: newHeight
         }, 100, function() {
-          _this.$(_this.viewContainerEl).css({
-            opacity: 1
-          });
+          _this.$(_this.viewContainerEl).removeAttr('style');
           return _this.$(_this.viewContainerEl).html(view);
         });
       }
