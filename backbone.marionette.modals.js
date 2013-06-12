@@ -36,6 +36,7 @@
         }
       }
       modal.render();
+      modal.regionEnabled = true;
       this.$el.show();
       this.$el.append(modal.el);
       if (this.modals.length > 0) {

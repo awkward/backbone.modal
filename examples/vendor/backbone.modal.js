@@ -258,8 +258,11 @@
       if (typeof this.submit === "function") {
         this.submit();
       }
-      this.trigger('modal:close');
-      return this.close();
+      if (this.regionEnabled) {
+        return this.trigger('modal:close');
+      } else {
+        return this.close();
+      }
     };
 
     Modal.prototype.triggerCancel = function(e) {
@@ -274,8 +277,11 @@
       if (typeof this.cancel === "function") {
         this.cancel();
       }
-      this.trigger('modal:close');
-      return this.close();
+      if (this.regionEnabled) {
+        return this.trigger('modal:close');
+      } else {
+        return this.close();
+      }
     };
 
     Modal.prototype.close = function() {
@@ -283,6 +289,7 @@
 
       $('body').off('keyup', this.checkKey);
       $('body').off('click', this.clickOutside);
+      console.log('yayy');
       if (typeof this.onClose === "function") {
         this.onClose();
       }

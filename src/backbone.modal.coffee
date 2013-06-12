@@ -173,8 +173,10 @@ class Backbone.Modal extends Backbone.View
 
     @submit?()
 
-    @trigger('modal:close')
-    @close()
+    if @regionEnabled
+      @trigger('modal:close')
+    else
+      @close()
 
   triggerCancel: (e) =>
     # triggers cancel
@@ -184,14 +186,18 @@ class Backbone.Modal extends Backbone.View
       return if @beforeCancel() is false
 
     @cancel?()
-
-    @trigger('modal:close')
-    @close()
+    
+    if @regionEnabled
+      @trigger('modal:close')
+    else
+      @close()
 
   close: ->
     # closes view
     $('body').off 'keyup', @checkKey
     $('body').off 'click', @clickOutside
+
+    console.log 'yayy'
 
     @onClose?()
 

@@ -15,6 +15,8 @@ class Backbone.Marionette.Modals extends Backbone.Marionette.Region
       secondLastModal?.modalEl.removeClass("#{secondLastModal.prefix}-animation-stacked-reverse")
 
     modal.render()
+    modal.regionEnabled = true
+    
     @$el.show()
     @$el.append modal.el
 
