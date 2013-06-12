@@ -193,6 +193,8 @@ class Backbone.Modal extends Backbone.View
     $('body').off 'keyup', @checkKey
     $('body').off 'click', @clickOutside
 
+    @onClose?()
+
     @shouldAnimate = false
     @modalEl.addClass('bb-modal-animation-close')
     @$el.fadeOut(duration: 200)

@@ -283,6 +283,9 @@
 
       $('body').off('keyup', this.checkKey);
       $('body').off('click', this.clickOutside);
+      if (typeof this.onClose === "function") {
+        this.onClose();
+      }
       this.shouldAnimate = false;
       this.modalEl.addClass('bb-modal-animation-close');
       this.$el.fadeOut({
