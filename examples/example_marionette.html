@@ -148,6 +148,9 @@
         setActive: function(options) {
           this.$('.tabbar-tab a').removeClass('active');
           this.$('#'+options.name).addClass('active');
+        },
+        onClose: function() {
+          console.log('onClose');
         }
       });
 
