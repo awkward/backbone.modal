@@ -1,0 +1,17 @@
+# NPM
+node_modules
+
+# Grunt
+.grunt
+
+# SASS/SCSS cache files
+*.scssc
+*.sassc
+.sass-cache
+ 
+# Mac finder artifacts
+.DS_Store
+ 
+# Sublime Text project files
+*.sublime-project
+*.sublime-workspace
