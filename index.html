@@ -42,6 +42,83 @@
 
       <code data-gist="https://gist.github.com/6219705.json"></code>
 
+      <p>You can bind your views by adding an event handler, just like you would define events in a Backbone.View. You can add additional options to pass along the callbacks. You can add a template or actual Backbone.View by setting <code>view</code> (this part is required). By using the onActive callback, you can see whenever a view is active.</p>
+
+      <h4>views.length <code>modal.views.length</code></h4>
+      <p>Get the amount of views in a modal.</p>
+
+      <h4>template <code>modal.template</code></h4>
+      <p>You don't need the <code>views</code> to create a modal, you can simply use a template if you just want to show one view. But if you want to create a complex modal, you can combine the <code>template</code> and <code>views</code>, but you'll have to define a <code>viewContainer</code>.</p>
+
+      <h4>viewContainer <code>modal.viewContainer</code></h4>
+      <p>All views will be rendered within the viewContainer. Select a container from your template by doing: <code>viewContainer: '.container'</code></p>
+
+      <h4>submitEl <code>modal.submitEl</code></h4>
+      <p>You can define an element that will trigger all submit events. This will result in calling <code>beforeSubmit</code>, <code>submit</code> and closing the modal.</p>
+
+      <h4>cancelEl <code>modal.cancelEl</code></h4>
+      <p>Similar to <code>submitEl</code> you can define an element that will cancel the modal. This will result in calling <code>beforeCancel</code>, <code>cancel</code> and closing the modal.</p>
+
+      <h4>openAt <code>modal.openAt([index])</code></h4>
+      <p>Open the modal at a specific index from <code>views</code>.</p>
+
+      <h4>next <code>modal.next()</code></h4>
+      <p>Open the next view from <code>views</code>. Useful when creating a wizard like modal.</p>
+
+      <h4>previous <code>modal.previous()</code></h4>
+      <p>Similar to <code>next()</code>, but will open the previous view from <code>views</code>.</p>
+
+      <h4>onRender <code>modal.onRender()</code></h4>
+      <p> Useful when you want to do some custom work while it's rendering the modal.</p>
+
+      <h4>beforeCancel <code>modal.beforeCancel()</code></h4>
+      <p>This will be called when the user hits ESC, clicking on the <code>cancelEl</code> or clicking outside the modal and before <code>cancel</code> is called.</p>
+
+      <h4>cancel <code>modal.cancel()</code></h4>
+      <p>This method is called when the user canceled the modal.</p>
+
+      <h4>beforeSubmit <code>modal.beforeSubmit()</code></h4>
+      This will be called when the user hits ENTER or clicking on the <code>submitEl</code>.
+
+      <h4>submit <code>modal.submit()</code></h4>
+      <p>This method is called when the user submitted the modal.</p>
+
+      <h4>currentIndex <code>modal.currentIndex</code></h4>
+      <p>Returns the index of the current view that is visible.</p>
+
+      <h3>Backbone.Marionette.Modals</h3>
+
+      <p>When you're using Marionette, you can set a Marionette.Region type as modal region: <code>Backbone.Marionette.Modals</code>. When showing views in this region, it will behave like you would expect. Adding multiple modals, will result in stacked modals. You can close them individually, or all at once.</p>
+
+      <h4>Getting started</h4>
+
+      <p>Setup a Marionette app, with a modals region and custom regiontype. You'll have to set the region type to <code>Backbone.Marionette.Modals</code>. That's it.
+      </p>
+      <p>If you're new to Marionette, please check <a href="marionettejs.com">Marionette's site</a>. If you'd like to create stacked modals without Marionette, you'll have to write something custom. This just makes it way easier and Marionette is really useful.</p>
+
+      <h4>Backbone.Marionette.Modals</h4>
+
+      <h4>show <code>modals.show(modal)</code></h4>
+      <p>Like you'd expect from a region, to render a view. When you already have a modal in there, it will animate differently and stack the modal.</p>
+
+      <h4>close <code>modals.close()</code></h4>
+      <p>This will close the last modal you have in the region.</p>
+
+      <h4>closeAll <code>modals.closeAll()</code></h4>
+      <p>Useful when you want to close all modals at once in this region.</p>
+
+      <h4>zIndex <code>modals.zIndex</code></h4>
+      <p>This will let you know how many modals are stacked.</p>
+
+      <h3>Examples</h3>
+
+      <p>
+        <a href="#">Single view/template</a><br/>
+        <a href="#">Tab based</a><br/>
+        <a href="#">Stacked modal with Marionette</a><br/>
+        <a href="#">Wizard</a><br/>
+      </p>
+
     </section>
   </div>
 

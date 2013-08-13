@@ -54,7 +54,7 @@ h3
 
 h4
   color: darken($purple, 10%)
-  margin-top: 10px
+  margin-top: 30px
 
   code
     margin-left: 6px
@@ -64,8 +64,12 @@ h4
 p
   color: $purple-gray
   font:
-    size: 16px
+    size: 15px
   line-height: 26px
+
+  code
+    font-size: 14px
+    padding: 0 5px
 
   &.intro
     font:
@@ -82,14 +86,18 @@ p
         decoration: underline
 
 code
-  display: inline-block
-  background: lighten($green, 35%)
-  border: 1px solid lighten($green, 15%)
+  background: #f0f0f0
+  border: 1px solid #ccc
   border-radius: 2px
-  padding: 3px 5px
+  padding: 1px 5px
   font:
     weight: normal
-  color: darken($green, 25%)
+  color: #666
+
+  &[data-gist]
+    background: none
+    border: none
+    padding: 0
 
 
 .source
@@ -148,7 +156,8 @@ code
 // Gist styling inspired by Michiel de Graaf (michieldegraaf.com)
 
 .gist
-  color: #f5f9ff
+  color: $purple-gray
+  margin-top: 20px
 
   .gist-file
     margin-bottom: 20px
@@ -158,20 +167,18 @@ code
       font-family: Monaco, Andale Mono, monospace
       font-size: 13px
       line-height: 20px
-      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2)
-      background: #30353d
+      background: #f0f0f0
       -webkit-border-radius: 3px
       -moz-border-radius: 3px
       border-radius: 3px
-      -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5) inset
-      -moz-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5) inset
-      box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5) inset
+      box-shadow: inset 0 1px 1px rgba(0,0,0,.05)
+      border: 1px solid rgba(0,0,0,.10)
+        top: 1px solid rgba(0,0,0,.15)
 
       .line-numbers
-        padding: 20px
-        color: #6e7480
+        padding: 10px
+        color: #bbb
         border: 0 none
-        background: #1b1f24
         -webkit-border-top-left-radius: 3px
         -moz-border-top-left-radius: 3px
         border-top-left-radius: 3px
@@ -185,7 +192,7 @@ code
           clear: right
 
       .line-data
-        padding: 10px !important
+        padding: 0 10px !important
 
       pre
         font-family: Monaco, Andale Mono, monospace
@@ -193,11 +200,11 @@ code
 
 .gist .gist-syntax
   .na, .k, .s
-    color: #fff4d3
+    color: #aaa
   .kt, .m, .mi, .no, .kc
     color: #00ffbe
   .n, .s1, .s2, .sx
-    color: #ff4184
+    color: $green
   .nc, .nt
     color: #84d6ed
   .nd, .nf
