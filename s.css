@@ -1,0 +1,50 @@
+* {
+  box-sizing: padding-box; }
+
+body {
+  background: #554f67;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  font-family: "PT Sans", sans-serif; }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0; }
+
+h1 {
+  font-size: 16px;
+  color: #554f67;
+  line-height: 1em; }
+
+h2 {
+  margin-top: 30px;
+  font-size: 23px;
+  font-weight: normal;
+  color: #5bbdae;
+  line-height: 37px; }
+
+p {
+  color: rgba(83, 81, 88, 0.85);
+  font-size: 16px;
+  line-height: 24px; }
+  p.intro {
+    font-size: 18px;
+    line-height: 28px; }
+
+.download {
+  font-size: 100px; }
+
+.content {
+  background: white;
+  width: 550px;
+  position: fixed;
+  right: 0;
+  height: 100%;
+  overflow: scroll;
+  padding: 40px 50px; }
