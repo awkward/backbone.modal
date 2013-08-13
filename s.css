@@ -43,6 +43,9 @@ h4 {
   h4 code {
     margin-left: 6px; }
 
+h4 + p {
+  margin-top: 5px; }
+
 p {
   color: #535158;
   font-size: 15px;
@@ -172,7 +175,7 @@ code {
 .gist .gist-syntax .nv {
   color: #fb8a95; }
 .gist .gist-syntax .nd, .gist .gist-syntax .o {
-  color: #f5f9ff; }
+  color: #333333; }
 .gist .gist-syntax .na, .gist .gist-syntax .k, .gist .gist-syntax .kt, .gist .gist-syntax .m, .gist .gist-syntax .mi, .gist .gist-syntax .no, .gist .gist-syntax .n, .gist .gist-syntax .s1, .gist .gist-syntax .s2, .gist .gist-syntax .sx, .gist .gist-syntax .nc, .gist .gist-syntax .nt, .gist .gist-syntax .nd, .gist .gist-syntax .nf, .gist .gist-syntax .nv, .gist .gist-syntax .nd, .gist .gist-syntax .o {
   font-weight: normal !important; }
 .gist .gist-syntax .c, .gist .gist-syntax .c1 {
