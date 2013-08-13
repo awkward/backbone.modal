@@ -4,11 +4,9 @@
 
   describe('Backbone.Modal', function() {
     var modal;
-
     modal = {};
     beforeEach(function() {
       var backboneView, _ref, _ref1;
-
       backboneView = (function(_super) {
         __extends(backboneView, _super);
 
@@ -97,7 +95,6 @@
     });
     describe('views:', function() {
       var view;
-
       view = {};
       beforeEach(function() {
         return view = new modal();
@@ -109,7 +106,6 @@
       });
       it("#buildView: checks if it's a Backbone.View or just a HTML template that is passed along", function() {
         var key, v, _results;
-
         _results = [];
         for (key in view.views) {
           v = view.buildView(view.views[key].view);
@@ -128,7 +124,6 @@
     describe('#openAt', function() {
       return it('opens a view at the specified index', function() {
         var view;
-
         view = new modal();
         view.openAt(1);
         return expect(view.currentIndex).toBe(1);
@@ -137,7 +132,6 @@
     describe('#next', function() {
       return it('should open the next view', function() {
         var view;
-
         view = new modal();
         view.render().next();
         return expect(view.currentIndex).toBe(1);
@@ -146,7 +140,6 @@
     describe('#previous', function() {
       return it('should open the previous view', function() {
         var view;
-
         view = new modal();
         view.render().openAt(2).previous();
         return expect(view.currentIndex).toBe(1);
@@ -155,7 +148,6 @@
     describe('#currentIndex', function() {
       return it('should return the index of the current view', function() {
         var view;
-
         view = new modal();
         view.render().openAt(2);
         return expect(view.currentIndex).toBe(2);
@@ -164,7 +156,6 @@
     describe('#render', function() {
       return it('renders the modal and internal views', function() {
         var view;
-
         view = new modal();
         return expect(_.isString(view.render().el));
       });
@@ -172,7 +163,6 @@
     describe('#beforeCancel', function() {
       it("should call this method when it's defined", function() {
         var view;
-
         view = new modal();
         spyOn(view, 'beforeCancel');
         view.render().triggerCancel();
@@ -180,7 +170,6 @@
       });
       return it('stops the cancel when it returns false', function() {
         var view;
-
         view = new modal();
         spyOn(view, 'close');
         view._shouldCancel = false;
@@ -191,7 +180,6 @@
     describe('#cancel', function() {
       return it('should be called when cancelEl is triggered', function() {
         var view;
-
         view = new modal();
         spyOn(view, 'cancel');
         view.render().$(view.cancelEl).click();
@@ -201,7 +189,6 @@
     describe('#beforeSubmit', function() {
       it("should call this method when it's defined", function() {
         var view;
-
         view = new modal();
         spyOn(view, 'beforeSubmit');
         view.render().triggerSubmit();
@@ -209,7 +196,6 @@
       });
       return it('stops the submit when it returns false', function() {
         var view;
-
         view = new modal();
         spyOn(view, 'submit');
         view._shouldSubmit = false;
@@ -220,7 +206,6 @@
     describe('#submit', function() {
       return it('should be called when submitEl is triggered', function() {
         var view;
-
         view = new modal();
         spyOn(view, 'submit');
         view.render().$(view.submitEl).click();

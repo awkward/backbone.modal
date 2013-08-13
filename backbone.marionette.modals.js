@@ -12,7 +12,8 @@
     __extends(Modals, _super);
 
     function Modals() {
-      this.close = __bind(this.close, this);      _ref = Modals.__super__.constructor.apply(this, arguments);
+      this.close = __bind(this.close, this);
+      _ref = Modals.__super__.constructor.apply(this, arguments);
       return _ref;
     }
 
@@ -22,7 +23,6 @@
 
     Modals.prototype.show = function(modal, options) {
       var lastModal, m, secondLastModal, _i, _len, _ref1;
-
       if (options == null) {
         options = {};
       }
@@ -60,7 +60,6 @@
     Modals.prototype.close = function() {
       var lastModal, modal,
         _this = this;
-
       modal = this.currentView;
       if (!modal || modal.isClosed) {
         return;
@@ -89,7 +88,6 @@
 
     Modals.prototype.closeAll = function() {
       var modal, _i, _len, _ref1, _results;
-
       _ref1 = this.modals;
       _results = [];
       for (_i = 0, _len = _ref1.length; _i < _len; _i++) {

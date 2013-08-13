@@ -125,6 +125,8 @@ class Backbone.Modal extends Backbone.View
     e?.preventDefault?()
     options       = e.data
     instance      = @buildView(options.view)
+
+    @previousView = @currentView if @currentView
     @currentView  = instance.view || instance.el
 
     if options.onActive
@@ -157,12 +159,14 @@ class Backbone.Modal extends Backbone.View
 
     if previousHeight is newHeight
       @$(@viewContainerEl).html view
+      @previousView?.close?()
     else
       @$(@viewContainerEl).css(opacity: 0)
 
       @$(@viewContainerEl).animate {height: newHeight}, 100, =>
         @$(@viewContainerEl).removeAttr('style')
         @$(@viewContainerEl).html view
+        @previousView?.close?()
 
   triggerSubmit: (e) =>
     # triggers submit
@@ -196,6 +200,8 @@ class Backbone.Modal extends Backbone.View
     # closes view
     $('body').off 'keyup', @checkKey
     $('body').off 'click', @clickOutside
+
+    @onClose?()
 
     @shouldAnimate = false
     @modalEl.addClass('bb-modal-animation-close')

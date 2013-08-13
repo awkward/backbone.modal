@@ -4,7 +4,6 @@
 
   describe('Backbone.Marionette.Modals', function() {
     var layout, modal, myLayout, _ref, _ref1;
-
     myLayout = {};
     layout = (function(_super) {
       __extends(layout, _super);

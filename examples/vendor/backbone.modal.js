@@ -18,7 +18,8 @@
       this.triggerSubmit = __bind(this.triggerSubmit, this);
       this.triggerView = __bind(this.triggerView, this);
       this.clickOutside = __bind(this.clickOutside, this);
-      this.checkKey = __bind(this.checkKey, this);      this.args = Array.prototype.slice.apply(arguments);
+      this.checkKey = __bind(this.checkKey, this);
+      this.args = Array.prototype.slice.apply(arguments);
       Backbone.View.prototype.constructor.apply(this, this.args);
       this.setUIElements();
       this.delegateModalEvents();
@@ -27,7 +28,6 @@
     Modal.prototype.render = function(options) {
       var data, _ref,
         _this = this;
-
       if (options == null) {
         options = {};
       }
@@ -67,7 +67,6 @@
 
     Modal.prototype.setUIElements = function() {
       var _ref;
-
       this.template = this.getOption('template');
       this.views = this.getOption('views');
       if ((_ref = this.views) != null) {
@@ -96,7 +95,6 @@
 
     Modal.prototype.serializeData = function() {
       var data;
-
       data = {};
       if (this.model) {
         data = _.extend(data, this.model.toJSON());
@@ -111,7 +109,6 @@
 
     Modal.prototype.delegateModalEvents = function() {
       var cancelEl, key, match, selector, submitEl, trigger, _results;
-
       this.active = true;
       cancelEl = this.getOption('cancelEl');
       submitEl = this.getOption('submitEl');
@@ -159,7 +156,6 @@
 
     Modal.prototype.buildView = function(viewType) {
       var view;
-
       if (!viewType) {
         return;
       }
@@ -184,7 +180,6 @@
 
     Modal.prototype.triggerView = function(e) {
       var instance, options;
-
       if (e != null) {
         if (typeof e.preventDefault === "function") {
           e.preventDefault();
@@ -192,6 +187,9 @@
       }
       options = e.data;
       instance = this.buildView(options.view);
+      if (this.currentView) {
+        this.previousView = this.currentView;
+      }
       this.currentView = instance.view || instance.el;
       if (options.onActive) {
         if (_.isFunction(options.onActive)) {
@@ -209,9 +207,8 @@
     };
 
     Modal.prototype.animateToView = function(view) {
-      var container, newHeight, previousHeight, tester,
+      var container, newHeight, previousHeight, tester, _ref,
         _this = this;
-
       tester = $('<tester/>');
       tester.html(this.$el.clone().css({
         top: -9999,
@@ -232,7 +229,8 @@
       container.html(view);
       newHeight = container.outerHeight();
       if (previousHeight === newHeight) {
-        return this.$(this.viewContainerEl).html(view);
+        this.$(this.viewContainerEl).html(view);
+        return (_ref = this.previousView) != null ? typeof _ref.close === "function" ? _ref.close() : void 0 : void 0;
       } else {
         this.$(this.viewContainerEl).css({
           opacity: 0
@@ -240,8 +238,10 @@
         return this.$(this.viewContainerEl).animate({
           height: newHeight
         }, 100, function() {
+          var _ref1;
           _this.$(_this.viewContainerEl).removeAttr('style');
-          return _this.$(_this.viewContainerEl).html(view);
+          _this.$(_this.viewContainerEl).html(view);
+          return (_ref1 = _this.previousView) != null ? typeof _ref1.close === "function" ? _ref1.close() : void 0 : void 0;
         });
       }
     };
@@ -286,9 +286,11 @@
 
     Modal.prototype.close = function() {
       var _this = this;
-
       $('body').off('keyup', this.checkKey);
       $('body').off('click', this.clickOutside);
+      if (typeof this.onClose === "function") {
+        this.onClose();
+      }
       this.shouldAnimate = false;
       this.modalEl.addClass('bb-modal-animation-close');
       this.$el.fadeOut({
@@ -296,7 +298,6 @@
       });
       return _.delay(function() {
         var _ref;
-
         if ((_ref = _this.currentView) != null) {
           if (typeof _ref.remove === "function") {
             _ref.remove();
@@ -308,7 +309,6 @@
 
     Modal.prototype.openAt = function(index) {
       var i, key, view;
-
       i = 0;
       for (key in this.views) {
         if (key !== 'length') {
