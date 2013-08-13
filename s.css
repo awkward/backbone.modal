@@ -118,6 +118,13 @@ code {
 .docs {
   border-top: 1px solid rgba(0, 0, 0, 0.1); }
 
+.modals-container {
+  margin-right: 630px; }
+  .modals-container .bb-modal-wrapper {
+    background: none;
+    position: relative;
+    width: auto; }
+
 .gist {
   color: #535158;
   margin-top: 20px; }
