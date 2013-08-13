@@ -24,27 +24,150 @@ h1 {
 
 h2 {
   margin-top: 30px;
-  font-size: 23px;
+  font-size: 22px;
   font-weight: normal;
   color: #5bbdae;
   line-height: 37px; }
 
+h3 {
+  font-weight: normal;
+  font-size: 22px;
+  color: #423d4f;
+  margin-top: 50px; }
+  h3:first-child {
+    margin-top: 0; }
+
+h4 {
+  color: #423d4f;
+  margin-top: 10px; }
+  h4 code {
+    margin-left: 6px; }
+
 p {
-  color: rgba(83, 81, 88, 0.85);
+  color: #535158;
   font-size: 16px;
-  line-height: 24px; }
+  line-height: 26px; }
   p.intro {
     font-size: 18px;
     line-height: 28px; }
+  p a {
+    color: #ff7448;
+    text-decoration: none; }
+    p a:hover {
+      text-decoration: underline; }
+
+code {
+  display: inline-block;
+  background: #daf0ed;
+  border: 1px solid #92d3c9;
+  border-radius: 2px;
+  padding: 3px 5px;
+  font-weight: normal;
+  color: #2c6d63; }
+
+.source {
+  margin: 50px 0 20px;
+  position: relative; }
+
+.download,
+.github {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 34px; }
+  .download b,
+  .github b {
+    font-weight: normal; }
 
 .download {
-  font-size: 100px; }
+  color: white;
+  display: inline-block;
+  background: #ff7448;
+  padding: 0px 10px;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15); }
 
-.content {
+.github {
+  position: absolute;
+  color: #5a536c;
+  right: 0;
+  padding-left: 30px;
+  background-image: url(img/github-logo.png);
+  background-repeat: no-repeat;
+  background-position-y: center; }
+
+.container {
   background: white;
-  width: 550px;
+  width: 630px;
   position: fixed;
   right: 0;
   height: 100%;
   overflow: scroll;
-  padding: 40px 50px; }
+  background: #faf9fa; }
+  .container > section {
+    padding: 40px 50px; }
+
+.intro {
+  background: white; }
+
+.docs {
+  border-top: 1px solid rgba(0, 0, 0, 0.1); }
+
+.gist {
+  color: #f5f9ff; }
+  .gist .gist-file {
+    margin-bottom: 20px;
+    border: 0 none; }
+    .gist .gist-file .gist-data {
+      font-family: Monaco, Andale Mono, monospace;
+      font-size: 13px;
+      line-height: 20px;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+      background: #30353d;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5) inset;
+      -moz-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5) inset;
+      box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5) inset; }
+      .gist .gist-file .gist-data .line-numbers {
+        padding: 20px;
+        color: #6e7480;
+        border: 0 none;
+        background: #1b1f24;
+        -webkit-border-top-left-radius: 3px;
+        -moz-border-top-left-radius: 3px;
+        border-top-left-radius: 3px;
+        -webkit-border-bottom-left-radius: 3px;
+        -moz-border-bottom-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+        text-align: right; }
+        .gist .gist-file .gist-data .line-numbers .line-number {
+          display: block;
+          clear: right; }
+      .gist .gist-file .gist-data .line-data {
+        padding: 10px !important; }
+      .gist .gist-file .gist-data pre {
+        font-family: Monaco, Andale Mono, monospace;
+        font-size: 13px; }
+
+.gist .gist-syntax .na, .gist .gist-syntax .k, .gist .gist-syntax .s {
+  color: #fff4d3; }
+.gist .gist-syntax .kt, .gist .gist-syntax .m, .gist .gist-syntax .mi, .gist .gist-syntax .no, .gist .gist-syntax .kc {
+  color: #00ffbe; }
+.gist .gist-syntax .n, .gist .gist-syntax .s1, .gist .gist-syntax .s2, .gist .gist-syntax .sx {
+  color: #ff4184; }
+.gist .gist-syntax .nc, .gist .gist-syntax .nt {
+  color: #84d6ed; }
+.gist .gist-syntax .nd, .gist .gist-syntax .nf {
+  color: #c0aafc; }
+.gist .gist-syntax .nv {
+  color: #fb8a95; }
+.gist .gist-syntax .nd, .gist .gist-syntax .o {
+  color: #f5f9ff; }
+.gist .gist-syntax .na, .gist .gist-syntax .k, .gist .gist-syntax .kt, .gist .gist-syntax .m, .gist .gist-syntax .mi, .gist .gist-syntax .no, .gist .gist-syntax .n, .gist .gist-syntax .s1, .gist .gist-syntax .s2, .gist .gist-syntax .sx, .gist .gist-syntax .nc, .gist .gist-syntax .nt, .gist .gist-syntax .nd, .gist .gist-syntax .nf, .gist .gist-syntax .nv, .gist .gist-syntax .nd, .gist .gist-syntax .o {
+  font-weight: normal !important; }
+.gist .gist-syntax .c, .gist .gist-syntax .c1 {
+  color: #9fa0a6; }
+
+.gist-meta {
+  display: none; }
