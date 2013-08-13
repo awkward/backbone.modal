@@ -38,7 +38,11 @@ $(function() {
     beforeCancel: function() {
     	return false;
     },
-    
+
+    beforeSubmit: function() {
+    	return false;
+    },
+
     setActive: function(options) {
       this.$('.tabbar-tab a').removeClass('active');
       this.$('#'+options.name).addClass('active');
