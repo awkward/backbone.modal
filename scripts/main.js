@@ -34,6 +34,11 @@ $(function() {
         onActive: 'setActive'
       }
     },
+
+    beforeCancel: function() {
+    	return false;
+    },
+    
     setActive: function(options) {
       this.$('.tabbar-tab a').removeClass('active');
       this.$('#'+options.name).addClass('active');
@@ -49,13 +54,11 @@ $(function() {
   });
 
   var myLayout = new Layout();
-  $('body').append(myLayout.render().el);
+  $('.app').append(myLayout.render().el);
 
-  $('body').on('click', '.open-1', function(){
-    myLayout.modals.show(new Modal1());
-  });
+  myLayout.modals.show(new Modal1());
 
-  $('body').on('click', '.open-2', function(){
+  $('.app').on('click', '.open-2', function(){
     myLayout.modals.show(new Modal2());
   });
 
