@@ -158,9 +158,6 @@ code {
           clear: right; }
       .gist .gist-file .gist-data .line-data {
         padding: 0 10px !important; }
-      .gist .gist-file .gist-data pre {
-        font-family: Monaco, Andale Mono, monospace;
-        font-size: 13px; }
 
 .gist .gist-syntax .na, .gist .gist-syntax .k, .gist .gist-syntax .s {
   color: #aaaaaa; }
