@@ -1,0 +1,3 @@
+$(function() {
+	$('body').gistify();
+});
