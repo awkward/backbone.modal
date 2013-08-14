@@ -43,7 +43,8 @@ h4 {
   h4 code {
     margin-left: 6px; }
 
-h4 + p {
+h4 + p,
+h3 + p {
   margin-top: 5px; }
 
 p {
