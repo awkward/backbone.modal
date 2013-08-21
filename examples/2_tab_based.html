@@ -18,22 +18,18 @@
   <script type="text/javascript" src="vendor/backbone.modal.js"></script>
 
   <!-- Custom style -->
-  <link type="text/css" rel="stylesheet" href="style.css">
+  <link type="text/css" rel="stylesheet" href="css/style.css">
 
 
 </head>
-
 
 <body>
   <a href="#" class="open">Open modal</a>
 
   <div class="app"></div>
 
+  <!-- The modal structure, with an container element that will contain all tabs -->
   <script type="text/template" id="modal-template">
-    <!-- <div class="bb-modal-titlebar">
-    <h2 class="titlebar-title">Manage profiles</h2>
-    </div> -->
-
     <div class="bb-modal-tabbar">
       <ul>
         <li class="tabbar-tab"><a href="#" id="tab1" class="active">Tab 1</a></li>
@@ -50,6 +46,15 @@
 
   <!-- Tab 1 -->
   <script type="text/template" id="modal-view1-template">
+    <div class="bb-modal-section">
+      <h3>Tab based example</h3>
+      <p>It's also really easy to create a modal, with seperate views that you can control using tabs.</p>
+      <p>We're also using a default style, but you can overwrite anything you want.</p>
+    </div>
+  </script>
+
+  <!-- Tab 2 -->
+  <script type="text/template" id="modal-view2-template">
     <div class="bb-modal-section">
       <div class="bb-modal-section-info">
         <h3 class="section-title">Credentials</h3>
@@ -72,19 +77,17 @@
     </div>
   </script>
 
-  <!-- Tab 2 -->
-  <script type="text/template" id="modal-view2-template">
-    This is the second view.
-  </script>
-
   <!-- Tab 3 -->
   <script type="text/template" id="modal-view3-template">
-    This is the third view.
+    <div class="bb-modal-section">
+      Another view.
+    </div>
   </script>
 
   <script>
     jQuery(function($) {
-      // create a modal view class
+
+      // Create a modal view class
       var Modal = Backbone.Modal.extend({
         template: _.template($('#modal-template').html()),
 
@@ -92,23 +95,38 @@
 
         views: {
           'click #tab1': {
-            view: _.template($('#modal-view1-template').html())
+            name: 'tab1',
+            view: _.template($('#modal-view1-template').html()),
+            onActive: 'setActive'
           },
           'click #tab2': {
-            view: _.template($('#modal-view2-template').html())
+            name: 'tab2',
+            view: _.template($('#modal-view2-template').html()),
+            onActive: 'setActive'
           },
           'click #tab3': {
-            view: _.template($('#modal-view3-template').html())
+            name: 'tab3',
+            view: _.template($('#modal-view3-template').html()),
+            onActive: 'setActive'
           }
+        },
+
+        setActive: function(options) {
+          this.$('.tabbar-tab a').removeClass('active');
+          this.$('#'+options.name).addClass('active');
         }
       });
 
-      // render an instance of your modal
-      var modalView = new Modal();
-
       $('.open').on('click', function(){
+
+        // Render an instance of your modal
+        var modalView = new Modal();
         $('.app').html(modalView.render().el);
+
       });
+
+      $('.open').click()
+
     });
   </script>
 </body>

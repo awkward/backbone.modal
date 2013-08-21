@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+
+<head>
+  <meta content="text/html;charset=UTF-8" http-equiv="Content-Type"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+  <title>Single view modal</title>
+
+  <script type="text/javascript" src="vendor/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="vendor/underscore.js"></script>
+  <script type="text/javascript" src="vendor/backbone.js"></script>
+
+  <!-- Adding Backbone.Modal extension here -->
+  <link type="text/css" rel="stylesheet" href="vendor/backbone.modal.css">
+  <link type="text/css" rel="stylesheet" href="vendor/backbone.modal.theme.css">
+  <script type="text/javascript" src="vendor/backbone.modal.js"></script>
+
+  <!-- Custom style -->
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+</head>
+
+
+<body>
+  <a href="#" class="open">Open modal</a>
+
+  <div class="app"></div>
+
+  <script type="text/template" id="modal-template">
+    <div class="bb-modal-section">
+      <h3>Backbone.Modal</h3>
+      <p>With Backbone.Modal you can create a modals in a few lines of code.</p>
+      <p>Some features are:</p>
+      <ul>
+        <li>Really flexible and easy to set up.</li>
+        <li>Default behaviors like ESC or clicking outside a modal.</li>
+        <li>Some awesome animations that make them feel robust.</li>
+        <li>Responsive and usable on mobile devices.</li>
+      </ul>
+    </div>
+    <div class="bb-modal-bottombar">
+      <a href="#" class="bb-modal-button">Close</a>
+    </div>
+  </script>
+
+  <script>
+    jQuery(function($) {
+
+      // Create a modal view class
+      var Modal = Backbone.Modal.extend({
+        template: _.template($('#modal-template').html()),
+        cancelEl: '.bb-modal-button'
+      });
+
+
+      $('.open').on('click', function(){
+
+        // Render an instance of your modal
+        var modalView = new Modal();
+        $('.app').html(modalView.render().el);
+
+      });
+
+      $('.open').click()
+    });
+  </script>
+</body>
+</html>

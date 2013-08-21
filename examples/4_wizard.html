@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+
+<head>
+  <meta content="text/html;charset=UTF-8" http-equiv="Content-Type"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+  <title>Create a modal</title>
+
+  <script type="text/javascript" src="vendor/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="vendor/underscore.js"></script>
+  <script type="text/javascript" src="vendor/backbone.js"></script>
+
+  <!-- Adding Backbone.Modal extension here -->
+  <link type="text/css" rel="stylesheet" href="vendor/backbone.modal.css">
+  <link type="text/css" rel="stylesheet" href="vendor/backbone.modal.theme.css">
+  <script type="text/javascript" src="vendor/backbone.modal.js"></script>
+
+  <!-- Custom style -->
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+
+
+</head>
+
+<body>
+  <a href="#" class="open">Open modal</a>
+
+  <div class="app"></div>
+
+  <!-- The modal structure, with an container element that will contain all tabs -->
+  <script type="text/template" id="modal-template">
+    <div class="my-container"></div>
+  </script>
+
+  <!-- Step 1 -->
+  <script type="text/template" id="modal-view1-template">
+    <div class="bb-modal-section">
+      <h3>Wizard example - step 1</h3>
+      <p>You can create all kinds of modals, like this wizard. It's pretty basic, but you can do anything you'd like.</p>
+      <a href="#" id="step3">Directly go to the last step</a>
+    </div>
+    <div class="bb-modal-bottombar">
+      <a href="#" class="cancel">Cancel</a>
+      <a href="#" class="bb-modal-button previous inactive">Previous</a>
+      <a href="#" class="bb-modal-button next">Next</a>
+    </div>
+  </script>
+
+  <!-- Step 2 -->
+  <script type="text/template" id="modal-view2-template">
+    <div class="bb-modal-section">
+      <h3>Wizard example - step 2</h3>
+      <p>This is the second step of the wizard.</p>
+    </div>
+    <div class="bb-modal-bottombar">
+      <a href="#" class="cancel">Cancel</a>
+      <a href="#" class="bb-modal-button previous">Previous</a>
+      <a href="#" class="bb-modal-button next">Next</a>
+    </div>
+  </script>
+
+  <!-- Step 3 -->
+  <script type="text/template" id="modal-view3-template">
+    <div class="bb-modal-section">
+      <h3>Wizard example - step 3</h3>
+      <p>And finally, the last step!</p>
+    </div>
+    <div class="bb-modal-bottombar">
+      <a href="#" class="cancel">Cancel</a>
+      <a href="#" class="bb-modal-button previous">Previous</a>
+      <a href="#" class="bb-modal-button done">Done</a>
+    </div>
+  </script>
+
+  <script>
+    jQuery(function($) {
+
+      // Create a modal view class
+      var Modal = Backbone.Modal.extend({
+        template: _.template($('#modal-template').html()),
+
+        viewContainer: '.my-container',
+        submitEl: '.done',
+        cancelEl: '.cancel',
+
+        views: {
+          'click #step1': {
+            view: _.template($('#modal-view1-template').html())
+          },
+          'click #step2': {
+            view: _.template($('#modal-view2-template').html())
+          },
+          'click #step3': {
+            view: _.template($('#modal-view3-template').html())
+          }
+        },
+
+        events: {
+          'click .previous': 'previousStep',
+          'click .next': 'nextStep'
+        },
+
+        previousStep: function(e) {
+          e.preventDefault();
+          this.previous();
+        },
+
+        nextStep: function(e) {
+          e.preventDefault();
+          this.next();
+        }
+
+      });
+
+      $('.open').on('click', function(){
+
+        // Render an instance of your modal
+        var modalView = new Modal();
+        $('.app').html(modalView.render().el);
+
+      });
+
+      $('.open').click()
+
+    });
+  </script>
+</body>
+</html>
