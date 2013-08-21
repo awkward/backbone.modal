@@ -6,7 +6,7 @@
   width: 100%;
   height: 100%;
   z-index: 100;
-  padding: 50px 20px;
+  padding: 50px 10px;
   overflow-x: auto;
   overflow-y: scroll; }
   .bb-modal-wrapper * {
@@ -15,15 +15,9 @@
 .bb-modal {
   border-radius: 3px;
   margin: auto;
-  width: 550px; }
+  width: auto;
+  max-width: 550px; }
 
 .bb-modal-views {
   width: 100%;
   box-sizing: border-box; }
-
-@media screen and (max-device-width: 320px) {
-  .bb-modal-responsive .bb-modal-wrapper {
-    padding: 10px; } }
-.bb-modal-responsive .bb-modal {
-  width: auto;
-  max-width: 550px; }
