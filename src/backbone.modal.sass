@@ -12,19 +12,25 @@
   *
     box-sizing: border-box
 
-  @media screen and (max-device-width: 320px)
-    padding: 10px
-
   overflow-x: auto
   overflow-y: scroll
 
 .bb-modal
-  max-width: 550px
-  @media screen and (max-device-width: 320px)
-    width 100%
   border-radius: 3px
   margin: auto
+  width: 550px
 
 .bb-modal-views
   width: 100%
   box-sizing: border-box
+
+.bb-modal-responsive
+  .bb-modal-wrapper
+    @media screen and (max-device-width: 320px)
+      padding: 10px
+
+  .bb-modal
+    width: auto
+    max-width: 550px
+    @media screen and (max-device-width: 320px)
+      width 100%

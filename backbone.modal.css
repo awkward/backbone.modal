@@ -11,15 +11,19 @@
   overflow-y: scroll; }
   .bb-modal-wrapper * {
     box-sizing: border-box; }
-  @media screen and (max-device-width: 320px) {
-    .bb-modal-wrapper {
-      padding: 10px; } }
 
 .bb-modal {
-  max-width: 550px;
   border-radius: 3px;
-  margin: auto; }
+  margin: auto;
+  width: 550px; }
 
 .bb-modal-views {
   width: 100%;
   box-sizing: border-box; }
+
+@media screen and (max-device-width: 320px) {
+  .bb-modal-responsive .bb-modal-wrapper {
+    padding: 10px; } }
+.bb-modal-responsive .bb-modal {
+  width: auto;
+  max-width: 550px; }
