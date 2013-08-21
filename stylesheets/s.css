@@ -65,8 +65,9 @@ p {
     font-size: 14px;
     padding: 0 5px; }
   p.intro {
-    font-size: 18px;
-    line-height: 1.8em; }
+    font-size: 1.5em;
+    line-height: 1.8em;
+    margin-top: 1em; }
   p a {
     color: #ff7448;
     text-decoration: none; }
@@ -94,7 +95,8 @@ code {
 .github {
   font-size: 16px;
   font-weight: bold;
-  line-height: 34px; }
+  line-height: 34px;
+  text-decoration: none; }
   .download b,
   .github b {
     font-weight: normal; }
