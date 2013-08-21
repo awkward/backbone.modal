@@ -164,7 +164,7 @@ code {
         padding: 0 10px !important; }
 
 .gist .gist-syntax .na, .gist .gist-syntax .k, .gist .gist-syntax .s {
-  color: #aaaaaa; }
+  color: #ff7448; }
 .gist .gist-syntax .kt, .gist .gist-syntax .m, .gist .gist-syntax .mi, .gist .gist-syntax .no, .gist .gist-syntax .kc {
   color: #00ffbe; }
 .gist .gist-syntax .n, .gist .gist-syntax .s1, .gist .gist-syntax .s2, .gist .gist-syntax .sx {
