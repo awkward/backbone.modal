@@ -129,6 +129,11 @@ class Backbone.Modal extends Backbone.View
     @previousView = @currentView if @currentView
     @currentView  = instance.view || instance.el
 
+    index = 0
+    for key of @views
+      @currentIndex = index if options.view is @views[key].view
+      index++
+      
     if options.onActive
       if _.isFunction(options.onActive)
         options.onActive(this)
@@ -227,7 +232,7 @@ class Backbone.Modal extends Backbone.View
     return this
 
   next: ->
-    @openAt(@currentIndex+1) if @currentIndex+1 < @views.length-1
+    @openAt(@currentIndex+1) if @currentIndex+1 < @views.length
 
   previous: ->
     @openAt(@currentIndex-1) if @currentIndex-1 < @views.length-1

@@ -179,7 +179,7 @@
     };
 
     Modal.prototype.triggerView = function(e) {
-      var instance, options;
+      var index, instance, key, options;
       if (e != null) {
         if (typeof e.preventDefault === "function") {
           e.preventDefault();
@@ -191,6 +191,13 @@
         this.previousView = this.currentView;
       }
       this.currentView = instance.view || instance.el;
+      index = 0;
+      for (key in this.views) {
+        if (options.view === this.views[key].view) {
+          this.currentIndex = index;
+        }
+        index++;
+      }
       if (options.onActive) {
         if (_.isFunction(options.onActive)) {
           options.onActive(this);
@@ -328,7 +335,7 @@
     };
 
     Modal.prototype.next = function() {
-      if (this.currentIndex + 1 < this.views.length - 1) {
+      if (this.currentIndex + 1 < this.views.length) {
         return this.openAt(this.currentIndex + 1);
       }
     };
