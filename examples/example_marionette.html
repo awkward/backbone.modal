@@ -2,6 +2,7 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta content="text/html;charset=UTF-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
     <title>Create a modal</title>
 
     <script type="text/javascript" src="vendor/jquery-1.9.1.js"></script>
@@ -43,7 +44,7 @@
     </div>
 
     <div class="my-container">
-      
+
     </div>
     <div class="bb-modal-bottombar">
       <a href="#" class="bb-modal-button">Done</a>
@@ -119,7 +120,7 @@
           modals: {
             selector:   '.modals-container',
             regionType: Backbone.Marionette.Modals
-          }  
+          }
         }
       });
 
@@ -169,7 +170,7 @@
       $('body').on('click', '.open-2', function(){
         myLayout.modals.show(new Modal2());
       });
-      
+
     });
   </script>
 </body>

@@ -1,8 +1,6 @@
-.bb-modal-wrapper * {
-  box-sizing: border-box; }
-
 .bb-modal-wrapper {
-  position: fixed;
+  box-sizing: border-box;
+  position: absolute;
   left: 0;
   top: 0;
   width: 100%;
@@ -11,9 +9,14 @@
   padding: 50px 20px;
   overflow-x: auto;
   overflow-y: scroll; }
+  .bb-modal-wrapper * {
+    box-sizing: border-box; }
+  @media screen and (max-device-width: 320px) {
+    .bb-modal-wrapper {
+      padding: 10px; } }
 
 .bb-modal {
-  width: 550px;
+  max-width: 550px;
   border-radius: 3px;
   margin: auto; }
 
