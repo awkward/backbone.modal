@@ -1,0 +1,245 @@
+// Variables
+$green: #5bbdae
+$purple: #5a536c
+$purple-gray: #535158
+$orange: #ff7448
+
+// Styling
+*
+  box-sizing: padding-box
+
+body
+  background: #554f67
+  padding: 0
+  margin: 0
+  height: 100%
+  font:
+    family: 'PT Sans', sans-serif
+    size: .75em
+  line-height: 1.5
+
+// H's
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6
+  margin: 0
+  padding: 0
+
+h1
+  font:
+    size: 1.3em // 16px
+  color: #554f67
+  line-height: 1em // 12px
+
+h2
+  margin-top: 1.2em
+  font:
+    size: 2.5em
+    weight: normal
+  color: #5bbdae
+
+h3
+  font:
+    weight: normal
+    size: 1.75em
+  line-height: 1.714em
+  color: darken($purple, 10%)
+  margin:
+    top: 1.714em
+
+  &:first-child
+    margin-top: 0
+
+h4
+  color: darken($purple, 10%)
+  margin-top: 2.5em
+  font:
+    size: 1.3em
+
+  code
+    margin-left: 6px
+
+h3+p
+  margin-top: 1em
+
+h4+p
+  margin-top: .5em
+
+h3+h4
+  margin-top: 1.125em
+
+
+// Modules
+p
+  color: $purple-gray
+  font:
+    size: 1.3em
+  line-height: 1.75em
+  padding: 0
+  margin: 0
+
+  code
+    font-size: 14px
+    padding: 0 5px
+
+  &.intro
+    font:
+      size: 18px
+    line-height: 1.8em
+
+  a
+    color: $orange
+    text:
+      decoration: none
+
+    &:hover
+      text:
+        decoration: underline
+
+code
+  background: #f0f0f0
+  border: 1px solid #ccc
+  border-radius: 2px
+  padding: 1px 5px
+  font:
+    weight: normal
+    size: 1em
+  color: #666
+
+  &[data-gist]
+    background: none
+    border: none
+    padding: 0
+
+
+.source
+  margin: 3em 0 20px
+  position: relative
+
+.download,
+.github
+  font:
+    size: 16px
+    weight: bold
+  line-height: 34px
+
+  b
+    font-weight: normal
+
+.download,
+  color: white
+  display: inline-block
+  background: $orange
+  padding: 0px 10px
+  border-radius: 3px
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.15)
+
+.github
+  position: absolute
+  color: $purple
+  right: 0
+  padding:
+    left: 30px
+  background:
+    image: url(img/github-logo.png)
+    repeat: no-repeat
+    position-y: center
+
+.container
+  background: white
+  width: 630px
+  position: fixed
+  right: 0
+  height: 100%
+  overflow: scroll
+  background: #faf9fa
+
+  >section
+    padding: 3em 50px
+    border:
+      top: 1px solid rgba(0,0,0,.1)
+
+.intro
+  background: white
+
+// Overwrite Backbone.Modal
+
+.modals-container
+  margin:
+    right: 630px
+
+  .bb-modal-wrapper
+    background: none
+    position: relative
+    width: auto
+
+// Gist styling inspired by Michiel de Graaf (michieldegraaf.com)
+
+.gist
+  color: $purple-gray
+  margin-top: 1.5em // 18px
+
+  .gist-file
+    margin-bottom: 1.5em // 18px
+    border: 0 none
+
+    .gist-data
+      font:
+        family: Monaco, Andale Mono, monospace
+        size: 1.333em // 13px
+      line-height: 1.125em // 18px
+      background: #f0f0f0
+      -webkit-border-radius: 3px
+      -moz-border-radius: 3px
+      border-radius: 3px
+      box-shadow: inset 0 1px 1px rgba(0,0,0,.05)
+      border: 1px solid rgba(0,0,0,.10)
+        top: 1px solid rgba(0,0,0,.15)
+
+      .line-numbers
+        padding: .6em // 6px
+        font:
+          size: .833em // 10px
+        color: #bbb
+        border: 0 none
+        -webkit-border-top-left-radius: 3px
+        -moz-border-top-left-radius: 3px
+        border-top-left-radius: 3px
+        -webkit-border-bottom-left-radius: 3px
+        -moz-border-bottom-left-radius: 3px
+        border-bottom-left-radius: 3px
+        text-align: right
+
+        .line-number
+          display: block
+          clear: right
+
+      .line-data
+        padding: 0 10px !important
+
+.gist .gist-syntax
+  .na, .k, .s
+    color: $orange
+  .kt, .m, .mi, .no, .kc
+    color: #00ffbe
+  .n, .s1, .s2, .sx
+    color: $green
+  .nc, .nt
+    color: #84d6ed
+  .nd, .nf
+    color: #c0aafc
+  .nv
+    color: #fb8a95
+  .nd, .o
+    color: #333
+  .na, .k, .kt, .m, .mi, .no, .n, .s1, .s2, .sx, .nc, .nt, .nd, .nf, .nv, .nd, .o
+    font-weight: normal !important
+  .c, .c1
+    color: #9fa0a6
+
+.gist-meta
+  display: none
