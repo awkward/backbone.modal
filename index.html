@@ -41,11 +41,11 @@
 
       <h3>Getting Started</h3>
       <p>
-        If you'd like to try out Backbone.Modal, be sure to read the docs. Check out the examples to know what kind of modals you can create. Once you're ready, just add the plugin code to your project and you're all set.
+        Backbone.modal.js is built on top of <a href="backbone.documentcloud.com">Backbone.js</a>. Make sure you include everything that's needed for Backbone and add Backbone.Modal.js and the CSS files to start playing with it. You can also start out with the <a href="#examples">examples</a>.
       </p>
 
       <p>
-        New to Backbone? Please check out <a href="backbone.documentcloud.com">Backbone's site</a> and make sure you understand Backbone.Views.
+        If you'd like to create a stacked modal (multiple modals on top of each other), you'll need to use Backbone.Marionette.js and <a href="#marionette">Backbone.Marionette.Modals.js</a>.
       </p>
 
       <h3>Backbone.Modal</h3>
@@ -98,18 +98,12 @@
       <p>Returns the index of the current view that is visible.</p>
 
     </section>
-    <section class="marionette">
+    <section id="marionette" class="marionette">
       <h3>Backbone.Marionette.Modals</h3>
 
       <p>When you're using Marionette, you can set a Marionette.Region type as modal region: <code>Backbone.Marionette.Modals</code>. When showing views in this region, it will behave like you would expect. Adding multiple modals, will result in stacked modals. You can close them individually, or all at once.</p>
 
-      <h4>Getting started</h4>
-
-      <p>Setup a Marionette app, with a modals region and custom regiontype. You'll have to set the region type to <code>Backbone.Marionette.Modals</code>. That's it.
-      </p>
-      <p>If you're new to Marionette, please check <a href="marionettejs.com">Marionette's site</a>. If you'd like to create stacked modals without Marionette, you'll have to write something custom. This just makes it way easier and Marionette is really useful.</p>
-
-      <h4>Backbone.Marionette.Modals</h4>
+      <code data-gist="https://gist.github.com/6291339.json"></code>
 
       <h4>show <code>modals.show(modal)</code></h4>
       <p>Like you'd expect from a region, to render a view. When you already have a modal in there, it will animate differently and stack the modal.</p>
@@ -123,7 +117,7 @@
       <h4>zIndex <code>modals.zIndex</code></h4>
       <p>This will let you know how many modals are stacked.</p>
     </section>
-    <section class="examples">
+    <section id="examples" class="examples">
       <h3>Examples</h3>
       <p>
         <a href="#">Single view/template</a><br/>
