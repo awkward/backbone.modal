@@ -35,6 +35,9 @@ module.exports = (grunt) ->
       modals:
         src: 'backbone.marionette.modals.js'
         dest: 'backbone.marionette.modals-min.js'
+      bundled:
+        src: 'backbone.modal-bundled.js'
+        dest: 'backbone.modal-bundled-min.js'
 
     jasmine:
       all:
@@ -50,6 +53,7 @@ module.exports = (grunt) ->
         files:
           'backbone.modal.js': 'src/backbone.modal.coffee'
           'backbone.marionette.modals.js': 'src/backbone.marionette.modals.coffee'
+          'backbone.modal-bundled.js': ['src/backbone.modal.coffee', 'src/backbone.marionette.modals.coffee']
 
           'examples/vendor/backbone.modal.js': 'src/backbone.modal.coffee'
           'examples/vendor/backbone.marionette.modals.js': 'src/backbone.marionette.modals.coffee'
