@@ -238,6 +238,7 @@
         _this = this;
       tester = $('<tester/>');
       tester.html(this.$el.clone().css({
+        position: 'relative',
         top: -9999,
         left: -9999
       }));
