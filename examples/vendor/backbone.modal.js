@@ -250,7 +250,7 @@
       if (this.viewContainer) {
         container = tester.find(this.viewContainer);
       } else {
-        container = tester;
+        container = tester.append($('<div />').find('div:first-child'));
       }
       container.removeAttr("style");
       previousHeight = container.outerHeight();

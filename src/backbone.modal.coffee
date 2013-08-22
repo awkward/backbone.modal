@@ -167,7 +167,7 @@ class Backbone.Modal extends Backbone.View
     if @viewContainer
       container     = tester.find(@viewContainer)
     else
-      container     = tester
+      container     = tester.append $('<div />').find('div:first-child')
 
     container.removeAttr("style")
 
