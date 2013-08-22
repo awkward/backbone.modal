@@ -113,10 +113,10 @@
       cancelEl = this.getOption('cancelEl');
       submitEl = this.getOption('submitEl');
       if (submitEl) {
-        this.$el.on('click', submitEl, this.triggerSubmit);
+        this.$el.off('click', submitEl, this.triggerSubmit);
       }
       if (cancelEl) {
-        this.$el.on('click', cancelEl, this.triggerCancel);
+        this.$el.off('click', cancelEl, this.triggerCancel);
       }
       _results = [];
       for (key in this.views) {
@@ -133,8 +133,28 @@
     };
 
     Modal.prototype.undelegateModalEvents = function() {
+      var cancelEl, key, match, selector, submitEl, trigger, _results;
       this.active = false;
-      return this.$el.off();
+      cancelEl = this.getOption('cancelEl');
+      submitEl = this.getOption('submitEl');
+      if (submitEl) {
+        this.$el.off('click', submitEl, this.triggerSubmit);
+      }
+      if (cancelEl) {
+        this.$el.off('click', cancelEl, this.triggerCancel);
+      }
+      _results = [];
+      for (key in this.views) {
+        if (key !== 'length') {
+          match = key.match(/^(\S+)\s*(.*)$/);
+          trigger = match[1];
+          selector = match[2];
+          _results.push(this.$el.off(trigger, selector, this.views[key], this.triggerView));
+        } else {
+          _results.push(void 0);
+        }
+      }
+      return _results;
     };
 
     Modal.prototype.checkKey = function(e) {

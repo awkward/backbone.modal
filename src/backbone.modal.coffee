@@ -79,11 +79,8 @@ class Backbone.Modal extends Backbone.View
     submitEl = @getOption('submitEl')
 
     # set event handlers for submit and cancel
-    if submitEl
-      @$el.on 'click', submitEl, @triggerSubmit
-
-    if cancelEl
-      @$el.on 'click', cancelEl, @triggerCancel
+    @$el.off('click', submitEl, @triggerSubmit) if submitEl
+    @$el.off('click', cancelEl, @triggerCancel) if cancelEl
 
     # set event handlers for views
     for key of @views
@@ -96,7 +93,23 @@ class Backbone.Modal extends Backbone.View
 
   undelegateModalEvents: ->
     @active = false
-    @$el.off()
+
+    # get elements
+    cancelEl = @getOption('cancelEl')
+    submitEl = @getOption('submitEl')
+
+    # remove event handlers for submit and cancel
+    @$el.off('click', submitEl, @triggerSubmit) if submitEl
+    @$el.off('click', cancelEl, @triggerCancel) if cancelEl
+
+    # remove event handlers for views
+    for key of @views
+      unless key is 'length'
+        match     = key.match(/^(\S+)\s*(.*)$/)
+        trigger   = match[1]
+        selector  = match[2]
+
+        @$el.off trigger, selector, @views[key], @triggerView
 
   checkKey: (e) =>
     if @active
