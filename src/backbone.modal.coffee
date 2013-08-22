@@ -79,8 +79,8 @@ class Backbone.Modal extends Backbone.View
     submitEl = @getOption('submitEl')
 
     # set event handlers for submit and cancel
-    @$el.off('click', submitEl, @triggerSubmit) if submitEl
-    @$el.off('click', cancelEl, @triggerCancel) if cancelEl
+    @$el.on('click', submitEl, @triggerSubmit) if submitEl
+    @$el.on('click', cancelEl, @triggerCancel) if cancelEl
 
     # set event handlers for views
     for key of @views

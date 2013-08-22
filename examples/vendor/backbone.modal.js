@@ -113,10 +113,10 @@
       cancelEl = this.getOption('cancelEl');
       submitEl = this.getOption('submitEl');
       if (submitEl) {
-        this.$el.off('click', submitEl, this.triggerSubmit);
+        this.$el.on('click', submitEl, this.triggerSubmit);
       }
       if (cancelEl) {
-        this.$el.off('click', cancelEl, this.triggerCancel);
+        this.$el.on('click', cancelEl, this.triggerCancel);
       }
       _results = [];
       for (key in this.views) {
