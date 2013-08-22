@@ -23,7 +23,7 @@ module.exports = (grunt) ->
           base: './examples/'
           middleware: (connect, options) ->
             [connect.static(options.base), (req, res, next) ->
-              fs.readFile "#{options.base}/2_tab_based.html", (err, data) ->
+              fs.readFile "#{options.base}/1_single_view.html", (err, data) ->
                 res.writeHead(200)
                 res.end(data)
             ]
