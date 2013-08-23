@@ -29,10 +29,10 @@
       this.ensureEl();
       if (this.modals.length > 0) {
         lastModal = _.last(this.modals);
-        lastModal.modalEl.addClass("" + lastModal.prefix + "-modal--animation-stacked");
+        lastModal.modalEl.addClass("" + lastModal.prefix + "-modal--stacked");
         secondLastModal = this.modals[this.modals.length - 1];
         if (secondLastModal != null) {
-          secondLastModal.modalEl.removeClass("" + secondLastModal.prefix + "-modal--animation-stacked-reverse");
+          secondLastModal.modalEl.removeClass("" + secondLastModal.prefix + "-modal--stacked-reverse");
         }
       }
       modal.render();
@@ -75,9 +75,9 @@
       this.currentView = this.modals[this.zIndex - 1];
       lastModal = _.last(this.modals);
       if (lastModal) {
-        lastModal.modalEl.addClass("" + lastModal.prefix + "-modal--animation-stacked-reverse");
+        lastModal.modalEl.addClass("" + lastModal.prefix + "-modal--stacked-reverse");
         _.delay(function() {
-          return lastModal.modalEl.removeClass("" + lastModal.prefix + "-modal--animation-stacked");
+          return lastModal.modalEl.removeClass("" + lastModal.prefix + "-modal--stacked");
         }, 300);
         if (this.zIndex !== 0) {
           lastModal.delegateModalEvents();

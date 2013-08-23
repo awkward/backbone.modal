@@ -59,7 +59,7 @@
       this.$el.fadeIn({
         duration: 100,
         complete: function() {
-          return _this.modalEl.addClass("" + _this.prefix + "-modal--animation-open");
+          return _this.modalEl.addClass("" + _this.prefix + "-modal--open");
         }
       });
       return this;
@@ -321,7 +321,7 @@
         this.onClose();
       }
       this.shouldAnimate = false;
-      this.modalEl.addClass("{@prefix}-modal--animation-close");
+      this.modalEl.addClass("{@prefix}-modal--close");
       this.$el.fadeOut({
         duration: 200
       });

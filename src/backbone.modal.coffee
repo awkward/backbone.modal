@@ -37,7 +37,7 @@ class Backbone.Modal extends Backbone.View
     @$el.fadeIn
       duration: 100
       complete: => 
-        @modalEl.addClass("#{@prefix}-modal--animation-open")
+        @modalEl.addClass("#{@prefix}-modal--open")
 
     return this
 
@@ -223,7 +223,7 @@ class Backbone.Modal extends Backbone.View
     @onClose?()
 
     @shouldAnimate = false
-    @modalEl.addClass("{@prefix}-modal--animation-close")
+    @modalEl.addClass("{@prefix}-modal--close")
     @$el.fadeOut(duration: 200)
       
     _.delay =>
