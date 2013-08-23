@@ -17,8 +17,7 @@
 
 <script src="scripts/gists.js"></script>
 
-<script src="scripts/backbone.modal-min.js"></script>
-<script src="scripts/backbone.marionette.modals-min.js"></script>
+<script src="scripts/backbone.modal-bundled-min.js"></script>
 
 <script src="scripts/main.js"></script>
 <title>Backbone.modal</title>
@@ -121,10 +120,10 @@
     <section id="examples" class="examples">
       <h3>Examples</h3>
       <p>
-        <a href="#">Single view/template</a><br/>
-        <a href="#">Tab based</a><br/>
-        <a href="#">Stacked modal with Marionette</a><br/>
-        <a href="#">Wizard</a><br/>
+        <a href="https://github.com/awkward/backbone.modal/blob/master/examples/1_single_view.html">Single view/template</a><br/>
+        <a href="https://github.com/awkward/backbone.modal/blob/master/examples/2_tab_based.html">Tab based</a><br/>
+        <a href="https://github.com/awkward/backbone.modal/blob/master/examples/3_stacked_modal_with_marionette.html">Stacked modal with Marionette</a><br/>
+        <a href="https://github.com/awkward/backbone.modal/blob/master/examples/4_wizard.html">Wizard</a><br/>
       </p>
     </section>
   </div>
@@ -136,22 +135,17 @@
     <div class="modals-container"></div>
   </script>
 
-  <script type="text/template" id="modal-template1">
-    <!-- <div class="bb-modal-titlebar">
-    <h2 class="titlebar-title">Manage profiles</h2>
-    </div> -->
 
+  <!-- The modal structure, with an container element that will contain all tabs -->
+  <script type="text/template" id="modal-template">
     <div class="bb-modal-tabbar">
       <ul>
         <li class="tabbar-tab"><a href="#" id="tab1" class="active">Tab 1</a></li>
         <li class="tabbar-tab"><a href="#" id="tab2">Tab 2</a></li>
-        <li class="tabbar-tab"><a href="#" id="tab3">Tab 3</a></li>
       </ul>
     </div>
 
-    <div class="my-container">
-
-    </div>
+    <div class="my-container"></div>
     <div class="bb-modal-bottombar">
       <a href="#" class="bb-modal-button">Done</a>
     </div>
@@ -159,6 +153,16 @@
 
   <!-- Tab 1 -->
   <script type="text/template" id="modal-view1-template">
+    <div class="bb-modal-section">
+      <h3>Tab based example</h3>
+      <p>It's also really easy to create a modal, with seperate views that you can control using tabs.</p>
+      <p>We're also using a default style, but you can overwrite anything you want.</p>
+      <p><a href="#" class="open-info">Open another modal</a></p>
+    </div>
+  </script>
+
+  <!-- Tab 2 -->
+  <script type="text/template" id="modal-view2-template">
     <div class="bb-modal-section">
       <div class="bb-modal-section-info">
         <h3 class="section-title">Credentials</h3>
@@ -181,38 +185,69 @@
     </div>
   </script>
 
-  <script type="text/template" id="modal-tab1">
-    <a href="#" class="open-2">Open second modal</a>
-  </script>
-  <script type="text/template" id="modal-tab2">
-    <p>Some other nice content here.</p>
-    <a href="#" class="open-2">Open second modal</a>
-  </script>
-  <script type="text/template" id="modal-tab3">
-    <a href="#" class="open-2">Open second modal</a>
+
+  <!-- Stacked modals -->
+
+  <script type="text/template" id="modal-template1">
+   <div class="bb-modal-section">
+     <h3>Backbone.Modal</h3>
+     <p>With Backbone.Modal you can create a modals in a few lines of code.</p>
+     <p>Some features are:</p>
+     <ul>
+       <li>Really flexible and easy to set up.</li>
+       <li>Default behaviors like ESC or clicking outside a modal.</li>
+       <li>Some awesome animations that make them feel robust.</li>
+       <li>Responsive and usable on mobile devices.</li>
+       <li><a href="#" class="open-tour">Open another modal</a></li>
+     </ul>
+   </div>
+   <div class="bb-modal-bottombar">
+     <a href="#" class="bb-modal-button">Close</a>
+   </div>
   </script>
 
-  <script type="text/template" id="modal-template2">
-    <div class="bb-modal-section">
-      <div class="bb-modal-section-info">
-        <h3 class="section-title">Credentials</h3>
-        <p class="section-description">Please fill in your personal information</h3>
-      </div>
-      <div class="section-row">
-        <label for="username">Username</label>
-        <input class="bb-modal-input" type="text" placeholder="Username" id="username"/>
-      </div>
-      <div class="section-row bb-modal-group">
-        <div class="section-column">
-          <label for="username">Password</label>
-          <input class="bb-modal-input" type="password" placeholder="Password" id="password"/>
-        </div>
-      </div>
-    </div>
-    <div class="bb-modal-bottombar">
-      <a href="#" class="bb-modal-button">Done</a>
-    </div>
+
+  <!-- Step 1 -->
+  <script type="text/template" id="modal-step1-template">
+   <div class="bb-modal-section">
+     <h3>Wizard example - step 1</h3>
+     <p>You can create all kinds of modals, like this wizard. It's pretty basic, but you can do anything you'd like.</p>
+     <a href="#" id="step3">Directly go to the last step</a>
+   </div>
+   <div class="bb-modal-bottombar">
+     <a href="#" class="cancel">Cancel</a>
+     <a href="#" class="bb-modal-button previous inactive">Previous</a>
+     <a href="#" class="bb-modal-button next">Next</a>
+   </div>
   </script>
+
+  <!-- Step 2 -->
+  <script type="text/template" id="modal-step2-template">
+   <div class="bb-modal-section">
+     <h3>Wizard example - step 2</h3>
+     <p>This is the second step of the wizard.</p>
+   </div>
+   <div class="bb-modal-bottombar">
+     <a href="#" class="cancel">Cancel</a>
+     <a href="#" class="bb-modal-button previous">Previous</a>
+     <a href="#" class="bb-modal-button next">Next</a>
+   </div>
+  </script>
+
+  <!-- Step 3 -->
+  <script type="text/template" id="modal-step3-template">
+   <div class="bb-modal-section">
+     <h3>Wizard example - step 3</h3>
+     <p>And finally, the last step!</p>
+   </div>
+   <div class="bb-modal-bottombar">
+     <a href="#" class="cancel">Cancel</a>
+     <a href="#" class="bb-modal-button previous">Previous</a>
+     <a href="#" class="bb-modal-button done">Done</a>
+   </div>
+  </script>
+
+
   <script src="/scripts/tools/hashgrid.js"></script>
 </body>
 </html>
