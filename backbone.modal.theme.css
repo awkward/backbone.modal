@@ -42,6 +42,10 @@
   font-size: 16px;
   line-height: 26px;
   color: #575656; }
+  .bbm-modal__section p {
+    font-size: 16px;
+    line-height: 26px;
+    color: #575656; }
   .bbm-modal__section a {
     color: #ff643c; }
 
