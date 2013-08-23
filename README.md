@@ -8,7 +8,7 @@ For a complete overview of the documentation visit: [http://awkward.github.io/ba
 
 #### Bundled version
 If you're using Backbone and Marionette.
-* [backbone.modal-bundled-min.js](https://github.com/awkward/backbone.modal/blob/master/backbone.modal-bundled-min.js)
+* [backbone.modal-bundled-min.js](https://raw.github.com/awkward/backbone.modal/master/backbone.modal-bundled-min.js)
 
 #### Backbone.Modals.js and Backbone.Marionette.Modals.js seperate
 If you just want to use the Backbone version without Marionette.
