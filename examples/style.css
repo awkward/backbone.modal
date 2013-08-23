@@ -1,0 +1,35 @@
+body {
+  font-family: "Helvetica Neue"; }
+
+a {
+  text-decoration: none;
+  font-style: normal; }
+
+.bbm-modal__tab {
+  padding: 0; }
+  .bbm-modal__tab a {
+    display: block;
+    padding-top: 55px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    position: relative;
+    font-size: 13px; }
+    .bbm-modal__tab a:before {
+      position: absolute;
+      content: "";
+      background: url(img/tab-icons.png);
+      left: 50%;
+      top: 10px;
+      margin-left: -20px;
+      width: 40px;
+      height: 40px;
+      opacity: 0.5; }
+    .bbm-modal__tab a.active {
+      opacity: 1; }
+      .bbm-modal__tab a.active:before {
+        opacity: 1; }
+  .bbm-modal__tab:last-child {
+    margin-left: -5px; }
+    .bbm-modal__tab:last-child a:before {
+      background-position: -40px; }
