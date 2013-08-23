@@ -4,3 +4,13 @@ body {
 a {
   text-decoration: none;
   font-style: normal; }
+
+.bb-modal{
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.bb-modal .intro-line{
+  font-size: 22px;
+  line-height: 1.6;
+}
