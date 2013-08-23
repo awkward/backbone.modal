@@ -10,9 +10,9 @@ class Backbone.Marionette.Modals extends Backbone.Marionette.Region
 
     if @modals.length > 0
       lastModal = _.last(@modals)
-      lastModal.modalEl.addClass("#{lastModal.prefix}-animation-stacked")
+      lastModal.modalEl.addClass("#{lastModal.prefix}-modal--animation-stacked")
       secondLastModal = @modals[@modals.length-1]
-      secondLastModal?.modalEl.removeClass("#{secondLastModal.prefix}-animation-stacked-reverse")
+      secondLastModal?.modalEl.removeClass("#{secondLastModal.prefix}-modal--animation-stacked-reverse")
 
     modal.render()
     modal.regionEnabled = true
@@ -54,9 +54,9 @@ class Backbone.Marionette.Modals extends Backbone.Marionette.Region
     lastModal     = _.last(@modals)
 
     if lastModal
-      lastModal.modalEl.addClass("#{lastModal.prefix}-animation-stacked-reverse")
+      lastModal.modalEl.addClass("#{lastModal.prefix}-modal--animation-stacked-reverse")
       _.delay =>
-        lastModal.modalEl.removeClass("#{lastModal.prefix}-animation-stacked")
+        lastModal.modalEl.removeClass("#{lastModal.prefix}-modal--animation-stacked")
       , 300
 
       lastModal.delegateModalEvents() if @zIndex isnt 0

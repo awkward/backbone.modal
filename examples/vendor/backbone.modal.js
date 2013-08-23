@@ -11,7 +11,7 @@
   Backbone.Modal = (function(_super) {
     __extends(Modal, _super);
 
-    Modal.prototype.prefix = 'bb-modal';
+    Modal.prototype.prefix = 'bbm';
 
     function Modal() {
       this.triggerCancel = __bind(this.triggerCancel, this);
@@ -33,7 +33,7 @@
       }
       data = this.serializeData();
       this.$el.addClass("" + this.prefix + "-wrapper");
-      this.modalEl = $('<div />').addClass(this.prefix);
+      this.modalEl = $('<div />').addClass("" + this.prefix + "-modal");
       if (this.template) {
         this.modalEl.html(this.template(data));
       }
@@ -42,7 +42,7 @@
       $('body').on('click', this.clickOutside);
       if (this.viewContainer) {
         this.viewContainerEl = this.modalEl.find(this.viewContainer);
-        this.viewContainerEl.addClass("" + this.prefix + "-views");
+        this.viewContainerEl.addClass("" + this.prefix + "-modal__views");
       } else {
         this.viewContainerEl = this.modalEl;
       }
@@ -59,7 +59,7 @@
       this.$el.fadeIn({
         duration: 100,
         complete: function() {
-          return _this.modalEl.addClass("" + _this.prefix + "-animation-open");
+          return _this.modalEl.addClass("" + _this.prefix + "-modal--animation-open");
         }
       });
       return this;
@@ -251,7 +251,7 @@
       if (this.viewContainer) {
         container = tester.find(this.viewContainer);
       } else {
-        container = tester.find('.bb-modal');
+        container = tester.find(this.prefix);
       }
       container.removeAttr('style');
       previousHeight = container.outerHeight();
@@ -321,7 +321,7 @@
         this.onClose();
       }
       this.shouldAnimate = false;
-      this.modalEl.addClass('bb-modal-animation-close');
+      this.modalEl.addClass("{@prefix}-modal--animation-close");
       this.$el.fadeOut({
         duration: 200
       });

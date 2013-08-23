@@ -2,7 +2,7 @@ unless Backbone?
   throw new Error("Backbone is not defined. Please include the latest version from http://documentcloud.github.com/backbone/backbone.js")
 
 class Backbone.Modal extends Backbone.View
-  prefix: 'bb-modal'
+  prefix: 'bbm'
   constructor: ->
     @args = Array::slice.apply(arguments)
     Backbone.View::constructor.apply(this, @args)
@@ -15,7 +15,7 @@ class Backbone.Modal extends Backbone.View
     data = @serializeData()
 
     @$el.addClass("#{@prefix}-wrapper")
-    @modalEl = $('<div />').addClass(@prefix)
+    @modalEl = $('<div />').addClass("#{@prefix}-modal")
     @modalEl.html @template(data) if @template
     @$el.html @modalEl
 
@@ -25,7 +25,7 @@ class Backbone.Modal extends Backbone.View
 
     if @viewContainer
       @viewContainerEl = @modalEl.find(@viewContainer)
-      @viewContainerEl.addClass("#{@prefix}-views")
+      @viewContainerEl.addClass("#{@prefix}-modal__views")
     else
       @viewContainerEl = @modalEl
 
@@ -37,7 +37,7 @@ class Backbone.Modal extends Backbone.View
     @$el.fadeIn
       duration: 100
       complete: => 
-        @modalEl.addClass("#{@prefix}-animation-open")
+        @modalEl.addClass("#{@prefix}-modal--animation-open")
 
     return this
 
@@ -168,7 +168,7 @@ class Backbone.Modal extends Backbone.View
     if @viewContainer
       container     = tester.find(@viewContainer)
     else
-      container     = tester.find('.bb-modal')
+      container     = tester.find(@prefix)
 
     container.removeAttr('style')
 
@@ -223,7 +223,7 @@ class Backbone.Modal extends Backbone.View
     @onClose?()
 
     @shouldAnimate = false
-    @modalEl.addClass('bb-modal-animation-close')
+    @modalEl.addClass("{@prefix}-modal--animation-close")
     @$el.fadeOut(duration: 200)
       
     _.delay =>
