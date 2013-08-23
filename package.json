@@ -1,7 +1,7 @@
 {
   "name": "Backbone.Modal",
-  "version": "0.0.1",
-  "description": "Backbone Modal extension",
+  "version": "1.0",
+  "description": "A plugin for Backbone.js that simplifies creating modals for your application.",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-coffee": "~0.6.4",
@@ -14,5 +14,5 @@
     "grunt-contrib-sass": "~0.3.0",
     "grunt-concurrent": "~0.2.0"
   },
-  "author": "David van Leeuwen"
+  "author": "Awkward"
 }
