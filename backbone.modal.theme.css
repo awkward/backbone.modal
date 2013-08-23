@@ -1,8 +1,8 @@
-.bb-modal-wrapper {
+.bbm-wrapper {
   background: rgba(0, 0, 0, 0.75);
   -webkit-transition: background-color 0.3s; }
 
-.bb-modal {
+.bbm-modal {
   background: white;
   box-shadow: 0 0px 6px rgba(0, 0, 0, 0.6), 0 1px 2px rgba(0, 0, 0, 0.9); }
 
@@ -23,7 +23,10 @@
 
 .bbm-modal__section {
   padding: 0 30px;
-  margin-top: 30px; }
+  margin-top: 30px;
+  font-size: 16px;
+  line-height: 26px;
+  color: #575656; }
 
 .bbm-modal__bottombar {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
@@ -38,19 +41,23 @@
 
 .bbm-button {
   display: inline-block;
-  border: 1px solid #c3c3c3;
-    border-bottom: 1px solid #9e9e9e;
-  color: rgba(65, 66, 69, 0.9);
+  color: rgba(49, 45, 58, 0.8);
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
   position: relative;
   line-height: 1em;
-  display: inline-block;
-  padding: 7px 13px;
+  padding: 10px 14px;
   border-radius: 3px;
-  background: #eeeded;
-  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.12); }
+  background: #fcfcfc;
+  background-image: -o-linear-gradient(90deg, rgba(70, 30, 170, 0) 0%, rgba(65, 61, 75, 0.15) 100%);
+  background-image: -moz-linear-gradient(90deg, rgba(70, 30, 170, 0) 0%, rgba(65, 61, 75, 0.15) 100%);
+  background-image: -webkit-linear-gradient(90deg, rgba(70, 30, 170, 0) 0%, rgba(65, 61, 75, 0.15) 100%);
+  background-image: -ms-linear-gradient(90deg, rgba(70, 30, 170, 0) 0%, rgba(65, 61, 75, 0.15) 100%);
+  background-image: linear-gradient(180deg, rgba(70, 30, 170, 0) 0%, rgba(65, 61, 75, 0.15) 100%);
+  -moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1), inset 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1), inset 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1), inset 0px 0px 0px 1px rgba(0, 0, 0, 0.2); }
 
 @-webkit-keyframes bbm-open {
   0% {
