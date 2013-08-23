@@ -1,129 +1,94 @@
-.bb-modal-wrapper {
+.bbm-wrapper {
   background: rgba(0, 0, 0, 0.75);
   -webkit-transition: background-color 0.3s; }
 
-.bb-modal {
+.bbm-modal {
   background: white;
   box-shadow: 0 0px 6px rgba(0, 0, 0, 0.6), 0 1px 2px rgba(0, 0, 0, 0.9); }
 
-.bb-modal-bottombar,
-.bb-modal-titlebar {
-  padding: 18px; }
+.bbm-modal__topbar,
+.bbm-modal__bottombar {
+  padding: 0 30px; }
 
-.bb-modal-titlebar,
-.bb-modal-tabbar {
+.bbm-modal__topbar {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+  .bbm-modal__topbar > ul {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    margin: 0; }
 
-.bb-modal-titlebar {
-  color: #222222; }
-
-.titlebar-title {
-  padding: 0;
-  margin: 0;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 1em; }
-
-.bb-modal-tabbar ul {
-  list-style: none;
-  text-align: center;
-  padding: 0;
-  margin: 0; }
-
-.tabbar-tab {
+.bbm-modal__tab {
   display: inline-block;
   padding: 15px 10px; }
-  .tabbar-tab a {
+  .bbm-modal__tab a {
     font-size: 16px;
     font-weight: bold;
     color: #999999; }
-    .tabbar-tab a:hover, .tabbar-tab a.active {
+    .bbm-modal__tab a:hover, .bbm-modal__tab a.active {
       color: #222222; }
 
-.bb-modal-bottombar {
+.bbm-modal__title {
+  padding: 20px 0 19px;
+  margin: 0;
+  font-weight: normal;
+  font-size: 22px;
+  line-height: 1em;
+  color: #312d3a; }
+
+.bbm-modal__section {
+  padding: 0 30px;
+  margin-top: 30px;
+  font-size: 16px;
+  line-height: 26px;
+  color: #575656; }
+  .bbm-modal__section a {
+    color: #ff643c; }
+
+.bbm-modal__bottombar {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   padding: 18px;
   text-align: right;
   margin-top: 25px; }
 
-.bb-modal-group {
+.bbm-group {
   content: "";
   display: table;
   clear: both; }
 
-.bb-modal-button {
+.bbm-button {
   display: inline-block;
-  border: 1px solid #c3c3c3;
-    border-bottom: 1px solid #9e9e9e;
-  color: rgba(65, 66, 69, 0.9);
+  color: rgba(49, 45, 58, 0.8);
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
   position: relative;
   line-height: 1em;
-  display: inline-block;
-  padding: 7px 13px;
+  padding: 10px 14px;
   border-radius: 3px;
-  background: #eeeded;
-  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.12); }
+  background: #fcfcfc;
+  background-image: -o-linear-gradient(90deg, rgba(70, 30, 170, 0) 0%, rgba(65, 61, 75, 0.15) 100%);
+  background-image: -moz-linear-gradient(90deg, rgba(70, 30, 170, 0) 0%, rgba(65, 61, 75, 0.15) 100%);
+  background-image: -webkit-linear-gradient(90deg, rgba(70, 30, 170, 0) 0%, rgba(65, 61, 75, 0.15) 100%);
+  background-image: -ms-linear-gradient(90deg, rgba(70, 30, 170, 0) 0%, rgba(65, 61, 75, 0.15) 100%);
+  background-image: linear-gradient(180deg, rgba(70, 30, 170, 0) 0%, rgba(65, 61, 75, 0.15) 100%);
+  -moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1), inset 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1), inset 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1), inset 0px 0px 0px 1px rgba(0, 0, 0, 0.2); }
+  .bbm-button.inactive {
+    opacity: 0.5;
+    pointer-events: none; }
+  .bbm-button:active {
+    background-image: -o-linear-gradient(90deg, rgba(70, 30, 170, 0) 0%, rgba(65, 61, 75, 0.25) 100%);
+    background-image: -moz-linear-gradient(90deg, rgba(70, 30, 170, 0) 0%, rgba(65, 61, 75, 0.25) 100%);
+    background-image: -webkit-linear-gradient(90deg, rgba(70, 30, 170, 0) 0%, rgba(65, 61, 75, 0.25) 100%);
+    background-image: -ms-linear-gradient(90deg, rgba(70, 30, 170, 0) 0%, rgba(65, 61, 75, 0.25) 100%);
+    background-image: linear-gradient(180deg, rgba(70, 30, 170, 0) 0%, rgba(65, 61, 75, 0.25) 100%);
+    -moz-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), inset 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), inset 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), inset 0px 0px 0px 1px rgba(0, 0, 0, 0.2); }
 
-.bb-modal-section {
-  padding: 0 25px;
-  margin-top: 25px; }
-
-.bb-modal-section-info {
-  margin-bottom: 15px; }
-
-.section-title {
-  font-size: 18px;
-  font-weight: 500;
-  margin: 0;
-  margin-bottom: 2px;
-  padding: 0; }
-
-.section-description {
-  font-size: 14px;
-  padding: 0;
-  margin: 0;
-  color: #666666; }
-
-.section-row {
-  width: 100%;
-  margin-bottom: 15px; }
-  .section-row:last-child {
-    margin-bottom: 0; }
-
-.section-column {
-  width: calc(50% - 8px);
-  float: left; }
-  .section-column:first-child {
-    margin-right: 8px; }
-  .section-column:last-child {
-    margin-left: 8px; }
-
-label {
-  font-size: 13px;
-  font-weight: 500;
-  color: #666666;
-  line-height: 24px; }
-
-input {
-  height: 35px;
-  width: 100%;
-  padding: 0 10px;
-  outline: 0;
-  font-size: 13px;
-  font-family: "Helvetica Neue";
-  color: #333333;
-  border: none;
-  background: #f5f5f6;
-  border-radius: 3px;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.45), inset 0 0 2px rgba(0, 0, 0, 0.349); }
-  input:focus {
-    box-shadow: inset 0 1px 2px rgba(30, 88, 190, 0.8), inset 0 0 2px rgba(7, 34, 81, 0.78), 0 0 2px #4585f1;
-    color: black; }
-
-@-webkit-keyframes framer-animation-1-1 {
+@-webkit-keyframes bbm-open {
   0% {
     -webkit-transform: matrix(0.99126, 0, 0, 0.99126, 0, 43.8813);
     opacity: 0.1259; }
@@ -228,15 +193,15 @@ input {
     -webkit-transform: matrix(1, 0, 0, 1, 0, 50);
     opacity: 1; } }
 
-.bb-modal-animation-open {
+.bbm-modal--open {
   -webkit-animation-duration: 0.3s;
-  -webkit-animation-name: framer-animation-1-1;
+  -webkit-animation-name: bbm-open;
   -webkit-animation-timing-function: linear;
   -webkit-animation-fill-mode: both;
   -webkit-transform-origin: 50% 50%;
   -webkit-backface-visibility: hidden; }
 
-@-webkit-keyframes framer-animation-2-1 {
+@-webkit-keyframes bbm-stacked {
   0% {
     -webkit-transform: matrix(0.99874, 0, 0, 0.99874, 0, 49.1187);
     opacity: 0.93705; }
@@ -341,15 +306,15 @@ input {
     -webkit-transform: matrix(0.99, 0, 0, 0.99, 0, 43);
     opacity: 0.5; } }
 
-.bb-modal-animation-stacked {
+.bbm-modal--stacked {
   -webkit-animation-duration: 0.43333s;
-  -webkit-animation-name: framer-animation-2-1;
+  -webkit-animation-name: bbm-stacked;
   -webkit-animation-timing-function: linear;
   -webkit-animation-fill-mode: both;
   -webkit-transform-origin: 50% 50%;
   -webkit-backface-visibility: hidden; }
 
-@-webkit-keyframes framer-animation-4-5 {
+@-webkit-keyframes bbm-stacked-reverse {
   0% {
     -webkit-transform: matrix(0.99123, 0, 0, 0.99123, 0, 43.86266);
     opacity: 0.56162; }
@@ -454,15 +419,15 @@ input {
     -webkit-transform: matrix(1, 0, 0, 1, 0, 50);
     opacity: 1; } }
 
-.bb-modal-animation-stacked-reverse {
+.bbm-modal--stacked-reverse {
   -webkit-animation-duration: 0.43333s;
-  -webkit-animation-name: framer-animation-4-5;
+  -webkit-animation-name: bbm-stacked-reverse;
   -webkit-animation-timing-function: linear;
   -webkit-animation-fill-mode: both;
   -webkit-transform-origin: 50% 50%;
   -webkit-backface-visibility: hidden; }
 
-@-webkit-keyframes framer-animation-14-1 {
+@-webkit-keyframes bbm-close {
   0% {
     -webkit-transform: matrix(0.99874, 0, 0, 0.99874, 0, 49.1187);
     opacity: 0.8741; }
@@ -567,9 +532,9 @@ input {
     -webkit-transform: matrix(0.99, 0, 0, 0.99, 0, 43);
     opacity: 0; } }
 
-.bb-modal-animation-close {
+.bbm-modal--close {
   -webkit-animation-duration: 0.43333s;
-  -webkit-animation-name: framer-animation-14-1;
+  -webkit-animation-name: bbm-close;
   -webkit-animation-timing-function: linear;
   -webkit-animation-fill-mode: both;
   -webkit-transform-origin: 50% 50%;

@@ -135,7 +135,7 @@ code {
 
 .modals-container {
   margin-right: 630px; }
-  .modals-container .bb-modal-wrapper {
+  .modals-container .bbm-wrapper {
     background: none;
     position: relative;
     width: auto; }
