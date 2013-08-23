@@ -11,14 +11,28 @@ $(function() {
     }
   });
 
+  var InfoModal = Backbone.Modal.extend({
+    template: _.template($('#info-modal-template').html()),
+    cancelEl: '.bbm-button',
+    events: {
+      'click .open-tab': 'openTab',
+      'click .open-wizard': 'openWizard'
+    },
+    openTab: function(e) {
+      e.preventDefault();
+      myLayout.modals.show(new TabModal());
+    },
+    openWizard: function(e) {
+      e.preventDefault();
+      myLayout.modals.show(new WizardModal());
+    }
+  });
+
   var TabModal = Backbone.Modal.extend({
-    template: _.template($('#modal-template').html()),
+    template: _.template($('#tab-modal-template').html()),
 
     viewContainer: '.my-container',
-
-    events: {
-      'click .open-info': 'openInfo'
-    },
+    submitEl: '.bbm-button',
 
     views: {
       'click #tab1': {
@@ -32,38 +46,17 @@ $(function() {
         onActive: 'setActive'
       }
     },
-    beforeCancel: function() {
-      return false;
-    },
-    beforeSubmit: function() {
-      return false;
-    },
-    openInfo: function(e) {
-      e.preventDefault()
-      myLayout.modals.show(new InfoModal());
-    },
+
     setActive: function(options) {
-      this.$('.tabbar-tab a').removeClass('active');
+      this.$('.bbm-modal__tab a').removeClass('active');
       this.$('#'+options.name).addClass('active');
     }
   });
 
-  var InfoModal = Backbone.Modal.extend({
-    template: _.template($('#modal-template1').html()),
-    cancelEl: '.bb-modal-button',
-    events: {
-      'click .open-tour': 'openTour'
-    },
-    openTour: function(e) {
-      e.preventDefault()
-      myLayout.modals.show(new TourModal());
-    }
-  });
 
-  var TourModal = Backbone.Modal.extend({
+  var WizardModal = Backbone.Modal.extend({
     submitEl: '.done',
     cancelEl: '.cancel',
-
     views: {
       'click #step1': {
         view: _.template($('#modal-step1-template').html())
@@ -75,26 +68,22 @@ $(function() {
         view: _.template($('#modal-step3-template').html())
       }
     },
-
     events: {
       'click .previous': 'previousStep',
       'click .next': 'nextStep'
     },
-
     previousStep: function(e) {
       e.preventDefault();
       this.previous();
     },
-
     nextStep: function(e) {
       e.preventDefault();
       this.next();
     }
-
   });
 
   var myLayout = new Layout();
   $('.app').append(myLayout.render().el);
 
-  myLayout.modals.show(new TabModal());
+  myLayout.modals.show(new InfoModal());
 });
