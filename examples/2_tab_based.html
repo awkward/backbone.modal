@@ -67,6 +67,7 @@
         template: _.template($('#modal-template').html()),
 
         viewContainer: '.my-container',
+        submitEl: '.bbm-button',
 
         views: {
           'click #tab1': {
@@ -82,7 +83,7 @@
         },
 
         setActive: function(options) {
-          this.$('.tabbar-tab a').removeClass('active');
+          this.$('.bbm-modal__tab a').removeClass('active');
           this.$('#'+options.name).addClass('active');
         }
       });

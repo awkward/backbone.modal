@@ -73,7 +73,7 @@
       // Create a modal view class
       var Modal1 = Backbone.Modal.extend({
         template: _.template($('#modal-template1').html()),
-        submitEl: '.bb-modal-button',
+        submitEl: '.bbm-button',
         events: {
           'click .open-2': 'openModal'
         },
@@ -85,7 +85,7 @@
 
       var Modal2 = Backbone.Modal.extend({
         template: _.template($('#modal-template2').html()),
-        submitEl: '.bb-modal-button'
+        submitEl: '.bbm-button'
       });
 
       // Render the layout
