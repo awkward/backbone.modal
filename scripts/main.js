@@ -18,6 +18,9 @@ $(function() {
       'click .open-tab': 'openTab',
       'click .open-wizard': 'openWizard'
     },
+    beforeCancel: function() {
+      return false;
+    },
     openTab: function(e) {
       e.preventDefault();
       myLayout.modals.show(new TabModal());
