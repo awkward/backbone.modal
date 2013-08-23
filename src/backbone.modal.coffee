@@ -160,14 +160,14 @@ class Backbone.Modal extends Backbone.View
       @$(@viewContainerEl).html instance.el
 
   animateToView: (view) ->
-    tester = $('<tester/>')
-    tester.html @$el.clone().css(position: 'relative', top: -9999, left: -9999)
+    tester = $('<tester/>').css(position: 'relative', top: -9999, left: -9999)
+    tester.html @$el.clone()
     if $('tester').length isnt 0 then $('tester').replaceWith tester else $('body').append tester
 
     if @viewContainer
       container     = tester.find(@viewContainer)
     else
-      container     = tester.append($('<div />')).find('div:first-child')
+      container     = tester.find('div').first()
 
     container.removeAttr("style")
 

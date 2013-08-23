@@ -236,12 +236,12 @@
     Modal.prototype.animateToView = function(view) {
       var container, newHeight, previousHeight, tester, _ref,
         _this = this;
-      tester = $('<tester/>');
-      tester.html(this.$el.clone().css({
+      tester = $('<tester/>').css({
         position: 'relative',
         top: -9999,
         left: -9999
-      }));
+      });
+      tester.html(this.$el.clone());
       if ($('tester').length !== 0) {
         $('tester').replaceWith(tester);
       } else {
@@ -250,7 +250,7 @@
       if (this.viewContainer) {
         container = tester.find(this.viewContainer);
       } else {
-        container = tester.append($('<div />')).find('div:first-child');
+        container = tester.find('div').first();
       }
       container.removeAttr("style");
       previousHeight = container.outerHeight();
