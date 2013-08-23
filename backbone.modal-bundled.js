@@ -234,18 +234,15 @@
     };
 
     Modal.prototype.animateToView = function(view) {
-      var container, newHeight, previousHeight, tester, _ref,
+      var container, newHeight, previousHeight, style, tester, _ref,
         _this = this;
-      tester = $('<tester/>').css({
+      style = {
         position: 'relative',
         top: -9999,
         left: -9999
-      });
-      tester.html(this.$el.clone().css({
-        position: 'relative',
-        top: -9999,
-        left: -9999
-      }));
+      };
+      tester = $('<tester/>').css(style);
+      tester.html(this.$el.clone().css(style));
       if ($('tester').length !== 0) {
         $('tester').replaceWith(tester);
       } else {
@@ -254,9 +251,9 @@
       if (this.viewContainer) {
         container = tester.find(this.viewContainer);
       } else {
-        container = tester.find('div').first();
+        container = tester.find('.bb-modal');
       }
-      container.removeAttr("style");
+      container.removeAttr('style');
       previousHeight = container.outerHeight();
       container.html(view);
       newHeight = container.outerHeight();
