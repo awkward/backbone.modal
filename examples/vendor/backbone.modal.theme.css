@@ -8,13 +8,28 @@
 
 .bbm-modal__topbar,
 .bbm-modal__bottombar {
-  padding: 18px 30px; }
+  padding: 0 30px; }
 
 .bbm-modal__topbar {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+  .bbm-modal__topbar > ul {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    margin: 0; }
+
+.bbm-modal__tab {
+  display: inline-block;
+  padding: 15px 10px; }
+  .bbm-modal__tab a {
+    font-size: 16px;
+    font-weight: bold;
+    color: #999999; }
+    .bbm-modal__tab a:hover, .bbm-modal__tab a.active {
+      color: #222222; }
 
 .bbm-modal__title {
-  padding: 9px 0 8px;
+  padding: 20px 0 19px;
   margin: 0;
   font-weight: normal;
   font-size: 22px;
@@ -27,6 +42,8 @@
   font-size: 16px;
   line-height: 26px;
   color: #575656; }
+  .bbm-modal__section a {
+    color: #ff643c; }
 
 .bbm-modal__bottombar {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
@@ -58,6 +75,18 @@
   -moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1), inset 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
   -webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1), inset 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
   box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1), inset 0px 0px 0px 1px rgba(0, 0, 0, 0.2); }
+  .bbm-button.inactive {
+    opacity: 0.5;
+    pointer-events: none; }
+  .bbm-button:active {
+    background-image: -o-linear-gradient(90deg, rgba(70, 30, 170, 0) 0%, rgba(65, 61, 75, 0.25) 100%);
+    background-image: -moz-linear-gradient(90deg, rgba(70, 30, 170, 0) 0%, rgba(65, 61, 75, 0.25) 100%);
+    background-image: -webkit-linear-gradient(90deg, rgba(70, 30, 170, 0) 0%, rgba(65, 61, 75, 0.25) 100%);
+    background-image: -ms-linear-gradient(90deg, rgba(70, 30, 170, 0) 0%, rgba(65, 61, 75, 0.25) 100%);
+    background-image: linear-gradient(180deg, rgba(70, 30, 170, 0) 0%, rgba(65, 61, 75, 0.25) 100%);
+    -moz-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), inset 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), inset 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), inset 0px 0px 0px 1px rgba(0, 0, 0, 0.2); }
 
 @-webkit-keyframes bbm-open {
   0% {

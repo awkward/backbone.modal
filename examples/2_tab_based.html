@@ -30,23 +30,22 @@
 
   <!-- The modal structure, with an container element that will contain all tabs -->
   <script type="text/template" id="modal-template">
-    <div class="bb-modal-tabbar">
+    <div class="bbm-modal__topbar">
       <ul>
-        <li class="tabbar-tab"><a href="#" id="tab1" class="active">Tab 1</a></li>
-        <li class="tabbar-tab"><a href="#" id="tab2">Tab 2</a></li>
-        <li class="tabbar-tab"><a href="#" id="tab3">Tab 3</a></li>
+        <li class="bbm-modal__tab"><a href="#" id="tab1" class="active">General</a></li>
+        <li class="bbm-modal__tab"><a href="#" id="tab2">Account</a></li>
       </ul>
     </div>
 
     <div class="my-container"></div>
-    <div class="bb-modal-bottombar">
-      <a href="#" class="bb-modal-button">Done</a>
+    <div class="bbm-modal__bottombar">
+      <a href="#" class="bbm-button">Done</a>
     </div>
   </script>
 
   <!-- Tab 1 -->
   <script type="text/template" id="modal-view1-template">
-    <div class="bb-modal-section">
+    <div class="bbm-modal__section">
       <h3>Tab based example</h3>
       <p>It's also really easy to create a modal, with seperate views that you can control using tabs.</p>
       <p>We're also using a default style, but you can overwrite anything you want.</p>
@@ -55,32 +54,8 @@
 
   <!-- Tab 2 -->
   <script type="text/template" id="modal-view2-template">
-    <div class="bb-modal-section">
-      <div class="bb-modal-section-info">
-        <h3 class="section-title">Credentials</h3>
-        <p class="section-description">Please fill in your personal information</h3>
-      </div>
-      <div class="section-row">
-        <label for="username">Username</label>
-        <input class="bb-modal-input" type="text" placeholder="Username" id="username"/>
-      </div>
-      <div class="section-row bb-modal-group">
-        <div class="section-column">
-          <label for="username">Password</label>
-          <input class="bb-modal-input" type="password" placeholder="Password" id="password"/>
-        </div>
-        <div class="section-column">
-          <label for="password-repeat">Password Repeat</label>
-          <input class="bb-modal-input" type="password" placeholder="Password repeat" id="password-repeat"/>
-        </div>
-      </div>
-    </div>
-  </script>
-
-  <!-- Tab 3 -->
-  <script type="text/template" id="modal-view3-template">
-    <div class="bb-modal-section">
-      Another view.
+    <div class="bbm-modal__section">
+      account details
     </div>
   </script>
 
@@ -102,11 +77,6 @@
           'click #tab2': {
             name: 'tab2',
             view: _.template($('#modal-view2-template').html()),
-            onActive: 'setActive'
-          },
-          'click #tab3': {
-            name: 'tab3',
-            view: _.template($('#modal-view3-template').html()),
             onActive: 'setActive'
           }
         },

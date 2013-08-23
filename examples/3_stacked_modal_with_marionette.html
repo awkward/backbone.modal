@@ -33,28 +33,32 @@
 
   <!-- Modal templates  -->
   <script type="text/template" id="modal-template1">
-    <div class="bb-modal-section">
-      <h3>Stacked modals with Backbone.Marionette</h3>
+    <div class="bbm-modal__topbar">
+      <h3 class="bbm-modal__title">Stacked modals with Backbone.Marionette</h3>
+    </div>
+    <div class="bbm-modal__section">
       <p>Go ahead and open the <a href="#" class="open-2">second modal</a>.</p>
     </div>
-    <div class="bb-modal-bottombar">
-      <a href="#" class="bb-modal-button">Done</a>
+    <div class="bbm-modal__bottombar">
+      <a href="#" class="bbm-button">Done</a>
     </div>
   </script>
 
   <script type="text/template" id="modal-template2">
-    <div class="bb-modal-section">
-      <h3>The stacked modal</h3>
+    <div class="bbm-modal__topbar">
+      <h3 class="bbm-modal__title">The stacked modal</h3>
+    </div>
+    <div class="bbm-modal__section">
       <p>By using Backbone.Marionette, your code stays simple and clean. So now we can create stacked modals, without doing any complex work.</p>
     </div>
-    <div class="bb-modal-bottombar">
-      <a href="#" class="bb-modal-button">Done</a>
+    <div class="bbm-modal__bottombar">
+      <a href="#" class="bbm-button">Done</a>
     </div>
   </script>
 
   <script>
     jQuery(function($) {
-      
+
       // Create a layout class
       var Layout = Backbone.Marionette.Layout.extend({
         template: _.template($('#modals-template').html()),
