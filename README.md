@@ -10,7 +10,7 @@ For a complete overview of the documentation visit: [http://awkward.github.io/ba
 If you're using Backbone and Marionette.
 * [backbone.modal-bundled-min.js](https://raw.github.com/awkward/backbone.modal/master/backbone.modal-bundled-min.js)
 
-#### Backbone.Modals.js and Backbone.Marionette.Modals.js seperate
+#### Backbone.Modals.js and Backbone.Marionette.Modals.js separate
 If you just want to use the Backbone version without Marionette.
 * [backbone.modal-min.js](https://raw.github.com/awkward/backbone.modal/master/backbone.modal-min.js)
 * [backbone.marionette.modals-min.js](https://raw.github.com/awkward/backbone.modal/master/backbone.marionette.modals-min.js)
