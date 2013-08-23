@@ -168,13 +168,15 @@ code {
       opacity: 1; }
       .bbm-modal__tab a.active:before {
         opacity: 1; }
+  .bbm-modal__tab:last-child {
+    margin-left: -5px; }
+    .bbm-modal__tab:last-child a:before {
+      background-position: -40px; }
 
 .bbm-button {
-  font-weight: bold; }
-  .bbm-button:last-child {
-    margin-left: -5px; }
-    .bbm-button:last-child a:before {
-      background-position: -40px; }
+  font-weight: bold;
+  padding-top: 11px;
+  padding-bottom: 9px; }
 
 .gist {
   color: #535158;
