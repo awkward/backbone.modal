@@ -6,3 +6,43 @@ body
 a
   text-decoration: none
   font-style: normal
+
+// Add icons to tabs
+.bbm-modal__tab
+  padding: 0
+
+  a
+    display: block
+    padding:
+      top: 55px
+      bottom: 10px
+      left: 20px
+      right: 20px
+    position: relative
+    font:
+      size: 13px
+
+    &:before
+      position: absolute
+      content: ""
+      background: url(img/tab-icons.png)
+      left: 50%
+      top: 10px
+      margin:
+        left: -20px
+      width: 40px
+      height: 40px
+      opacity: .5
+
+    &.active
+      opacity: 1
+
+      &:before
+        opacity: 1
+
+
+  &:last-child
+    margin-left: -5px
+    a
+      &:before
+        background-position: -40px
