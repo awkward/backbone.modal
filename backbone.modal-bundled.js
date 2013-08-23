@@ -241,7 +241,11 @@
         top: -9999,
         left: -9999
       });
-      tester.html(this.$el.clone());
+      tester.html(this.$el.clone().css({
+        position: 'relative',
+        top: -9999,
+        left: -9999
+      }));
       if ($('tester').length !== 0) {
         $('tester').replaceWith(tester);
       } else {
