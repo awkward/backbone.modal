@@ -160,6 +160,7 @@ code
   height: 100%
   overflow: scroll
   background: #faf9fa
+  z-index: 50
 
   >section
     padding: 3em 50px
@@ -176,9 +177,57 @@ code
     right: 630px
 
   .bbm-wrapper
-    background: none
+    background: rgba(85,79,103,.5)
+    z-index: 10
+    padding-right: 630px
+
+  .bbm-modal
+    min-width: 400px
+
+// Add icons to tabs
+.bbm-modal__tab
+  padding: 0
+
+  a
+    display: block
+    padding:
+      top: 55px
+      bottom: 10px
+      left: 20px
+      right: 20px
     position: relative
-    width: auto
+    text:
+      decoration: none
+    font:
+      size: 13px
+
+    &:before
+      position: absolute
+      content: ""
+      background: url(img/tab-icons.png)
+      left: 50%
+      top: 10px
+      margin:
+        left: -20px
+      width: 40px
+      height: 40px
+      opacity: .5
+
+    &.active
+      opacity: 1
+
+      &:before
+        opacity: 1
+
+.bbm-button
+  font-weight: bold
+
+
+  &:last-child
+    margin-left: -5px
+    a
+      &:before
+        background-position: -40px
 
 // Gist styling inspired by Michiel de Graaf (michieldegraaf.com)
 

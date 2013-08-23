@@ -125,7 +125,8 @@ code {
   right: 0;
   height: 100%;
   overflow: scroll;
-  background: #faf9fa; }
+  background: #faf9fa;
+  z-index: 50; }
   .container > section {
     padding: 3em 50px;
     border-top: 1px solid rgba(0, 0, 0, 0.1); }
@@ -136,9 +137,44 @@ code {
 .modals-container {
   margin-right: 630px; }
   .modals-container .bbm-wrapper {
-    background: none;
+    background: rgba(85, 79, 103, 0.5);
+    z-index: 10;
+    padding-right: 630px; }
+  .modals-container .bbm-modal {
+    min-width: 400px; }
+
+.bbm-modal__tab {
+  padding: 0; }
+  .bbm-modal__tab a {
+    display: block;
+    padding-top: 55px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
     position: relative;
-    width: auto; }
+    text-decoration: none;
+    font-size: 13px; }
+    .bbm-modal__tab a:before {
+      position: absolute;
+      content: "";
+      background: url(img/tab-icons.png);
+      left: 50%;
+      top: 10px;
+      margin-left: -20px;
+      width: 40px;
+      height: 40px;
+      opacity: 0.5; }
+    .bbm-modal__tab a.active {
+      opacity: 1; }
+      .bbm-modal__tab a.active:before {
+        opacity: 1; }
+
+.bbm-button {
+  font-weight: bold; }
+  .bbm-button:last-child {
+    margin-left: -5px; }
+    .bbm-button:last-child a:before {
+      background-position: -40px; }
 
 .gist {
   color: #535158;
