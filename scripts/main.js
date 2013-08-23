@@ -19,7 +19,9 @@ $(function() {
       'click .open-wizard': 'openWizard'
     },
     beforeCancel: function() {
-      return false;
+      _.delay(function() {
+        myLayout.modals.show(new InfoModal());
+      }, 500);
     },
     openTab: function(e) {
       e.preventDefault();
