@@ -2,7 +2,7 @@ unless Backbone?
   throw new Error("Backbone is not defined. Please include the latest version from http://documentcloud.github.com/backbone/backbone.js")
 
 class Backbone.Modal extends Backbone.View
-  prefix: 'bb-modal'
+  prefix: 'bbm'
   constructor: ->
     @args = Array::slice.apply(arguments)
     Backbone.View::constructor.apply(this, @args)
@@ -15,7 +15,7 @@ class Backbone.Modal extends Backbone.View
     data = @serializeData()
 
     @$el.addClass("#{@prefix}-wrapper")
-    @modalEl = $('<div />').addClass(@prefix)
+    @modalEl = $('<div />').addClass("#{@prefix}-modal")
     @modalEl.html @template(data) if @template
     @$el.html @modalEl
 
@@ -25,7 +25,7 @@ class Backbone.Modal extends Backbone.View
 
     if @viewContainer
       @viewContainerEl = @modalEl.find(@viewContainer)
-      @viewContainerEl.addClass("#{@prefix}-views")
+      @viewContainerEl.addClass("#{@prefix}-modal__views")
     else
       @viewContainerEl = @modalEl
 
@@ -37,7 +37,7 @@ class Backbone.Modal extends Backbone.View
     @$el.fadeIn
       duration: 100
       complete: => 
-        @modalEl.addClass("#{@prefix}-animation-open")
+        @modalEl.addClass("#{@prefix}-modal--open")
 
     return this
 
@@ -79,11 +79,8 @@ class Backbone.Modal extends Backbone.View
     submitEl = @getOption('submitEl')
 
     # set event handlers for submit and cancel
-    if submitEl
-      @$el.on 'click', submitEl, @triggerSubmit
-
-    if cancelEl
-      @$el.on 'click', cancelEl, @triggerCancel
+    @$el.on('click', submitEl, @triggerSubmit) if submitEl
+    @$el.on('click', cancelEl, @triggerCancel) if cancelEl
 
     # set event handlers for views
     for key of @views
@@ -96,7 +93,23 @@ class Backbone.Modal extends Backbone.View
 
   undelegateModalEvents: ->
     @active = false
-    @$el.off()
+
+    # get elements
+    cancelEl = @getOption('cancelEl')
+    submitEl = @getOption('submitEl')
+
+    # remove event handlers for submit and cancel
+    @$el.off('click', submitEl, @triggerSubmit) if submitEl
+    @$el.off('click', cancelEl, @triggerCancel) if cancelEl
+
+    # remove event handlers for views
+    for key of @views
+      unless key is 'length'
+        match     = key.match(/^(\S+)\s*(.*)$/)
+        trigger   = match[1]
+        selector  = match[2]
+
+        @$el.off trigger, selector, @views[key], @triggerView
 
   checkKey: (e) =>
     if @active
@@ -147,16 +160,17 @@ class Backbone.Modal extends Backbone.View
       @$(@viewContainerEl).html instance.el
 
   animateToView: (view) ->
-    tester = $('<tester/>')
-    tester.html @$el.clone().css(top: -9999, left: -9999)
+    style  = position: 'relative', top: -9999, left: -9999
+    tester = $('<tester/>').css(style)
+    tester.html @$el.clone().css(style)
     if $('tester').length isnt 0 then $('tester').replaceWith tester else $('body').append tester
-
+    
     if @viewContainer
       container     = tester.find(@viewContainer)
     else
-      container     = tester
+      container     = tester.find(@prefix)
 
-    container.removeAttr("style")
+    container.removeAttr('style')
 
     previousHeight  = container.outerHeight()
     container.html(view)
@@ -209,7 +223,7 @@ class Backbone.Modal extends Backbone.View
     @onClose?()
 
     @shouldAnimate = false
-    @modalEl.addClass('bb-modal-animation-close')
+    @modalEl.addClass("{@prefix}-modal--close")
     @$el.fadeOut(duration: 200)
       
     _.delay =>
