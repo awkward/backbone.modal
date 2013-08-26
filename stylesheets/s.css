@@ -192,7 +192,8 @@ code {
   top: -7px;
   right: 0;
   background: url(img/awkie.png);
-  opacity: 0.8; }
+  opacity: 0.8;
+  background-size: 20px 32px; }
   .awkward:hover {
     opacity: 1; }
 
@@ -245,6 +246,9 @@ code {
 
 .bbm-modal__section p {
   margin-top: 10px; }
+.bbm-modal__section ul {
+  padding: 0;
+    padding-left: 30px; }
 
 .bbm-button {
   font-weight: bold;
