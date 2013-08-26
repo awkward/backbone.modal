@@ -217,7 +217,7 @@ code {
         border-top: 1px solid rgba(0, 0, 0, 0.15); }
       .gist .gist-file .gist-data .line-numbers {
         padding: 0.6em;
-        font-size: 0.833em;
+        font-size: 0.688em;
         color: #bbbbbb;
         border: 0 none;
         -webkit-border-top-left-radius: 3px;
