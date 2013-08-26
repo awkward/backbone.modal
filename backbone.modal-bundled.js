@@ -251,7 +251,7 @@
       if (this.viewContainer) {
         container = tester.find(this.viewContainer);
       } else {
-        container = tester.find(this.prefix);
+        container = tester.find("." + this.prefix + "-modal");
       }
       container.removeAttr('style');
       previousHeight = container.outerHeight();

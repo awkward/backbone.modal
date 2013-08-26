@@ -168,7 +168,7 @@ class Backbone.Modal extends Backbone.View
     if @viewContainer
       container     = tester.find(@viewContainer)
     else
-      container     = tester.find(@prefix)
+      container     = tester.find(".#{@prefix}-modal")
 
     container.removeAttr('style')
 
