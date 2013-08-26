@@ -269,6 +269,9 @@ code {
       border: 1px solid rgba(0, 0, 0, 0.1);
         border-top: 1px solid rgba(0, 0, 0, 0.15);
       overflow: scroll; }
+      @media (max-width: 480px) {
+        .gist .gist-file .gist-data {
+          font-size: 11px; } }
       .gist .gist-file .gist-data .line-numbers {
         padding: 0.6em;
         font-size: 0.688em;
@@ -281,6 +284,9 @@ code {
         -moz-border-bottom-left-radius: 3px;
         border-bottom-left-radius: 3px;
         text-align: right; }
+        @media (max-width: 480px) {
+          .gist .gist-file .gist-data .line-numbers {
+            display: none; } }
         .gist .gist-file .gist-data .line-numbers .line-number {
           display: block;
           clear: right; }

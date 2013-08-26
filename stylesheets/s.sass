@@ -331,6 +331,7 @@ code
       font:
         family: Monaco, Andale Mono, monospace
         size: 1.333em // 13px
+
       line-height: 1.125em // 18px
       background: #f0f0f0
       -webkit-border-radius: 3px
@@ -340,6 +341,10 @@ code
       border: 1px solid rgba(0,0,0,.10)
         top: 1px solid rgba(0,0,0,.15)
       overflow: scroll
+
+      +mobile-only
+        font:
+          size: 11px
 
       .line-numbers
         padding: .6em // 6px
@@ -354,6 +359,9 @@ code
         -moz-border-bottom-left-radius: 3px
         border-bottom-left-radius: 3px
         text-align: right
+
+        +mobile-only
+          display: none
 
         .line-number
           display: block
