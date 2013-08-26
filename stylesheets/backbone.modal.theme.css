@@ -50,11 +50,13 @@
     color: #575656; }
     .bbm-modal__section p:last-child {
       padding: 0;
-      margin: 0; }
+      margin-bottom: 0; }
   .bbm-modal__section a {
     color: #ff643c; }
   .bbm-modal__section h3 {
-    margin-top: 0; }
+    margin: 0;
+    font-size: 20px;
+    line-height: 1em; }
 
 .bbm-modal__bottombar {
   border-top: 1px solid rgba(0, 0, 0, 0.1);

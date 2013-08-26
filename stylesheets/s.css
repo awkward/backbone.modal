@@ -190,6 +190,9 @@ code {
     .bbm-modal__tab:last-child a:before {
       background-position: -40px; }
 
+.bbm-modal__section p {
+  margin-top: 10px; }
+
 .bbm-button {
   font-weight: bold;
   padding-top: 11px;
