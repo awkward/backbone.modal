@@ -36,8 +36,8 @@ class Backbone.Modal extends Backbone.View
     @modalEl.css(opacity: 0)
     @$el.fadeIn
       duration: 100
-      complete: => 
-        @modalEl.addClass("#{@prefix}-modal--open")
+      complete: =>
+        @modalEl.css(opacity: 1).addClass("#{@prefix}-modal--open")
 
     return this
 
@@ -183,7 +183,7 @@ class Backbone.Modal extends Backbone.View
       @$(@viewContainerEl).css(opacity: 0)
 
       @$(@viewContainerEl).animate {height: newHeight}, 100, =>
-        @$(@viewContainerEl).removeAttr('style')
+        @$(@viewContainerEl).css(opacity: 1).removeAttr('style')
         @$(@viewContainerEl).html view
         @previousView?.close?()
 

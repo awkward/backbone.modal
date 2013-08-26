@@ -59,7 +59,9 @@
       this.$el.fadeIn({
         duration: 100,
         complete: function() {
-          return _this.modalEl.addClass("" + _this.prefix + "-modal--open");
+          return _this.modalEl.css({
+            opacity: 1
+          }).addClass("" + _this.prefix + "-modal--open");
         }
       });
       return this;
@@ -268,7 +270,9 @@
           height: newHeight
         }, 100, function() {
           var _ref1;
-          _this.$(_this.viewContainerEl).removeAttr('style');
+          _this.$(_this.viewContainerEl).css({
+            opacity: 1
+          }).removeAttr('style');
           _this.$(_this.viewContainerEl).html(view);
           return (_ref1 = _this.previousView) != null ? typeof _ref1.close === "function" ? _ref1.close() : void 0 : void 0;
         });
