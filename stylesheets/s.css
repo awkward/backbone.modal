@@ -29,6 +29,9 @@ h2 {
   font-size: 2.5em;
   font-weight: normal;
   color: #5bbdae; }
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 2em; } }
 
 h3 {
   font-weight: normal;
@@ -90,6 +93,9 @@ code {
 .source {
   margin: 3em 0 20px;
   position: relative; }
+  @media (max-width: 480px) {
+    .source {
+      position: static; } }
 
 .download,
 .github {
@@ -100,6 +106,12 @@ code {
   .download b,
   .github b {
     font-weight: normal; }
+  @media (max-width: 480px) {
+    .download,
+    .github {
+      width: 100%;
+      text-align: center;
+      position: static; } }
 
 .download {
   color: white;
@@ -115,6 +127,9 @@ code {
   -moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1), inset 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1), inset 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1), inset 0px 0px 0px 1px rgba(0, 0, 0, 0.1); }
+  @media (max-width: 480px) {
+    .download {
+      padding: 0; } }
   .download:active {
     background: #f86536;
     background-image: -o-linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
@@ -134,6 +149,10 @@ code {
   background-image: url(img/github-logo.png);
   background-repeat: no-repeat;
   background-position-y: center; }
+  @media (max-width: 480px) {
+    .github {
+      padding: 0;
+      background: none; } }
 
 .container {
   background: white;
@@ -154,6 +173,9 @@ code {
   .container > section {
     padding: 3em 50px;
     border-top: 1px solid rgba(0, 0, 0, 0.1); }
+    @media (max-width: 480px) {
+      .container > section {
+        padding: 3em 25px; } }
 
 .intro {
   background: white; }
@@ -178,8 +200,8 @@ code {
   margin-right: 640px; }
   @media only screen and (max-width: 1024px) {
     .modals-container {
-      margin: 10px;
-      height: 500px; } }
+      margin: 20px;
+      height: 600px; } }
   .modals-container .bbm-wrapper {
     background: rgba(85, 79, 103, 0.5);
     z-index: 10;
@@ -187,11 +209,9 @@ code {
     @media only screen and (max-width: 1024px) {
       .modals-container .bbm-wrapper {
         position: absolute;
-        padding: 0;
+        padding: 10px;
         top: 0;
-        height: 500px; } }
-  .modals-container .bbm-modal {
-    min-width: 400px; }
+        height: 600px; } }
 
 .bbm-modal__tab {
   padding: 0; }
@@ -247,7 +267,8 @@ code {
       border-radius: 3px;
       box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
       border: 1px solid rgba(0, 0, 0, 0.1);
-        border-top: 1px solid rgba(0, 0, 0, 0.15); }
+        border-top: 1px solid rgba(0, 0, 0, 0.15);
+      overflow: scroll; }
       .gist .gist-file .gist-data .line-numbers {
         padding: 0.6em;
         font-size: 0.688em;

@@ -44,6 +44,10 @@ h2
     weight: normal
   color: #5bbdae
 
+  +mobile-only
+    font:
+      size: 2em
+
 h3
   font:
     weight: normal
@@ -124,6 +128,9 @@ code
   margin: 3em 0 20px
   position: relative
 
+  +mobile-only
+    position: static
+
 .download,
 .github
   font:
@@ -135,12 +142,20 @@ code
   b
     font-weight: normal
 
+  +mobile-only
+    width: 100%
+    text-align: center
+    position: static
+
 .download,
   color: white
   display: inline-block
   background: $orange
   padding: 0px 10px
   border-radius: 3px
+
+  +mobile-only
+    padding: 0
 
   background-image: -o-linear-gradient(90deg, rgba(255,255,255,.1) 0%, rgba(255,255,255,0.00) 100%)
   background-image: -moz-linear-gradient(90deg, rgba(255,255,255,.1) 0%, rgba(255,255,255,0.00) 100%)
@@ -176,6 +191,10 @@ code
     repeat: no-repeat
     position-y: center
 
+  +mobile-only
+    padding: 0
+    background: none
+
 .container
   background: white
   width: 630px
@@ -199,6 +218,9 @@ code
     padding: 3em 50px
     border:
       top: 1px solid rgba(0,0,0,.1)
+
+    +mobile-only
+      padding: 3em 25px
 
 .intro
   background: white
@@ -227,8 +249,8 @@ code
     right: 640px
 
   +tablet-landscape-and-below
-    margin: 10px
-    height: 500px
+    margin: 20px
+    height: 600px
 
   .bbm-wrapper
     background: rgba(85,79,103,.5)
@@ -237,12 +259,12 @@ code
 
     +tablet-landscape-and-below
       position: absolute
-      padding: 0
+      padding: 10px
       top: 0
-      height: 500px
+      height: 600px
 
   .bbm-modal
-    min-width: 400px
+    //min-width: 400px
 
 // Add icons to tabs
 .bbm-modal__tab
@@ -317,6 +339,7 @@ code
       box-shadow: inset 0 1px 1px rgba(0,0,0,.05)
       border: 1px solid rgba(0,0,0,.10)
         top: 1px solid rgba(0,0,0,.15)
+      overflow: scroll
 
       .line-numbers
         padding: .6em // 6px
