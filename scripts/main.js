@@ -19,6 +19,12 @@ $(function() {
       'click .open-wizard': 'openWizard'
     },
     beforeCancel: function() {
+      this.openAgain()
+    },
+    beforeSubmit: function() {
+      this.openAgain()
+    },
+    openAgain: function() {
       _.delay(function() {
         myLayout.modals.show(new InfoModal());
       }, 500);
@@ -62,7 +68,6 @@ $(function() {
   var WizardModal = Backbone.Modal.extend({
     template: _.template($('#wizard-modal-template').html()),
     viewContainer: '.my-container',
-
     submitEl: '.done',
     cancelEl: '.cancel',
     views: {
@@ -100,6 +105,13 @@ $(function() {
     nextStep: function(e) {
       e.preventDefault();
       this.next();
+    },
+    beforeSubmit: function() {
+      if(this.currentIndex != this.views.length-1) {
+        this.next();
+        return false;
+      }
+      return true;
     }
   });
 
