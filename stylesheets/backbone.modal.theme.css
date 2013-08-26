@@ -12,7 +12,8 @@
   padding: 0 30px; }
 
 .bbm-modal__topbar {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px; }
   .bbm-modal__topbar > ul {
     list-style: none;
     text-align: center;
@@ -39,7 +40,7 @@
 
 .bbm-modal__section {
   padding: 0 30px;
-  margin-top: 30px;
+  margin-top: 0px;
   font-size: 16px;
   line-height: 26px;
   color: #575656; }
@@ -47,14 +48,19 @@
     font-size: 16px;
     line-height: 26px;
     color: #575656; }
+    .bbm-modal__section p:last-child {
+      padding: 0;
+      margin: 0; }
   .bbm-modal__section a {
     color: #ff643c; }
+  .bbm-modal__section h3 {
+    margin-top: 0; }
 
 .bbm-modal__bottombar {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   padding: 18px;
   text-align: right;
-  margin-top: 25px; }
+  margin-top: 30px; }
 
 /* MODULES */
 .bbm-group {
