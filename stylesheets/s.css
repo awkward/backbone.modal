@@ -1,3 +1,12 @@
+.twitter-share-button {
+  position: absolute;
+  z-index: 99;
+  bottom: 10px;
+  left: 10px; }
+  @media (max-width: 480px) {
+    .twitter-share-button {
+      display: none; } }
+
 * {
   box-sizing: padding-box; }
 
