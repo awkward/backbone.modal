@@ -60,22 +60,38 @@ $(function() {
 
 
   var WizardModal = Backbone.Modal.extend({
+    template: _.template($('#wizard-modal-template').html()),
+    viewContainer: '.my-container',
+
     submitEl: '.done',
     cancelEl: '.cancel',
     views: {
       'click #step1': {
-        view: _.template($('#modal-step1-template').html())
+        view: _.template($('#modal-step1-template').html()),
+        onActive: 'checkStep'
       },
       'click #step2': {
-        view: _.template($('#modal-step2-template').html())
+        view: _.template($('#modal-step2-template').html()),
+        onActive: 'checkStep'
       },
       'click #step3': {
-        view: _.template($('#modal-step3-template').html())
+        view: _.template($('#modal-step3-template').html()),
+        onActive: 'checkStep'
       }
     },
     events: {
       'click .previous': 'previousStep',
       'click .next': 'nextStep'
+    },
+    checkStep: function(options) {
+      this.$('.next').removeClass('done inactive').text('Next');
+      this.$('.previous').removeClass('inactive');
+
+      if(this.currentIndex == 0) {
+        this.$('.previous').addClass('inactive');
+      } else if(this.currentIndex == this.views.length-1) {
+        this.$('.next').addClass('done').text('Close');
+      }
     },
     previousStep: function(e) {
       e.preventDefault();
