@@ -90,13 +90,13 @@
       <p> Useful when you want to do some custom work while it's rendering the modal.</p>
 
       <h4>beforeCancel <code>modal.beforeCancel()</code></h4>
-      <p>This will be called when the user hits ESC, clicking on the <code>cancelEl</code> or clicking outside the modal and before <code>cancel</code> is called.</p>
+      <p>This will be called when the user hits ESC, clicking on the <code>cancelEl</code> or clicking outside the modal and before <code>cancel</code> is called. It expects <code>true</code> or <code>false</code>.</p>
 
       <h4>cancel <code>modal.cancel()</code></h4>
       <p>This method is called when the user canceled the modal.</p>
 
       <h4>beforeSubmit <code>modal.beforeSubmit()</code></h4>
-      <p>This will be called when the user hits ENTER or clicking on the <code>submitEl</code>.</p>
+      <p>This will be called when the user hits ENTER or clicking on the <code>submitEl</code>. It expects <code>true</code> or <code>false</code>, so you can do any validation for example.</p>
 
       <h4>submit <code>modal.submit()</code></h4>
       <p>This method is called when the user submitted the modal.</p>
