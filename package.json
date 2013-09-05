@@ -1,6 +1,6 @@
 {
   "name": "Backbone.Modal",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "A plugin for Backbone.js that simplifies creating modals for your application.",
   "devDependencies": {
     "grunt": "~0.4.1",

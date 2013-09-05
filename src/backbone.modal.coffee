@@ -15,13 +15,13 @@ class Backbone.Modal extends Backbone.View
     data = @serializeData()
 
     @$el.addClass("#{@prefix}-wrapper")
-    @modalEl = $('<div />').addClass("#{@prefix}-modal")
+    @modalEl = Backbone.$('<div />').addClass("#{@prefix}-modal")
     @modalEl.html @template(data) if @template
     @$el.html @modalEl
 
     # global events for key and click outside the modal
-    $('body').on 'keyup', @checkKey
-    $('body').on 'click', @clickOutside
+    Backbone.$('body').on 'keyup', @checkKey
+    Backbone.$('body').on 'click', @clickOutside
 
     if @viewContainer
       @viewContainerEl = @modalEl.find(@viewContainer)
@@ -118,7 +118,7 @@ class Backbone.Modal extends Backbone.View
         when 13 then @triggerSubmit()
 
   clickOutside: (e) =>
-    @triggerCancel(null, true) if $(e.target).hasClass("#{@prefix}-wrapper") and @active
+    @triggerCancel(null, true) if Backbone.$(e.target).hasClass("#{@prefix}-wrapper") and @active
 
   buildView: (viewType) ->
     # returns a Backbone.View instance, a function or an object
@@ -146,7 +146,7 @@ class Backbone.Modal extends Backbone.View
     for key of @views
       @currentIndex = index if options.view is @views[key].view
       index++
-      
+
     if options.onActive
       if _.isFunction(options.onActive)
         options.onActive(this)
@@ -161,10 +161,10 @@ class Backbone.Modal extends Backbone.View
 
   animateToView: (view) ->
     style  = position: 'relative', top: -9999, left: -9999
-    tester = $('<tester/>').css(style)
+    tester = Backbone.$('<tester/>').css(style)
     tester.html @$el.clone().css(style)
-    if $('tester').length isnt 0 then $('tester').replaceWith tester else $('body').append tester
-    
+    if Backbone.$('tester').length isnt 0 then Backbone.$('tester').replaceWith tester else Backbone.$('body').append tester
+
     if @viewContainer
       container     = tester.find(@viewContainer)
     else
@@ -209,7 +209,7 @@ class Backbone.Modal extends Backbone.View
       return if @beforeCancel() is false
 
     @cancel?()
-    
+
     if @regionEnabled
       @trigger('modal:close')
     else
@@ -217,15 +217,15 @@ class Backbone.Modal extends Backbone.View
 
   close: ->
     # closes view
-    $('body').off 'keyup', @checkKey
-    $('body').off 'click', @clickOutside
+    Backbone.$('body').off 'keyup', @checkKey
+    Backbone.$('body').off 'click', @clickOutside
 
     @onClose?()
 
     @shouldAnimate = false
     @modalEl.addClass("{@prefix}-modal--close")
     @$el.fadeOut(duration: 200)
-      
+
     _.delay =>
       @currentView?.remove?()
       @remove()

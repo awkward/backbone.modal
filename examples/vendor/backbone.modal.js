@@ -33,13 +33,13 @@
       }
       data = this.serializeData();
       this.$el.addClass("" + this.prefix + "-wrapper");
-      this.modalEl = $('<div />').addClass("" + this.prefix + "-modal");
+      this.modalEl = Backbone.$('<div />').addClass("" + this.prefix + "-modal");
       if (this.template) {
         this.modalEl.html(this.template(data));
       }
       this.$el.html(this.modalEl);
-      $('body').on('keyup', this.checkKey);
-      $('body').on('click', this.clickOutside);
+      Backbone.$('body').on('keyup', this.checkKey);
+      Backbone.$('body').on('click', this.clickOutside);
       if (this.viewContainer) {
         this.viewContainerEl = this.modalEl.find(this.viewContainer);
         this.viewContainerEl.addClass("" + this.prefix + "-modal__views");
@@ -171,7 +171,7 @@
     };
 
     Modal.prototype.clickOutside = function(e) {
-      if ($(e.target).hasClass("" + this.prefix + "-wrapper") && this.active) {
+      if (Backbone.$(e.target).hasClass("" + this.prefix + "-wrapper") && this.active) {
         return this.triggerCancel(null, true);
       }
     };
@@ -243,12 +243,12 @@
         top: -9999,
         left: -9999
       };
-      tester = $('<tester/>').css(style);
+      tester = Backbone.$('<tester/>').css(style);
       tester.html(this.$el.clone().css(style));
-      if ($('tester').length !== 0) {
-        $('tester').replaceWith(tester);
+      if (Backbone.$('tester').length !== 0) {
+        Backbone.$('tester').replaceWith(tester);
       } else {
-        $('body').append(tester);
+        Backbone.$('body').append(tester);
       }
       if (this.viewContainer) {
         container = tester.find(this.viewContainer);
@@ -319,8 +319,8 @@
 
     Modal.prototype.close = function() {
       var _this = this;
-      $('body').off('keyup', this.checkKey);
-      $('body').off('click', this.clickOutside);
+      Backbone.$('body').off('keyup', this.checkKey);
+      Backbone.$('body').off('click', this.clickOutside);
       if (typeof this.onClose === "function") {
         this.onClose();
       }
