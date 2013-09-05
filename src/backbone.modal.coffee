@@ -146,7 +146,7 @@ class Backbone.Modal extends Backbone.View
     for key of @views
       @currentIndex = index if options.view is @views[key].view
       index++
-      
+
     if options.onActive
       if _.isFunction(options.onActive)
         options.onActive(this)
@@ -164,7 +164,7 @@ class Backbone.Modal extends Backbone.View
     tester = Backbone.$('<tester/>').css(style)
     tester.html @$el.clone().css(style)
     if Backbone.$('tester').length isnt 0 then Backbone.$('tester').replaceWith tester else Backbone.$('body').append tester
-    
+
     if @viewContainer
       container     = tester.find(@viewContainer)
     else
@@ -209,7 +209,7 @@ class Backbone.Modal extends Backbone.View
       return if @beforeCancel() is false
 
     @cancel?()
-    
+
     if @regionEnabled
       @trigger('modal:close')
     else
@@ -225,7 +225,7 @@ class Backbone.Modal extends Backbone.View
     @shouldAnimate = false
     @modalEl.addClass("{@prefix}-modal--close")
     @$el.fadeOut(duration: 200)
-      
+
     _.delay =>
       @currentView?.remove?()
       @remove()
