@@ -325,7 +325,7 @@
         this.onClose();
       }
       this.shouldAnimate = false;
-      this.modalEl.addClass("{@prefix}-modal--close");
+      this.modalEl.addClass("" + this.prefix + "-modal--close");
       this.$el.fadeOut({
         duration: 200
       });
