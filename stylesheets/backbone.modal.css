@@ -1,6 +1,7 @@
 /* Modal positioning */
 .bbm-wrapper {
   box-sizing: border-box;
+  -moz-box-sizing: border-box;
   position: absolute;
   left: 0;
   top: 0;
