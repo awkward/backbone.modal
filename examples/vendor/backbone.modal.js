@@ -280,6 +280,9 @@
     };
 
     Modal.prototype.triggerSubmit = function(e) {
+      if (!e) {
+        return;
+      }
       if (e != null) {
         e.preventDefault();
       }

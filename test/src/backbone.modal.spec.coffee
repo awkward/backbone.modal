@@ -118,14 +118,14 @@ describe 'Backbone.Modal', ->
     it "should call this method when it's defined", ->
       view = new modal()
       spyOn(view, 'beforeSubmit')
-      view.render().triggerSubmit()
+      view.render().triggerSubmit({preventDefault: ->})
       expect(view.beforeSubmit).toHaveBeenCalled()
 
     it 'stops the submit when it returns false', ->
       view = new modal()
       spyOn(view, 'submit')
       view._shouldSubmit = false
-      view.render().triggerSubmit()
+      view.render().triggerSubmit({preventDefault: ->})
       expect(view.submit.calls.length).toEqual(0)
 
   describe '#submit', ->

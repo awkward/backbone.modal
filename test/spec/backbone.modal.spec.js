@@ -191,7 +191,9 @@
         var view;
         view = new modal();
         spyOn(view, 'beforeSubmit');
-        view.render().triggerSubmit();
+        view.render().triggerSubmit({
+          preventDefault: function() {}
+        });
         return expect(view.beforeSubmit).toHaveBeenCalled();
       });
       return it('stops the submit when it returns false', function() {
@@ -199,7 +201,9 @@
         view = new modal();
         spyOn(view, 'submit');
         view._shouldSubmit = false;
-        view.render().triggerSubmit();
+        view.render().triggerSubmit({
+          preventDefault: function() {}
+        });
         return expect(view.submit.calls.length).toEqual(0);
       });
     });

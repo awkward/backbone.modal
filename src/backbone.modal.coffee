@@ -188,6 +188,7 @@ class Backbone.Modal extends Backbone.View
         @previousView?.close?()
 
   triggerSubmit: (e) =>
+    return unless e
     # triggers submit
     e?.preventDefault()
 
