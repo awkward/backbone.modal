@@ -26,8 +26,7 @@
     }
 
     Modal.prototype.render = function(options) {
-      var data, _ref,
-        _this = this;
+      var data, _ref;
       if (options == null) {
         options = {};
       }
@@ -56,14 +55,10 @@
       this.modalEl.css({
         opacity: 0
       });
-      this.$el.fadeIn({
-        duration: 100,
-        complete: function() {
-          return _this.modalEl.css({
-            opacity: 1
-          }).addClass("" + _this.prefix + "-modal--open");
-        }
-      });
+      this.$el.show();
+      this.modalEl.css({
+        opacity: 1
+      }).addClass("" + this.prefix + "-modal--open");
       return this;
     };
 
@@ -329,9 +324,7 @@
       }
       this.shouldAnimate = false;
       this.modalEl.addClass("" + this.prefix + "-modal--close");
-      this.$el.fadeOut({
-        duration: 200
-      });
+      this.$el.hide();
       return _.delay(function() {
         var _ref;
         if ((_ref = _this.currentView) != null) {
