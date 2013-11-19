@@ -22,7 +22,7 @@ There's default style, and you can use our theme to make things look pretty.
 
 ### How to contribute
 
-To get started `grunt install` to install all dependencies. If you have any requests, please create an issue. If you're working on something yourself, make a pull request and we'll make sure to check it out to get in into the next release.
+To get started `npm install` to install all dependencies. If you have any requests, please create an issue. If you're working on something yourself, make a pull request and we'll make sure to check it out to get in into the next release.
 
 ### Tests
 
