@@ -154,7 +154,7 @@ class Backbone.Modal extends Backbone.View
         this[options.onActive].call(this, options)
 
     if @shouldAnimate
-      @animateToView(instance.el)
+      @animateToView(instance)
     else
       @shouldAnimate = true
       @$(@viewContainerEl).html instance.el
@@ -173,19 +173,21 @@ class Backbone.Modal extends Backbone.View
     container.removeAttr('style')
 
     previousHeight  = container.outerHeight()
-    container.html(view)
+    container.html(view.el)
     newHeight       = container.outerHeight()
 
     if previousHeight is newHeight
-      @$(@viewContainerEl).html view
+      @$(@viewContainerEl).html view.el
       @previousView?.close?()
+      view.view?.triggerMethod? "show"
     else
       @$(@viewContainerEl).css(opacity: 0)
 
       @$(@viewContainerEl).animate {height: newHeight}, 100, =>
         @$(@viewContainerEl).css(opacity: 1).removeAttr('style')
-        @$(@viewContainerEl).html view
+        @$(@viewContainerEl).html view.el
         @previousView?.close?()
+        view.view?.triggerMethod? "show"
 
   triggerSubmit: (e) =>
     return unless e
