@@ -176,13 +176,22 @@
       }
     };
 
-    Modal.prototype.buildView = function(viewType) {
-      var view;
+    Modal.prototype.buildView = function(viewType, viewOptions) {
+      var args, view;
+      if (viewOptions == null) {
+        viewOptions = {};
+      }
       if (!viewType) {
         return;
       }
       if (_.isFunction(viewType)) {
-        view = new viewType(this.args[0]);
+        args = this.args[0];
+        if (typeof args === 'object') {
+          args = _.extend(args, viewOptions);
+        } else {
+          args = viewOptions;
+        }
+        view = new viewType(args);
         if (view instanceof Backbone.View) {
           return {
             el: view.render().$el,
@@ -201,14 +210,14 @@
     };
 
     Modal.prototype.triggerView = function(e) {
-      var index, instance, key, options;
+      var index, instance, key, options, _ref;
       if (e != null) {
         if (typeof e.preventDefault === "function") {
           e.preventDefault();
         }
       }
       options = e.data;
-      instance = this.buildView(options.view);
+      instance = this.buildView(options.view, options != null ? options.viewOptions : void 0);
       if (this.currentView) {
         this.previousView = this.currentView;
       }
@@ -231,7 +240,8 @@
         return this.animateToView(instance);
       } else {
         this.shouldAnimate = true;
-        return this.$(this.viewContainerEl).html(instance.el);
+        this.$(this.viewContainerEl).html(instance.el);
+        return instance != null ? (_ref = instance.view) != null ? _ref.triggerMethod("show") : void 0 : void 0;
       }
     };
 
