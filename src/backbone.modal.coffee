@@ -165,7 +165,7 @@ class Backbone.Modal extends Backbone.View
     else
       @shouldAnimate = true
       @$(@viewContainerEl).html instance.el
-      instance?.view?.triggerMethod("show")
+      instance.view?.triggerMethod? "show"
 
   animateToView: (view) ->
     style  = position: 'relative', top: -9999, left: -9999

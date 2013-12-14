@@ -241,7 +241,7 @@
       } else {
         this.shouldAnimate = true;
         this.$(this.viewContainerEl).html(instance.el);
-        return instance != null ? (_ref = instance.view) != null ? _ref.triggerMethod("show") : void 0 : void 0;
+        return (_ref = instance.view) != null ? typeof _ref.triggerMethod === "function" ? _ref.triggerMethod("show") : void 0 : void 0;
       }
     };
 
