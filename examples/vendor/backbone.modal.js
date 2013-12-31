@@ -165,7 +165,7 @@
           case 27:
             return this.triggerCancel();
           case 13:
-            return this.triggerSubmit();
+            return this.triggerSubmit(e);
         }
       }
     };

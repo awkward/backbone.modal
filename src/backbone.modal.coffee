@@ -115,7 +115,7 @@ class Backbone.Modal extends Backbone.View
     if @active
       switch e.keyCode
         when 27 then @triggerCancel()
-        when 13 then @triggerSubmit()
+        when 13 then @triggerSubmit(e)
 
   clickOutside: (e) =>
     @triggerCancel(null, true) if Backbone.$(e.target).hasClass("#{@prefix}-wrapper") and @active
