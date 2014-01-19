@@ -1,8 +1,9 @@
 module.exports = (grunt) ->
-module.exports = (grunt) ->
   fs = require('fs')
 
   grunt.initConfig
+    pkg: grunt.file.readJSON('package.json')
+
     open:
       default:
         url: 'http://localhost:8000'
@@ -20,10 +21,10 @@ module.exports = (grunt) ->
       examples:
         options:
           port: 5000
-          base: './examples/'
+          base: './'
           middleware: (connect, options) ->
             [connect.static(options.base), (req, res, next) ->
-              fs.readFile "#{options.base}/1_single_view.html", (err, data) ->
+              fs.readFile "#{options.base}/examples/1_single_view.html", (err, data) ->
                 res.writeHead(200)
                 res.end(data)
             ]
@@ -46,7 +47,7 @@ module.exports = (grunt) ->
           specs: 'test/spec/**/*.js'
           outfile: 'test/spec.html'
           host: 'http://127.0.0.1:8000/'
-          vendor: ['examples/vendor/jquery-1.9.1.js', 'examples/vendor/underscore.js', 'examples/vendor/backbone.js', 'examples/vendor/marionette.js']
+          vendor: ['http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js', 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js', 'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min.js', 'http://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/1.4.1-bundled/backbone.marionette.min.js']
 
     coffee:
       all:
@@ -76,29 +77,20 @@ module.exports = (grunt) ->
     concurrent:
       compile: ['coffee', 'sass']
 
-    regarde:
-      livereloadJS:
-        files: ['test/**/*.js', 'examples/vendor/*.js']
-        tasks: ['livereload']
-      livereloadCSS:
-        files: ['examples/vendor/backbone.modal.css', 'examples/vendor/backbone.modal.theme.css', 'examples/style.css']
-        tasks: ['livereload:backbone.modal.css', 'livereload:examples/vendor/backbone.modal.theme.css', 'livereload:examples/style.css']
+    watch:
       sass:
         files: ['src/**/*.sass']
         tasks: ['sass']
+        options:
+          livereload: true
       coffee:
         files: ['src/**/*.coffee', 'test/src/**/*.coffee']
         tasks: ['uglify', 'coffee']
+        options:
+          livereload: true
 
-  grunt.loadNpmTasks 'grunt-contrib-coffee'
-  grunt.loadNpmTasks 'grunt-regarde'
-  grunt.loadNpmTasks 'grunt-open'
-  grunt.loadNpmTasks 'grunt-contrib-connect'
-  grunt.loadNpmTasks 'grunt-contrib-livereload'
-  grunt.loadNpmTasks 'grunt-contrib-jasmine'
-  grunt.loadNpmTasks 'grunt-contrib-uglify'
-  grunt.loadNpmTasks 'grunt-contrib-sass'
-  grunt.loadNpmTasks 'grunt-concurrent'
+  # Auto include Grunt tasks
+  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks)
 
   grunt.registerTask 'build', ['concurrent', 'uglify', 'jasmine:all:build']
-  grunt.registerTask 'watch', ['connect', 'build', 'livereload-start', 'open', 'regarde']
+  grunt.registerTask 'default', ['connect', 'build', 'open', 'watch']
