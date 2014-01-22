@@ -5,7 +5,7 @@ class Backbone.Marionette.Modals extends Backbone.Marionette.Region
   modals: []
   zIndex: 0
 
-  show: (modal, options = {}) ->
+  show: (modal, options) ->
     @ensureEl()
 
     if @modals.length > 0
@@ -14,7 +14,7 @@ class Backbone.Marionette.Modals extends Backbone.Marionette.Region
       secondLastModal = @modals[@modals.length-1]
       secondLastModal?.modalEl.removeClass("#{secondLastModal.prefix}-modal--stacked-reverse")
 
-    modal.render()
+    modal.render(options)
     modal.regionEnabled = true
     
     @$el.show()

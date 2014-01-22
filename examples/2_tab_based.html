@@ -99,8 +99,8 @@
       $('.open').on('click', function(){
 
         // Render an instance of your modal
-        var modalView = new Modal();
-        $('.app').html(modalView.render({name: 'tab2'}).el);
+        var modalView = new Modal({name: 'tab2'});
+        $('.app').html(modalView.render().el);
 
       });
 
