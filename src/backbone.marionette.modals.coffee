@@ -61,7 +61,8 @@ class Backbone.Marionette.Modals extends Backbone.Marionette.Region
 
       lastModal.delegateModalEvents() if @zIndex isnt 0
       
-    Marionette.triggerMethod.call(this, "close")
+    Marionette.triggerMethod.call(modal, "close")
+    Marionette.triggerMethod.call(this, "close", modal)
 
   closeAll: ->
     @close() for modal in @modals
