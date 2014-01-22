@@ -32,6 +32,7 @@ class Backbone.Modal extends Backbone.View
       @viewContainerEl = @modalEl
 
     @$el.show()
+    options = _.extend(options = {}, @args[0]) unless _.isEmpty(@args)
     @openAt(options or 0) if @views?.length > 0
     @onRender?()
 
