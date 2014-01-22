@@ -23,9 +23,6 @@
 
     Modals.prototype.show = function(modal, options) {
       var lastModal, m, secondLastModal, _i, _len, _ref1;
-      if (options == null) {
-        options = {};
-      }
       this.ensureEl();
       if (this.modals.length > 0) {
         lastModal = _.last(this.modals);
@@ -35,7 +32,7 @@
           secondLastModal.modalEl.removeClass("" + secondLastModal.prefix + "-modal--stacked-reverse");
         }
       }
-      modal.render();
+      modal.render(options);
       modal.regionEnabled = true;
       this.$el.show();
       this.$el.append(modal.el);

@@ -46,9 +46,6 @@
         this.viewContainerEl = this.modalEl;
       }
       this.$el.show();
-      if (!_.isEmpty(this.args)) {
-        options = _.extend(options = {}, this.args[0]);
-      }
       if (((_ref = this.views) != null ? _ref.length : void 0) > 0) {
         this.openAt(options || 0);
       }
@@ -430,9 +427,6 @@
 
     Modals.prototype.show = function(modal, options) {
       var lastModal, m, secondLastModal, _i, _len, _ref1;
-      if (options == null) {
-        options = {};
-      }
       this.ensureEl();
       if (this.modals.length > 0) {
         lastModal = _.last(this.modals);
@@ -442,7 +436,7 @@
           secondLastModal.modalEl.removeClass("" + secondLastModal.prefix + "-modal--stacked-reverse");
         }
       }
-      modal.render();
+      modal.render(options);
       modal.regionEnabled = true;
       this.$el.show();
       this.$el.append(modal.el);

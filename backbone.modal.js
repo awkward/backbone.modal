@@ -46,9 +46,6 @@
         this.viewContainerEl = this.modalEl;
       }
       this.$el.show();
-      if (!_.isEmpty(this.args)) {
-        options = _.extend(options = {}, this.args[0]);
-      }
       if (((_ref = this.views) != null ? _ref.length : void 0) > 0) {
         this.openAt(options || 0);
       }
