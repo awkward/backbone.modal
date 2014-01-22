@@ -12,7 +12,7 @@ class Backbone.Modal extends Backbone.View
     @setUIElements()
     @delegateModalEvents()
 
-  render: (options = {}) ->
+  render: (options) ->
     # use openAt or overwrite this with your own functionality
     data = @serializeData()
 
@@ -32,11 +32,7 @@ class Backbone.Modal extends Backbone.View
       @viewContainerEl = @modalEl
 
     @$el.show()
-
-    if @views?.length > 0
-      openAtOptions = options || 0
-      @openAt(openAtOptions)
-
+    @openAt(options or 0) if @views?.length > 0
     @onRender?()
 
     animate = @getOption('animate')

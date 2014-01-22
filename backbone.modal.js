@@ -28,11 +28,8 @@
     }
 
     Modal.prototype.render = function(options) {
-      var animate, data, openAtOptions, _ref,
+      var animate, data, _ref,
         _this = this;
-      if (options == null) {
-        options = {};
-      }
       data = this.serializeData();
       this.$el.addClass("" + this.prefix + "-wrapper");
       this.modalEl = Backbone.$('<div />').addClass("" + this.prefix + "-modal");
@@ -50,8 +47,7 @@
       }
       this.$el.show();
       if (((_ref = this.views) != null ? _ref.length : void 0) > 0) {
-        openAtOptions = options || 0;
-        this.openAt(openAtOptions);
+        this.openAt(options || 0);
       }
       if (typeof this.onRender === "function") {
         this.onRender();
