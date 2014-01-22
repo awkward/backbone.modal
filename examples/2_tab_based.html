@@ -80,6 +80,16 @@
           }
         },
 
+        // views: [{
+        //   name: 'tab1',
+        //   view: _.template($('#modal-view1-template').html()),
+        //   onActive: 'setActive'
+        // },{
+        //   name: 'tab2',
+        //   view: _.template($('#modal-view2-template').html()),
+        //   onActive: 'setActive'
+        // }],
+
         setActive: function(options) {
           this.$('.bbm-modal__tab a').removeClass('active');
           this.$('#'+options.name).addClass('active');

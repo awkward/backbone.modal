@@ -95,7 +95,7 @@ class Backbone.Modal extends Backbone.View
 
     # set event handlers for views
     for key of @views
-      unless key is 'length'
+      if _.isString(key) and key isnt 'length'
         match     = key.match(/^(\S+)\s*(.*)$/)
         trigger   = match[1]
         selector  = match[2]
@@ -115,7 +115,7 @@ class Backbone.Modal extends Backbone.View
 
     # remove event handlers for views
     for key of @views
-      unless key is 'length'
+      if _.isString(key) and key isnt 'length'
         match     = key.match(/^(\S+)\s*(.*)$/)
         trigger   = match[1]
         selector  = match[2]

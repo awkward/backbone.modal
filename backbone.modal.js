@@ -130,7 +130,7 @@
       }
       _results = [];
       for (key in this.views) {
-        if (key !== 'length') {
+        if (_.isString(key) && key !== 'length') {
           match = key.match(/^(\S+)\s*(.*)$/);
           trigger = match[1];
           selector = match[2];
@@ -155,7 +155,7 @@
       }
       _results = [];
       for (key in this.views) {
-        if (key !== 'length') {
+        if (_.isString(key) && key !== 'length') {
           match = key.match(/^(\S+)\s*(.*)$/);
           trigger = match[1];
           selector = match[2];
