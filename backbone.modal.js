@@ -370,15 +370,10 @@
             }
             i++;
           } else if (_.isObject(options)) {
-            if ((function() {
-              var _results;
-              _results = [];
-              for (attr in this.views[key]) {
-                _results.push(options[attr] === this.views[key][attr]);
+            for (attr in this.views[key]) {
+              if (options[attr] === this.views[key][attr]) {
+                view = this.views[key];
               }
-              return _results;
-            }).call(this)) {
-              view = this.views[key];
             }
           }
         }

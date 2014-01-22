@@ -257,7 +257,8 @@ class Backbone.Modal extends Backbone.View
           i++
         # Use attributes to find a view in views[]
         else if _.isObject(options)
-          view  = @views[key] if options[attr] is @views[key][attr] for attr of @views[key]
+          for attr of @views[key]
+            view = @views[key] if options[attr] is @views[key][attr]
 
     if view
       @currentIndex = _.indexOf(@views, view) 
