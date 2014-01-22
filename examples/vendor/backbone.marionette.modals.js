@@ -80,8 +80,7 @@
           lastModal.delegateModalEvents();
         }
       }
-      Marionette.triggerMethod.call(modal, "close");
-      return Marionette.triggerMethod.call(this, "close", modal);
+      return Marionette.triggerMethod.call(modal, "close");
     };
 
     Modals.prototype.closeAll = function() {
