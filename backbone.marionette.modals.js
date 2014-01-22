@@ -77,10 +77,9 @@
           return lastModal.modalEl.removeClass("" + lastModal.prefix + "-modal--stacked");
         }, 300);
         if (this.zIndex !== 0) {
-          lastModal.delegateModalEvents();
+          return lastModal.delegateModalEvents();
         }
       }
-      return Marionette.triggerMethod.call(modal, "close");
     };
 
     Modals.prototype.closeAll = function() {
