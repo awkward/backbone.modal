@@ -13,6 +13,8 @@
 
     Modal.prototype.prefix = 'bbm';
 
+    Modal.prototype.animate = true;
+
     function Modal() {
       this.triggerCancel = __bind(this.triggerCancel, this);
       this.triggerSubmit = __bind(this.triggerSubmit, this);
@@ -26,7 +28,7 @@
     }
 
     Modal.prototype.render = function(options) {
-      var data, _ref,
+      var animate, data, openAtOptions, _ref,
         _this = this;
       if (options == null) {
         options = {};
@@ -48,22 +50,28 @@
       }
       this.$el.show();
       if (((_ref = this.views) != null ? _ref.length : void 0) > 0) {
-        this.openAt(0);
+        openAtOptions = options || 0;
+        this.openAt(openAtOptions);
       }
       if (typeof this.onRender === "function") {
         this.onRender();
       }
-      this.modalEl.css({
-        opacity: 0
-      });
-      this.$el.fadeIn({
-        duration: 100,
-        complete: function() {
-          return _this.modalEl.css({
-            opacity: 1
-          }).addClass("" + _this.prefix + "-modal--open");
-        }
-      });
+      animate = this.getOption('animate');
+      if (this.$el.fadeIn && animate) {
+        this.modalEl.css({
+          opacity: 0
+        });
+        this.$el.fadeIn({
+          duration: 100,
+          complete: function() {
+            return _this.modalEl.css({
+              opacity: 1
+            }).addClass("" + _this.prefix + "-modal--open");
+          }
+        });
+      } else {
+        this.modalEl.addClass("" + this.prefix + "-modal--open");
+      }
       return this;
     };
 
@@ -321,7 +329,8 @@
     };
 
     Modal.prototype.close = function() {
-      var _this = this;
+      var animate, removeViews,
+        _this = this;
       Backbone.$('body').off('keyup', this.checkKey);
       Backbone.$('body').off('click', this.clickOutside);
       if (typeof this.onClose === "function") {
@@ -329,10 +338,7 @@
       }
       this.shouldAnimate = false;
       this.modalEl.addClass("" + this.prefix + "-modal--close");
-      this.$el.fadeOut({
-        duration: 200
-      });
-      return _.delay(function() {
+      removeViews = function() {
         var _ref;
         if ((_ref = _this.currentView) != null) {
           if (typeof _ref.remove === "function") {
@@ -340,22 +346,46 @@
           }
         }
         return _this.remove();
-      }, 200);
+      };
+      animate = this.getOption('animate');
+      if (this.$el.fadeOut && animate) {
+        this.$el.fadeOut({
+          duration: 200
+        });
+        return _.delay(function() {
+          return removeViews();
+        }, 200);
+      } else {
+        return removeViews();
+      }
     };
 
-    Modal.prototype.openAt = function(index) {
-      var i, key, view;
+    Modal.prototype.openAt = function(options) {
+      var attr, i, key, view;
       i = 0;
       for (key in this.views) {
         if (key !== 'length') {
-          if (i === index) {
-            view = this.views[key];
+          if (_.isNumber(options)) {
+            if (i === options) {
+              view = this.views[key];
+            }
+            i++;
+          } else if (_.isObject(options)) {
+            if ((function() {
+              var _results;
+              _results = [];
+              for (attr in this.views[key]) {
+                _results.push(options[attr] === this.views[key][attr]);
+              }
+              return _results;
+            }).call(this)) {
+              view = this.views[key];
+            }
           }
-          i++;
         }
       }
       if (view) {
-        this.currentIndex = index;
+        this.currentIndex = _.indexOf(this.views, view);
         this.triggerView({
           data: view
         });

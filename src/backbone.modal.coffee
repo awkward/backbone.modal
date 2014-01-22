@@ -3,6 +3,8 @@ unless Backbone?
 
 class Backbone.Modal extends Backbone.View
   prefix: 'bbm'
+  animate: true
+
   constructor: ->
     @args = Array::slice.apply(arguments)
     Backbone.View::constructor.apply(this, @args)
@@ -30,14 +32,23 @@ class Backbone.Modal extends Backbone.View
       @viewContainerEl = @modalEl
 
     @$el.show()
-    @openAt(0) if @views?.length > 0
+
+    if @views?.length > 0
+      openAtOptions = options || 0
+      @openAt(openAtOptions)
+
     @onRender?()
 
-    @modalEl.css(opacity: 0)
-    @$el.fadeIn
-      duration: 100
-      complete: =>
-        @modalEl.css(opacity: 1).addClass("#{@prefix}-modal--open")
+    animate = @getOption('animate')
+
+    if @$el.fadeIn and animate
+      @modalEl.css(opacity: 0)
+      @$el.fadeIn
+        duration: 100
+        complete: =>
+          @modalEl.css(opacity: 1).addClass("#{@prefix}-modal--open")
+    else
+      @modalEl.addClass("#{@prefix}-modal--open")
 
     return this
 
@@ -225,23 +236,34 @@ class Backbone.Modal extends Backbone.View
 
     @shouldAnimate = false
     @modalEl.addClass("#{@prefix}-modal--close")
-    @$el.fadeOut(duration: 200)
 
-    _.delay =>
+    removeViews = =>
       @currentView?.remove?()
       @remove()
-    , 200
 
-  openAt: (index) ->
-    # loop through views and trigger the index
+    animate = @getOption('animate')
+    if @$el.fadeOut and animate
+      @$el.fadeOut(duration: 200)
+      _.delay ->
+        removeViews()
+      , 200
+    else
+      removeViews()
+
+  openAt: (options) ->
     i = 0
     for key of @views
       unless key is 'length'
-        view = @views[key] if i is index
-        i++
+        # Go to specific index in views[]
+        if _.isNumber(options)
+          view = @views[key] if i is options
+          i++
+        # Use attributes to find a view in views[]
+        else if _.isObject(options)
+          view  = @views[key] if options[attr] is @views[key][attr] for attr of @views[key]
 
     if view
-      @currentIndex = index
+      @currentIndex = _.indexOf(@views, view) 
       @triggerView(data: view)
 
     return this

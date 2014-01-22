@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
   <title>Tab based modal</title>
-
+  
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min.js"></script>
@@ -90,7 +90,7 @@
 
         // Render an instance of your modal
         var modalView = new Modal();
-        $('.app').html(modalView.render().el);
+        $('.app').html(modalView.render({name: 'tab2'}).el);
 
       });
 
@@ -98,5 +98,9 @@
 
     });
   </script>
+
+
+  <!-- Do not include in your page -->
+  <script src="//localhost:35729/livereload.js"></script>
 </body>
 </html>
