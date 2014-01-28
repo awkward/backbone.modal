@@ -329,6 +329,9 @@
         _this = this;
       Backbone.$('body').off('keyup', this.checkKey);
       Backbone.$('body').off('click', this.clickOutside);
+      if (typeof this.onClose === "function") {
+        this.onClose();
+      }
       this.shouldAnimate = false;
       this.modalEl.addClass("" + this.prefix + "-modal--close");
       removeViews = function() {

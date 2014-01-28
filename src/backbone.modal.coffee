@@ -228,6 +228,8 @@ class Backbone.Modal extends Backbone.View
     Backbone.$('body').off 'keyup', @checkKey
     Backbone.$('body').off 'click', @clickOutside
 
+    @onClose?()
+
     @shouldAnimate = false
     @modalEl.addClass("#{@prefix}-modal--close")
 
