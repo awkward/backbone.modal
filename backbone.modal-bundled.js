@@ -329,9 +329,6 @@
         _this = this;
       Backbone.$('body').off('keyup', this.checkKey);
       Backbone.$('body').off('click', this.clickOutside);
-      if (typeof this.onClose === "function") {
-        this.onClose();
-      }
       this.shouldAnimate = false;
       this.modalEl.addClass("" + this.prefix + "-modal--close");
       removeViews = function() {
@@ -470,6 +467,8 @@
       } else if (modal.remove) {
         modal.remove();
       }
+      Marionette.triggerMethod.call(this, "close");
+      Marionette.triggerMethod.call(this, "close", modal);
       modal.off('modal:close', this.close);
       this.modals.splice(_.indexOf(this.modals, modal), 1);
       this.zIndex--;

@@ -66,6 +66,8 @@
       } else if (modal.remove) {
         modal.remove();
       }
+      Marionette.triggerMethod.call(this, "close");
+      Marionette.triggerMethod.call(this, "close", modal);
       modal.off('modal:close', this.close);
       this.modals.splice(_.indexOf(this.modals, modal), 1);
       this.zIndex--;
