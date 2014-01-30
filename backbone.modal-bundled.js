@@ -167,9 +167,9 @@
       if (this.active) {
         switch (e.keyCode) {
           case 27:
-            return this.triggerCancel();
+            return this.triggerCancel(e);
           case 13:
-            return this.triggerSubmit();
+            return this.triggerSubmit(e);
         }
       }
     };
@@ -180,13 +180,13 @@
       }
     };
 
-    Modal.prototype.buildView = function(viewType) {
+    Modal.prototype.buildView = function(viewType, options) {
       var view;
       if (!viewType) {
         return;
       }
       if (_.isFunction(viewType)) {
-        view = new viewType(this.args[0]);
+        view = new viewType(options || this.args[0]);
         if (view instanceof Backbone.View) {
           return {
             el: view.render().$el,
@@ -194,7 +194,7 @@
           };
         } else {
           return {
-            el: viewType(this.args[0])
+            el: viewType(options || this.args[0])
           };
         }
       }
@@ -205,16 +205,22 @@
     };
 
     Modal.prototype.triggerView = function(e) {
-      var index, instance, key, options;
+      var index, instance, key, options, _base, _base1;
       if (e != null) {
         if (typeof e.preventDefault === "function") {
           e.preventDefault();
         }
       }
       options = e.data;
-      instance = this.buildView(options.view);
+      instance = this.buildView(options.view, options.viewOptions);
       if (this.currentView) {
         this.previousView = this.currentView;
+        if ((typeof (_base = this.previousView).beforeSubmit === "function" ? _base.beforeSubmit() : void 0) === false) {
+          return;
+        }
+        if (typeof (_base1 = this.previousView).submit === "function") {
+          _base1.submit();
+        }
       }
       this.currentView = instance.view || instance.el;
       index = 0;
@@ -284,15 +290,19 @@
     };
 
     Modal.prototype.triggerSubmit = function(e) {
-      if (!e) {
-        return;
-      }
+      var _ref;
       if (e != null) {
         e.preventDefault();
       }
-      if (this.beforeSubmit) {
-        if (this.beforeSubmit() === false) {
-          return;
+      if (this.beforeSubmit ? this.beforeSubmit() === false : void 0) {
+        return;
+      }
+      if (this.currentView && this.currentView.beforeSubmit ? this.currentView.beforeSubmit() === false : void 0) {
+        return;
+      }
+      if ((_ref = this.currentView) != null) {
+        if (typeof _ref.submit === "function") {
+          _ref.submit();
         }
       }
       if (typeof this.submit === "function") {
@@ -309,10 +319,8 @@
       if (e != null) {
         e.preventDefault();
       }
-      if (this.beforeCancel) {
-        if (this.beforeCancel() === false) {
-          return;
-        }
+      if (this.beforeCancel ? this.beforeCancel() === false : void 0) {
+        return;
       }
       if (typeof this.cancel === "function") {
         this.cancel();

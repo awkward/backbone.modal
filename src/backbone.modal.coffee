@@ -121,22 +121,22 @@ class Backbone.Modal extends Backbone.View
   checkKey: (e) =>
     if @active
       switch e.keyCode
-        when 27 then @triggerCancel()
-        when 13 then @triggerSubmit()
+        when 27 then @triggerCancel(e)
+        when 13 then @triggerSubmit(e)
 
   clickOutside: (e) =>
     @triggerCancel(null, true) if Backbone.$(e.target).hasClass("#{@prefix}-wrapper") and @active
 
-  buildView: (viewType) ->
+  buildView: (viewType, options) ->
     # returns a Backbone.View instance, a function or an object
     return unless viewType
     if _.isFunction(viewType)
-      view = new viewType(@args[0])
+      view = new viewType(options or @args[0])
 
       if view instanceof Backbone.View
         return {el: view.render().$el, view: view}
       else
-        return {el: viewType(@args[0])}
+        return {el: viewType(options or @args[0])}
 
     return {view: viewType, el: viewType.$el}
 
@@ -144,9 +144,13 @@ class Backbone.Modal extends Backbone.View
     # trigger what view should be rendered
     e?.preventDefault?()
     options       = e.data
-    instance      = @buildView(options.view)
+    instance      = @buildView(options.view, options.viewOptions)
 
-    @previousView = @currentView if @currentView
+    if @currentView
+      @previousView = @currentView
+      return if @previousView.beforeSubmit?() is false
+      @previousView.submit?()
+      
     @currentView  = instance.view || instance.el
 
     index = 0
@@ -195,13 +199,12 @@ class Backbone.Modal extends Backbone.View
         @previousView?.close?()
 
   triggerSubmit: (e) =>
-    return unless e
-    # triggers submit
     e?.preventDefault()
 
-    if @beforeSubmit
-      return if @beforeSubmit() is false
+    return if @beforeSubmit() is false if @beforeSubmit
+    return if @currentView.beforeSubmit() is false if @currentView and @currentView.beforeSubmit
 
+    @currentView?.submit?()
     @submit?()
 
     if @regionEnabled
@@ -210,12 +213,9 @@ class Backbone.Modal extends Backbone.View
       @close()
 
   triggerCancel: (e) =>
-    # triggers cancel
     e?.preventDefault()
 
-    if @beforeCancel
-      return if @beforeCancel() is false
-
+    return if @beforeCancel() is false if @beforeCancel
     @cancel?()
 
     if @regionEnabled
