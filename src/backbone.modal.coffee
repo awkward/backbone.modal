@@ -130,6 +130,8 @@ class Backbone.Modal extends Backbone.View
   buildView: (viewType, options) ->
     # returns a Backbone.View instance, a function or an object
     return unless viewType
+    options = options() if options and _.isFunction(options)
+
     if _.isFunction(viewType)
       view = new viewType(options or @args[0])
 
@@ -150,7 +152,7 @@ class Backbone.Modal extends Backbone.View
       @previousView = @currentView
       return if @previousView.beforeSubmit?() is false
       @previousView.submit?()
-      
+
     @currentView  = instance.view || instance.el
 
     index = 0
@@ -260,7 +262,7 @@ class Backbone.Modal extends Backbone.View
             view = @views[key] if options[attr] is @views[key][attr]
 
     if view
-      @currentIndex = _.indexOf(@views, view) 
+      @currentIndex = _.indexOf(@views, view)
       @triggerView(data: view)
 
     return this

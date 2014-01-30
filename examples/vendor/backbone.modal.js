@@ -185,6 +185,9 @@
       if (!viewType) {
         return;
       }
+      if (options && _.isFunction(options)) {
+        options = options();
+      }
       if (_.isFunction(viewType)) {
         view = new viewType(options || this.args[0]);
         if (view instanceof Backbone.View) {
