@@ -33,6 +33,7 @@
       }
       data = this.serializeData();
       this.$el.addClass("" + this.prefix + "-wrapper");
+      this.$el.height($(document).height());
       this.modalEl = Backbone.$('<div />').addClass("" + this.prefix + "-modal");
       if (this.template) {
         this.modalEl.html(this.template(data));
@@ -59,8 +60,11 @@
       this.$el.fadeIn({
         duration: 100,
         complete: function() {
+          var scrolledpx;
+          scrolledpx = parseInt($(document).scrollTop()) + 51;
           return _this.modalEl.css({
-            opacity: 1
+            opacity: 1,
+            marginTop: scrolledpx
           }).addClass("" + _this.prefix + "-modal--open");
         }
       });
