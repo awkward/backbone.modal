@@ -150,10 +150,11 @@ class Backbone.Modal extends Backbone.View
 
     if @currentView
       @previousView = @currentView
-      return if @previousView.beforeSubmit?() is false
-      @previousView.submit?()
+      unless options.openOptions?.skipSubmit
+        return if @previousView.beforeSubmit?() is false
+        @previousView.submit?()
 
-    @currentView  = instance.view || instance.el
+    @currentView = instance.view || instance.el
 
     index = 0
     for key of @views
@@ -263,7 +264,7 @@ class Backbone.Modal extends Backbone.View
 
     if view
       @currentIndex = _.indexOf(@views, view)
-      @triggerView(data: view)
+      @triggerView(data: _.extend(view, {openOptions: options}))
 
     return this
 

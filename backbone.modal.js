@@ -208,7 +208,7 @@
     };
 
     Modal.prototype.triggerView = function(e) {
-      var index, instance, key, options, _base, _base1;
+      var index, instance, key, options, _base, _base1, _ref;
       if (e != null) {
         if (typeof e.preventDefault === "function") {
           e.preventDefault();
@@ -218,11 +218,13 @@
       instance = this.buildView(options.view, options.viewOptions);
       if (this.currentView) {
         this.previousView = this.currentView;
-        if ((typeof (_base = this.previousView).beforeSubmit === "function" ? _base.beforeSubmit() : void 0) === false) {
-          return;
-        }
-        if (typeof (_base1 = this.previousView).submit === "function") {
-          _base1.submit();
+        if (!((_ref = options.openOptions) != null ? _ref.skipSubmit : void 0)) {
+          if ((typeof (_base = this.previousView).beforeSubmit === "function" ? _base.beforeSubmit() : void 0) === false) {
+            return;
+          }
+          if (typeof (_base1 = this.previousView).submit === "function") {
+            _base1.submit();
+          }
         }
       }
       this.currentView = instance.view || instance.el;
@@ -389,7 +391,9 @@
       if (view) {
         this.currentIndex = _.indexOf(this.views, view);
         this.triggerView({
-          data: view
+          data: _.extend(view, {
+            openOptions: options
+          })
         });
       }
       return this;
