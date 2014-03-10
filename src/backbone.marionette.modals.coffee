@@ -1,5 +1,5 @@
 unless Backbone?
-  throw new Error("Backbone is not defined. Please include the latest version from http://documentcloud.github.com/backbone/backbone.js") 
+  throw new Error("Backbone is not defined. Please include the latest version from http://documentcloud.github.com/backbone/backbone.js")
 
 class Backbone.Marionette.Modals extends Backbone.Marionette.Region
   modals: []
@@ -16,12 +16,12 @@ class Backbone.Marionette.Modals extends Backbone.Marionette.Region
 
     modal.render(options)
     modal.regionEnabled = true
-    
+
     @$el.show()
     @$el.append modal.el
 
-    modal.$el.css(background: 'none') if @modals.length > 0
-    
+    view.$el.css(background: 'none') for view in @modals if @modals.length > 0
+
     Marionette.triggerMethod.call(modal, "show")
     Marionette.triggerMethod.call(this, "show", modal)
 
@@ -45,7 +45,7 @@ class Backbone.Marionette.Modals extends Backbone.Marionette.Region
 
     Marionette.triggerMethod.call(modal, "close")
     Marionette.triggerMethod.call(this, "close", modal)
-    
+
     modal.off('modal:close', @close)
 
     @modals.splice(_.indexOf(@modals, modal), 1)
@@ -57,6 +57,7 @@ class Backbone.Marionette.Modals extends Backbone.Marionette.Region
     lastModal     = _.last(@modals)
 
     if lastModal
+      lastModal.$el.removeAttr('style')
       lastModal.modalEl.addClass("#{lastModal.prefix}-modal--stacked-reverse")
       _.delay =>
         lastModal.modalEl.removeClass("#{lastModal.prefix}-modal--stacked")

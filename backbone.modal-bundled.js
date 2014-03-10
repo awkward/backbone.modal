@@ -437,7 +437,7 @@
     Modals.prototype.zIndex = 0;
 
     Modals.prototype.show = function(modal, options) {
-      var lastModal, m, secondLastModal, _i, _len, _ref1;
+      var lastModal, m, secondLastModal, view, _i, _j, _len, _len1, _ref1, _ref2;
       this.ensureEl();
       if (this.modals.length > 0) {
         lastModal = _.last(this.modals);
@@ -452,16 +452,20 @@
       this.$el.show();
       this.$el.append(modal.el);
       if (this.modals.length > 0) {
-        modal.$el.css({
-          background: 'none'
-        });
+        _ref1 = this.modals;
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          view = _ref1[_i];
+          view.$el.css({
+            background: 'none'
+          });
+        }
       }
       Marionette.triggerMethod.call(modal, "show");
       Marionette.triggerMethod.call(this, "show", modal);
       this.currentView = modal;
-      _ref1 = this.modals;
-      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-        m = _ref1[_i];
+      _ref2 = this.modals;
+      for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+        m = _ref2[_j];
         m.undelegateModalEvents();
       }
       modal.on('modal:close', this.close);
@@ -489,6 +493,7 @@
       this.currentView = this.modals[this.zIndex - 1];
       lastModal = _.last(this.modals);
       if (lastModal) {
+        lastModal.$el.removeAttr('style');
         lastModal.modalEl.addClass("" + lastModal.prefix + "-modal--stacked-reverse");
         _.delay(function() {
           return lastModal.modalEl.removeClass("" + lastModal.prefix + "-modal--stacked");
