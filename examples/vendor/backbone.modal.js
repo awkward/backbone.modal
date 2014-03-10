@@ -370,12 +370,17 @@
     };
 
     Modal.prototype.openAt = function(options) {
-      var attr, i, key, view;
+      var atIndex, attr, i, key, view;
+      if (_.isNumber(options)) {
+        atIndex = options;
+      } else if (_.isNumber(options._index)) {
+        atIndex = options._index;
+      }
       i = 0;
       for (key in this.views) {
         if (key !== 'length') {
-          if (_.isNumber(options)) {
-            if (i === options) {
+          if (_.isNumber(atIndex)) {
+            if (i === atIndex) {
               view = this.views[key];
             }
             i++;
@@ -399,15 +404,25 @@
       return this;
     };
 
-    Modal.prototype.next = function() {
+    Modal.prototype.next = function(options) {
+      if (options == null) {
+        options = {};
+      }
       if (this.currentIndex + 1 < this.views.length) {
-        return this.openAt(this.currentIndex + 1);
+        return this.openAt(_.extend(options, {
+          _index: this.currentIndex + 1
+        }));
       }
     };
 
-    Modal.prototype.previous = function() {
+    Modal.prototype.previous = function(options) {
+      if (options == null) {
+        options = {};
+      }
       if (this.currentIndex - 1 < this.views.length - 1) {
-        return this.openAt(this.currentIndex - 1);
+        return this.openAt(_.extend(options, {
+          _index: this.currentIndex - 1
+        }));
       }
     };
 

@@ -250,12 +250,17 @@ class Backbone.Modal extends Backbone.View
       removeViews()
 
   openAt: (options) ->
+    if _.isNumber(options)
+      atIndex = options
+    else if _.isNumber(options._index)
+      atIndex = options._index
+
     i = 0
     for key of @views
       unless key is 'length'
         # Go to specific index in views[]
-        if _.isNumber(options)
-          view = @views[key] if i is options
+        if _.isNumber(atIndex)
+          view = @views[key] if i is atIndex
           i++
         # Use attributes to find a view in views[]
         else if _.isObject(options)
@@ -268,8 +273,8 @@ class Backbone.Modal extends Backbone.View
 
     return this
 
-  next: ->
-    @openAt(@currentIndex+1) if @currentIndex+1 < @views.length
+  next: (options = {}) ->
+    @openAt(_.extend(options, {_index: @currentIndex+1})) if @currentIndex+1 < @views.length
 
-  previous: ->
-    @openAt(@currentIndex-1) if @currentIndex-1 < @views.length-1
+  previous: (options = {}) ->
+    @openAt(_.extend(options, {_index: @currentIndex-1})) if @currentIndex-1 < @views.length-1
