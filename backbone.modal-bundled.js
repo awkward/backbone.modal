@@ -209,7 +209,7 @@
     };
 
     Modal.prototype.triggerView = function(e) {
-      var index, instance, key, options, _base, _base1, _ref;
+      var index, instance, key, options, _base, _base1, _base2, _ref;
       if (e != null) {
         if (typeof e.preventDefault === "function") {
           e.preventDefault();
@@ -247,7 +247,8 @@
         return this.animateToView(instance.el);
       } else {
         this.shouldAnimate = true;
-        return this.$(this.viewContainerEl).html(instance.el);
+        this.$(this.viewContainerEl).html(instance.el);
+        return typeof (_base2 = this.currentView).onShow === "function" ? _base2.onShow() : void 0;
       }
     };
 
