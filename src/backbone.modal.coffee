@@ -43,6 +43,7 @@ class Backbone.Modal extends Backbone.View
         duration: 100
         complete: =>
           @modalEl.css(opacity: 1).addClass("#{@prefix}-modal--open")
+          @onShow?()
     else
       @modalEl.addClass("#{@prefix}-modal--open")
 
@@ -192,6 +193,7 @@ class Backbone.Modal extends Backbone.View
 
     if previousHeight is newHeight
       @$(@viewContainerEl).html view
+      @currentView.onShow?()
       @previousView?.close?()
     else
       @$(@viewContainerEl).css(opacity: 0)
@@ -199,6 +201,7 @@ class Backbone.Modal extends Backbone.View
       @$(@viewContainerEl).animate {height: newHeight}, 100, =>
         @$(@viewContainerEl).css(opacity: 1).removeAttr('style')
         @$(@viewContainerEl).html view
+        @currentView.onShow?()
         @previousView?.close?()
 
   triggerSubmit: (e) =>

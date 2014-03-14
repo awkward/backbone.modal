@@ -60,9 +60,10 @@
         this.$el.fadeIn({
           duration: 100,
           complete: function() {
-            return _this.modalEl.css({
+            _this.modalEl.css({
               opacity: 1
             }).addClass("" + _this.prefix + "-modal--open");
+            return typeof _this.onShow === "function" ? _this.onShow() : void 0;
           }
         });
       } else {
@@ -251,7 +252,7 @@
     };
 
     Modal.prototype.animateToView = function(view) {
-      var container, newHeight, previousHeight, style, tester, _ref,
+      var container, newHeight, previousHeight, style, tester, _base, _ref,
         _this = this;
       style = {
         position: 'relative',
@@ -276,6 +277,9 @@
       newHeight = container.outerHeight();
       if (previousHeight === newHeight) {
         this.$(this.viewContainerEl).html(view);
+        if (typeof (_base = this.currentView).onShow === "function") {
+          _base.onShow();
+        }
         return (_ref = this.previousView) != null ? typeof _ref.close === "function" ? _ref.close() : void 0 : void 0;
       } else {
         this.$(this.viewContainerEl).css({
@@ -284,11 +288,14 @@
         return this.$(this.viewContainerEl).animate({
           height: newHeight
         }, 100, function() {
-          var _ref1;
+          var _base1, _ref1;
           _this.$(_this.viewContainerEl).css({
             opacity: 1
           }).removeAttr('style');
           _this.$(_this.viewContainerEl).html(view);
+          if (typeof (_base1 = _this.currentView).onShow === "function") {
+            _base1.onShow();
+          }
           return (_ref1 = _this.previousView) != null ? typeof _ref1.close === "function" ? _ref1.close() : void 0 : void 0;
         });
       }
