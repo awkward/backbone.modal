@@ -60,10 +60,14 @@
         this.$el.fadeIn({
           duration: 100,
           complete: function() {
+            var _ref1;
             _this.modalEl.css({
               opacity: 1
             }).addClass("" + _this.prefix + "-modal--open");
-            return typeof _this.onShow === "function" ? _this.onShow() : void 0;
+            if (typeof _this.onShow === "function") {
+              _this.onShow();
+            }
+            return (_ref1 = _this.currentView) != null ? typeof _ref1.onShow === "function" ? _ref1.onShow() : void 0 : void 0;
           }
         });
       } else {
@@ -209,7 +213,7 @@
     };
 
     Modal.prototype.triggerView = function(e) {
-      var index, instance, key, options, _base, _base1, _base2, _ref;
+      var index, instance, key, options, _base, _base1, _ref;
       if (e != null) {
         if (typeof e.preventDefault === "function") {
           e.preventDefault();
@@ -247,8 +251,7 @@
         return this.animateToView(instance.el);
       } else {
         this.shouldAnimate = true;
-        this.$(this.viewContainerEl).html(instance.el);
-        return typeof (_base2 = this.currentView).onShow === "function" ? _base2.onShow() : void 0;
+        return this.$(this.viewContainerEl).html(instance.el);
       }
     };
 

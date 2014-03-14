@@ -44,6 +44,7 @@ class Backbone.Modal extends Backbone.View
         complete: =>
           @modalEl.css(opacity: 1).addClass("#{@prefix}-modal--open")
           @onShow?()
+          @currentView?.onShow?()
     else
       @modalEl.addClass("#{@prefix}-modal--open")
 
@@ -173,7 +174,6 @@ class Backbone.Modal extends Backbone.View
     else
       @shouldAnimate = true
       @$(@viewContainerEl).html instance.el
-      @currentView.onShow?()
 
   animateToView: (view) ->
     style  = position: 'relative', top: -9999, left: -9999
