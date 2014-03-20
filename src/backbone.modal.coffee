@@ -1,284 +1,293 @@
-unless Backbone?
-  throw new Error("Backbone is not defined. Please include the latest version from http://documentcloud.github.com/backbone/backbone.js")
+do (root = @, factory = (Backbone) ->
+  class Backbone.Modal extends Backbone.View
+    prefix: 'bbm'
+    animate: true
 
-class Backbone.Modal extends Backbone.View
-  prefix: 'bbm'
-  animate: true
+    constructor: ->
+      @args = Array::slice.apply(arguments)
+      Backbone.View::constructor.apply(this, @args)
 
-  constructor: ->
-    @args = Array::slice.apply(arguments)
-    Backbone.View::constructor.apply(this, @args)
+      @setUIElements()
+      @delegateModalEvents()
 
-    @setUIElements()
-    @delegateModalEvents()
+    render: (options) ->
+      # use openAt or overwrite this with your own functionality
+      data = @serializeData()
 
-  render: (options) ->
-    # use openAt or overwrite this with your own functionality
-    data = @serializeData()
+      @$el.addClass("#{@prefix}-wrapper")
+      @modalEl = Backbone.$('<div />').addClass("#{@prefix}-modal")
+      @modalEl.html @template(data) if @template
+      @$el.html @modalEl
 
-    @$el.addClass("#{@prefix}-wrapper")
-    @modalEl = Backbone.$('<div />').addClass("#{@prefix}-modal")
-    @modalEl.html @template(data) if @template
-    @$el.html @modalEl
+      # global events for key and click outside the modal
+      Backbone.$('body').on 'keyup', @checkKey
+      Backbone.$('body').on 'click', @clickOutside
 
-    # global events for key and click outside the modal
-    Backbone.$('body').on 'keyup', @checkKey
-    Backbone.$('body').on 'click', @clickOutside
-
-    if @viewContainer
-      @viewContainerEl = @modalEl.find(@viewContainer)
-      @viewContainerEl.addClass("#{@prefix}-modal__views")
-    else
-      @viewContainerEl = @modalEl
-
-    @$el.show()
-    @openAt(options or 0) if @views?.length > 0
-    @onRender?()
-
-    animate = @getOption('animate')
-
-    if @$el.fadeIn and animate
-      @modalEl.css(opacity: 0)
-      @$el.fadeIn
-        duration: 100
-        complete: =>
-          @modalEl.css(opacity: 1).addClass("#{@prefix}-modal--open")
-          @onShow?()
-          @currentView?.onShow?()
-    else
-      @modalEl.addClass("#{@prefix}-modal--open")
-
-    return this
-
-  setUIElements: ->
-    # get modal options
-    @template       = @getOption('template')
-    @views          = @getOption('views')
-    @views?.length  = _.size(@views)
-    @viewContainer  = @getOption('viewContainer')
-
-    # hide modal
-    @$el.hide()
-
-    throw new Error('No template or views defined for Backbone.Modal') if _.isUndefined(@template) and _.isUndefined(@views)
-    throw new Error('No viewContainer defined for Backbone.Modal') if @template and @views and _.isUndefined(@viewContainer)
-
-  getOption: (option) ->
-    # get class instance property
-    return unless option
-    if @options and option in @options and @options[option]?
-      return @options[option]
-    else
-      return @[option]
-
-  serializeData: ->
-    # return the appropriate data for this view
-    data = {}
-
-    data = _.extend(data, @model.toJSON()) if @model
-    data = _.extend(data, {items: @collection.toJSON()}) if @collection
-
-    return data
-
-  delegateModalEvents: ->
-    @active = true
-
-    # get elements
-    cancelEl = @getOption('cancelEl')
-    submitEl = @getOption('submitEl')
-
-    # set event handlers for submit and cancel
-    @$el.on('click', submitEl, @triggerSubmit) if submitEl
-    @$el.on('click', cancelEl, @triggerCancel) if cancelEl
-
-    # set event handlers for views
-    for key of @views
-      if _.isString(key) and key isnt 'length'
-        match     = key.match(/^(\S+)\s*(.*)$/)
-        trigger   = match[1]
-        selector  = match[2]
-
-        @$el.on trigger, selector, @views[key], @triggerView
-
-  undelegateModalEvents: ->
-    @active = false
-
-    # get elements
-    cancelEl = @getOption('cancelEl')
-    submitEl = @getOption('submitEl')
-
-    # remove event handlers for submit and cancel
-    @$el.off('click', submitEl, @triggerSubmit) if submitEl
-    @$el.off('click', cancelEl, @triggerCancel) if cancelEl
-
-    # remove event handlers for views
-    for key of @views
-      if _.isString(key) and key isnt 'length'
-        match     = key.match(/^(\S+)\s*(.*)$/)
-        trigger   = match[1]
-        selector  = match[2]
-
-        @$el.off trigger, selector, @views[key], @triggerView
-
-  checkKey: (e) =>
-    if @active
-      switch e.keyCode
-        when 27 then @triggerCancel(e)
-        when 13 then @triggerSubmit(e)
-
-  clickOutside: (e) =>
-    @triggerCancel(null, true) if Backbone.$(e.target).hasClass("#{@prefix}-wrapper") and @active
-
-  buildView: (viewType, options) ->
-    # returns a Backbone.View instance, a function or an object
-    return unless viewType
-    options = options() if options and _.isFunction(options)
-
-    if _.isFunction(viewType)
-      view = new viewType(options or @args[0])
-
-      if view instanceof Backbone.View
-        return {el: view.render().$el, view: view}
+      if @viewContainer
+        @viewContainerEl = @modalEl.find(@viewContainer)
+        @viewContainerEl.addClass("#{@prefix}-modal__views")
       else
-        return {el: viewType(options or @args[0])}
+        @viewContainerEl = @modalEl
 
-    return {view: viewType, el: viewType.$el}
+      @$el.show()
+      @openAt(options or 0) if @views?.length > 0
+      @onRender?()
 
-  triggerView: (e) =>
-    # trigger what view should be rendered
-    e?.preventDefault?()
-    options       = e.data
-    instance      = @buildView(options.view, options.viewOptions)
+      animate = @getOption('animate')
 
-    if @currentView
-      @previousView = @currentView
-      unless options.openOptions?.skipSubmit
-        return if @previousView.beforeSubmit?() is false
-        @previousView.submit?()
+      if @$el.fadeIn and animate
+        @modalEl.css(opacity: 0)
+        @$el.fadeIn
+          duration: 100
+          complete: =>
+            @modalEl.css(opacity: 1).addClass("#{@prefix}-modal--open")
+            @onShow?()
+            @currentView?.onShow?()
+      else
+        @modalEl.addClass("#{@prefix}-modal--open")
 
-    @currentView = instance.view || instance.el
+      return this
 
-    index = 0
-    for key of @views
-      @currentIndex = index if options.view is @views[key].view
-      index++
+    setUIElements: ->
+      # get modal options
+      @template       = @getOption('template')
+      @views          = @getOption('views')
+      @views?.length  = _.size(@views)
+      @viewContainer  = @getOption('viewContainer')
 
-    if options.onActive
-      if _.isFunction(options.onActive)
-        options.onActive(this)
-      else if _.isString(options.onActive)
-        this[options.onActive].call(this, options)
+      # hide modal
+      @$el.hide()
 
-    if @shouldAnimate
-      @animateToView(instance.el)
-    else
-      @shouldAnimate = true
-      @$(@viewContainerEl).html instance.el
+      throw new Error('No template or views defined for Backbone.Modal') if _.isUndefined(@template) and _.isUndefined(@views)
+      throw new Error('No viewContainer defined for Backbone.Modal') if @template and @views and _.isUndefined(@viewContainer)
 
-  animateToView: (view) ->
-    style  = position: 'relative', top: -9999, left: -9999
-    tester = Backbone.$('<tester/>').css(style)
-    tester.html @$el.clone().css(style)
-    if Backbone.$('tester').length isnt 0 then Backbone.$('tester').replaceWith tester else Backbone.$('body').append tester
+    getOption: (option) ->
+      # get class instance property
+      return unless option
+      if @options and option in @options and @options[option]?
+        return @options[option]
+      else
+        return @[option]
 
-    if @viewContainer
-      container     = tester.find(@viewContainer)
-    else
-      container     = tester.find(".#{@prefix}-modal")
+    serializeData: ->
+      # return the appropriate data for this view
+      data = {}
 
-    container.removeAttr('style')
+      data = _.extend(data, @model.toJSON()) if @model
+      data = _.extend(data, {items: @collection.toJSON()}) if @collection
 
-    previousHeight  = container.outerHeight()
-    container.html(view)
-    newHeight       = container.outerHeight()
+      return data
 
-    if previousHeight is newHeight
-      @$(@viewContainerEl).html view
-      @currentView.onShow?()
-      @previousView?.close?()
-    else
-      @$(@viewContainerEl).css(opacity: 0)
+    delegateModalEvents: ->
+      @active = true
 
-      @$(@viewContainerEl).animate {height: newHeight}, 100, =>
-        @$(@viewContainerEl).css(opacity: 1).removeAttr('style')
+      # get elements
+      cancelEl = @getOption('cancelEl')
+      submitEl = @getOption('submitEl')
+
+      # set event handlers for submit and cancel
+      @$el.on('click', submitEl, @triggerSubmit) if submitEl
+      @$el.on('click', cancelEl, @triggerCancel) if cancelEl
+
+      # set event handlers for views
+      for key of @views
+        if _.isString(key) and key isnt 'length'
+          match     = key.match(/^(\S+)\s*(.*)$/)
+          trigger   = match[1]
+          selector  = match[2]
+
+          @$el.on trigger, selector, @views[key], @triggerView
+
+    undelegateModalEvents: ->
+      @active = false
+
+      # get elements
+      cancelEl = @getOption('cancelEl')
+      submitEl = @getOption('submitEl')
+
+      # remove event handlers for submit and cancel
+      @$el.off('click', submitEl, @triggerSubmit) if submitEl
+      @$el.off('click', cancelEl, @triggerCancel) if cancelEl
+
+      # remove event handlers for views
+      for key of @views
+        if _.isString(key) and key isnt 'length'
+          match     = key.match(/^(\S+)\s*(.*)$/)
+          trigger   = match[1]
+          selector  = match[2]
+
+          @$el.off trigger, selector, @views[key], @triggerView
+
+    checkKey: (e) =>
+      if @active
+        switch e.keyCode
+          when 27 then @triggerCancel(e)
+          when 13 then @triggerSubmit(e)
+
+    clickOutside: (e) =>
+      @triggerCancel(null, true) if Backbone.$(e.target).hasClass("#{@prefix}-wrapper") and @active
+
+    buildView: (viewType, options) ->
+      # returns a Backbone.View instance, a function or an object
+      return unless viewType
+      options = options() if options and _.isFunction(options)
+
+      if _.isFunction(viewType)
+        view = new viewType(options or @args[0])
+
+        if view instanceof Backbone.View
+          return {el: view.render().$el, view: view}
+        else
+          return {el: viewType(options or @args[0])}
+
+      return {view: viewType, el: viewType.$el}
+
+    triggerView: (e) =>
+      # trigger what view should be rendered
+      e?.preventDefault?()
+      options       = e.data
+      instance      = @buildView(options.view, options.viewOptions)
+
+      if @currentView
+        @previousView = @currentView
+        unless options.openOptions?.skipSubmit
+          return if @previousView.beforeSubmit?() is false
+          @previousView.submit?()
+
+      @currentView = instance.view || instance.el
+
+      index = 0
+      for key of @views
+        @currentIndex = index if options.view is @views[key].view
+        index++
+
+      if options.onActive
+        if _.isFunction(options.onActive)
+          options.onActive(this)
+        else if _.isString(options.onActive)
+          this[options.onActive].call(this, options)
+
+      if @shouldAnimate
+        @animateToView(instance.el)
+      else
+        @shouldAnimate = true
+        @$(@viewContainerEl).html instance.el
+
+    animateToView: (view) ->
+      style  = position: 'relative', top: -9999, left: -9999
+      tester = Backbone.$('<tester/>').css(style)
+      tester.html @$el.clone().css(style)
+      if Backbone.$('tester').length isnt 0 then Backbone.$('tester').replaceWith tester else Backbone.$('body').append tester
+
+      if @viewContainer
+        container     = tester.find(@viewContainer)
+      else
+        container     = tester.find(".#{@prefix}-modal")
+
+      container.removeAttr('style')
+
+      previousHeight  = container.outerHeight()
+      container.html(view)
+      newHeight       = container.outerHeight()
+
+      if previousHeight is newHeight
         @$(@viewContainerEl).html view
         @currentView.onShow?()
         @previousView?.close?()
+      else
+        @$(@viewContainerEl).css(opacity: 0)
 
-  triggerSubmit: (e) =>
-    e?.preventDefault()
+        @$(@viewContainerEl).animate {height: newHeight}, 100, =>
+          @$(@viewContainerEl).css(opacity: 1).removeAttr('style')
+          @$(@viewContainerEl).html view
+          @currentView.onShow?()
+          @previousView?.close?()
 
-    return if @beforeSubmit() is false if @beforeSubmit
-    return if @currentView.beforeSubmit() is false if @currentView and @currentView.beforeSubmit
+    triggerSubmit: (e) =>
+      e?.preventDefault()
 
-    @currentView?.submit?()
-    @submit?()
+      return if @beforeSubmit() is false if @beforeSubmit
+      return if @currentView.beforeSubmit() is false if @currentView and @currentView.beforeSubmit
 
-    if @regionEnabled
-      @trigger('modal:close')
-    else
-      @close()
+      @currentView?.submit?()
+      @submit?()
 
-  triggerCancel: (e) =>
-    e?.preventDefault()
+      if @regionEnabled
+        @trigger('modal:close')
+      else
+        @close()
 
-    return if @beforeCancel() is false if @beforeCancel
-    @cancel?()
+    triggerCancel: (e) =>
+      e?.preventDefault()
 
-    if @regionEnabled
-      @trigger('modal:close')
-    else
-      @close()
+      return if @beforeCancel() is false if @beforeCancel
+      @cancel?()
 
-  close: ->
-    # closes view
-    Backbone.$('body').off 'keyup', @checkKey
-    Backbone.$('body').off 'click', @clickOutside
+      if @regionEnabled
+        @trigger('modal:close')
+      else
+        @close()
 
-    @onClose?()
+    close: ->
+      # closes view
+      Backbone.$('body').off 'keyup', @checkKey
+      Backbone.$('body').off 'click', @clickOutside
 
-    @shouldAnimate = false
-    @modalEl.addClass("#{@prefix}-modal--close")
+      @onClose?()
 
-    removeViews = =>
-      @currentView?.remove?()
-      @remove()
+      @shouldAnimate = false
+      @modalEl.addClass("#{@prefix}-modal--close")
 
-    animate = @getOption('animate')
-    if @$el.fadeOut and animate
-      @$el.fadeOut(duration: 200)
-      _.delay ->
+      removeViews = =>
+        @currentView?.remove?()
+        @remove()
+
+      animate = @getOption('animate')
+      if @$el.fadeOut and animate
+        @$el.fadeOut(duration: 200)
+        _.delay ->
+          removeViews()
+        , 200
+      else
         removeViews()
-      , 200
-    else
-      removeViews()
 
-  openAt: (options) ->
-    if _.isNumber(options)
-      atIndex = options
-    else if _.isNumber(options._index)
-      atIndex = options._index
+    openAt: (options) ->
+      if _.isNumber(options)
+        atIndex = options
+      else if _.isNumber(options._index)
+        atIndex = options._index
 
-    i = 0
-    for key of @views
-      unless key is 'length'
-        # Go to specific index in views[]
-        if _.isNumber(atIndex)
-          view = @views[key] if i is atIndex
-          i++
-        # Use attributes to find a view in views[]
-        else if _.isObject(options)
-          for attr of @views[key]
-            view = @views[key] if options[attr] is @views[key][attr]
+      i = 0
+      for key of @views
+        unless key is 'length'
+          # Go to specific index in views[]
+          if _.isNumber(atIndex)
+            view = @views[key] if i is atIndex
+            i++
+          # Use attributes to find a view in views[]
+          else if _.isObject(options)
+            for attr of @views[key]
+              view = @views[key] if options[attr] is @views[key][attr]
 
-    if view
-      @currentIndex = _.indexOf(@views, view)
-      @triggerView(data: _.extend(view, {openOptions: options}))
+      if view
+        @currentIndex = _.indexOf(@views, view)
+        @triggerView(data: _.extend(view, {openOptions: options}))
 
-    return this
+      return this
 
-  next: (options = {}) ->
-    @openAt(_.extend(options, {_index: @currentIndex+1})) if @currentIndex+1 < @views.length
+    next: (options = {}) ->
+      @openAt(_.extend(options, {_index: @currentIndex+1})) if @currentIndex+1 < @views.length
 
-  previous: (options = {}) ->
-    @openAt(_.extend(options, {_index: @currentIndex-1})) if @currentIndex-1 < @views.length-1
+    previous: (options = {}) ->
+      @openAt(_.extend(options, {_index: @currentIndex-1})) if @currentIndex-1 < @views.length-1
+) ->
+  if typeof exports is 'object'
+    backbone = require 'backbone'
+    module.exports = factory backbone
+  else if typeof define is 'function' && define.amd
+    define ['backbone'], factory
+  else
+    unless Backbone?
+      throw new Error("Backbone is not defined. Please include the latest version from http://documentcloud.github.com/backbone/backbone.js")
+
+    factory Backbone
