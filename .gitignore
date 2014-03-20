@@ -15,3 +15,6 @@ node_modules
 # Sublime Text project files
 *.sublime-project
 *.sublime-workspace
+
+# PhpStorm project files
+.idea
