@@ -45,8 +45,8 @@
           });
         }
       }
-      Marionette.triggerMethod.call(modal, "show");
-      Marionette.triggerMethod.call(this, "show", modal);
+      Backbone.Marionette.triggerMethod.call(modal, "show");
+      Backbone.Marionette.triggerMethod.call(this, "show", modal);
       this.currentView = modal;
       _ref2 = this.modals;
       for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
@@ -70,8 +70,8 @@
       } else if (modal.remove) {
         modal.remove();
       }
-      Marionette.triggerMethod.call(modal, "close");
-      Marionette.triggerMethod.call(this, "close", modal);
+      Backbone.Marionette.triggerMethod.call(modal, "close");
+      Backbone.Marionette.triggerMethod.call(this, "close", modal);
       modal.off('modal:close', this.close);
       this.modals.splice(_.indexOf(this.modals, modal), 1);
       this.zIndex--;

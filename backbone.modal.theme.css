@@ -208,7 +208,6 @@
   100% {
     -webkit-transform: matrix(1, 0, 0, 1, 0, 50);
     opacity: 1; } }
-
 .bbm-modal--open {
   -webkit-animation-duration: 0.3s;
   -webkit-animation-name: bbm-open;
@@ -322,7 +321,6 @@
   100% {
     -webkit-transform: matrix(0.99, 0, 0, 0.99, 0, 43);
     opacity: 0.5; } }
-
 .bbm-modal--stacked {
   -webkit-animation-duration: 0.43333s;
   -webkit-animation-name: bbm-stacked;
@@ -436,7 +434,6 @@
   100% {
     -webkit-transform: matrix(1, 0, 0, 1, 0, 50);
     opacity: 1; } }
-
 .bbm-modal--stacked-reverse {
   -webkit-animation-duration: 0.43333s;
   -webkit-animation-name: bbm-stacked-reverse;
@@ -537,11 +534,11 @@
 
   88% {
     -webkit-transform: matrix(0.99, 0, 0, 0.99, 0, 42.9995);
-    opacity: -7e -5; }
+    opacity: -12e; }
 
   92% {
     -webkit-transform: matrix(0.99, 0, 0, 0.99, 0, 43.00044);
-    opacity: 6.0e-05; }
+    opacity: 0.00006; }
 
   96% {
     -webkit-transform: matrix(0.99, 0, 0, 0.99, 0, 43.00088);
@@ -550,7 +547,6 @@
   100% {
     -webkit-transform: matrix(0.99, 0, 0, 0.99, 0, 43);
     opacity: 0; } }
-
 .bbm-modal--close {
   -webkit-animation-duration: 0.43333s;
   -webkit-animation-name: bbm-close;
