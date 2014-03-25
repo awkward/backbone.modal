@@ -22,8 +22,8 @@ class Backbone.Marionette.Modals extends Backbone.Marionette.Region
 
     view.$el.css(background: 'none') for view in @modals if @modals.length > 0
 
-    Marionette.triggerMethod.call(modal, "show")
-    Marionette.triggerMethod.call(this, "show", modal)
+    Backbone.Marionette.triggerMethod.call(modal, "show")
+    Backbone.Marionette.triggerMethod.call(this, "show", modal)
 
     @currentView = modal
 
@@ -43,8 +43,8 @@ class Backbone.Marionette.Modals extends Backbone.Marionette.Region
     else if modal.remove
       modal.remove()
 
-    Marionette.triggerMethod.call(modal, "close")
-    Marionette.triggerMethod.call(this, "close", modal)
+    Backbone.Marionette.triggerMethod.call(modal, "close")
+    Backbone.Marionette.triggerMethod.call(this, "close", modal)
 
     modal.off('modal:close', @close)
 
