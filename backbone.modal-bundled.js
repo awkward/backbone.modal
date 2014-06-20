@@ -59,9 +59,10 @@
       this.$el.fadeIn({
         duration: 100,
         complete: function() {
-          return _this.modalEl.css({
+          _this.modalEl.css({
             opacity: 1
           }).addClass("" + _this.prefix + "-modal--open");
+          return typeof _this.onRendered === "function" ? _this.onRendered() : void 0;
         }
       });
       return this;
