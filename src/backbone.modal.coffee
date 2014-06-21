@@ -15,6 +15,7 @@ class Backbone.Modal extends Backbone.View
     data = @serializeData()
 
     @$el.addClass("#{@prefix}-wrapper")
+    @$el.height $(document).height()
     @modalEl = Backbone.$('<div />').addClass("#{@prefix}-modal")
     @modalEl.html @template(data) if @template
     @$el.html @modalEl
@@ -37,7 +38,8 @@ class Backbone.Modal extends Backbone.View
     @$el.fadeIn
       duration: 100
       complete: =>
-        @modalEl.css(opacity: 1).addClass("#{@prefix}-modal--open")
+        scrolledpx = parseInt($(document).scrollTop()) + 51
+        @modalEl.css(opacity: 1, marginTop: scrolledpx).addClass("#{@prefix}-modal--open")
 
     return this
 
