@@ -120,11 +120,18 @@ class Backbone.Modal extends Backbone.View
   clickOutside: (e) =>
     @triggerCancel(null, true) if Backbone.$(e.target).hasClass("#{@prefix}-wrapper") and @active
 
-  buildView: (viewType) ->
+  buildView: (viewType, viewOptions = {}) ->
     # returns a Backbone.View instance, a function or an object
     return unless viewType
     if _.isFunction(viewType)
-      view = new viewType(@args[0])
+
+      args = this.args[0];
+
+      if typeof args is 'object'
+        args = _.extend(args, viewOptions);
+      else args = viewOptions
+
+      view = new viewType(args)
 
       if view instanceof Backbone.View
         return {el: view.render().$el, view: view}
@@ -137,7 +144,7 @@ class Backbone.Modal extends Backbone.View
     # trigger what view should be rendered
     e?.preventDefault?()
     options       = e.data
-    instance      = @buildView(options.view)
+    instance      = @buildView(options.view, options?.viewOptions)
 
     @previousView = @currentView if @currentView
     @currentView  = instance.view || instance.el
@@ -154,10 +161,11 @@ class Backbone.Modal extends Backbone.View
         this[options.onActive].call(this, options)
 
     if @shouldAnimate
-      @animateToView(instance.el)
+      @animateToView(instance)
     else
       @shouldAnimate = true
       @$(@viewContainerEl).html instance.el
+      instance.view?.triggerMethod? "show"
 
   animateToView: (view) ->
     style  = position: 'relative', top: -9999, left: -9999
@@ -173,19 +181,21 @@ class Backbone.Modal extends Backbone.View
     container.removeAttr('style')
 
     previousHeight  = container.outerHeight()
-    container.html(view)
+    container.html(view.el)
     newHeight       = container.outerHeight()
 
     if previousHeight is newHeight
-      @$(@viewContainerEl).html view
+      @$(@viewContainerEl).html view.el
       @previousView?.close?()
+      view.view?.triggerMethod? "show"
     else
       @$(@viewContainerEl).css(opacity: 0)
 
       @$(@viewContainerEl).animate {height: newHeight}, 100, =>
         @$(@viewContainerEl).css(opacity: 1).removeAttr('style')
-        @$(@viewContainerEl).html view
+        @$(@viewContainerEl).html view.el
         @previousView?.close?()
+        view.view?.triggerMethod? "show"
 
   triggerSubmit: (e) =>
     return unless e
