@@ -189,11 +189,13 @@ class Backbone.Modal extends Backbone.View
 
   triggerSubmit: (e) =>
     return unless e
+
+    # To use HTML5 Validation we need to do this without preventDefault.
+     if @beforeSubmit
+      return if @beforeSubmit(e) is false
+
     # triggers submit
     e?.preventDefault()
-
-    if @beforeSubmit
-      return if @beforeSubmit() is false
 
     @submit?()
 
