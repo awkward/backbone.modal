@@ -26,7 +26,7 @@
       if (options == null) {
         options = {};
       }
-      this.ensureEl();
+      this._ensureElement();
       if (this.modals.length > 0) {
         lastModal = _.last(this.modals);
         lastModal.modalEl.addClass("" + lastModal.prefix + "-modal--stacked");

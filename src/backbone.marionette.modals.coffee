@@ -6,7 +6,7 @@ class Backbone.Marionette.Modals extends Backbone.Marionette.Region
   zIndex: 0
 
   show: (modal, options = {}) ->
-    @ensureEl()
+    @_ensureElement()
 
     if @modals.length > 0
       lastModal = _.last(@modals)
