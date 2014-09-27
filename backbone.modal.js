@@ -38,7 +38,6 @@
         this.modalEl.html(this.template(data));
       }
       this.$el.html(this.modalEl);
-      Backbone.$('body').addClass('open-modal');
       Backbone.$('body').on('keyup', this.checkKey);
       Backbone.$('body').on('click', this.clickOutside);
       if (this.viewContainer) {
@@ -323,7 +322,6 @@
 
     Modal.prototype.close = function() {
       var _this = this;
-      Backbone.$('body').removeClass('open-modal');
       Backbone.$('body').off('keyup', this.checkKey);
       Backbone.$('body').off('click', this.clickOutside);
       if (typeof this.onClose === "function") {
