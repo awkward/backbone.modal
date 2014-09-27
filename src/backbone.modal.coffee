@@ -20,6 +20,7 @@ class Backbone.Modal extends Backbone.View
     @$el.html @modalEl
 
     # global events for key and click outside the modal
+    Backbone.$('body').addClass 'open-modal'
     Backbone.$('body').on 'keyup', @checkKey
     Backbone.$('body').on 'click', @clickOutside
 
@@ -218,6 +219,7 @@ class Backbone.Modal extends Backbone.View
 
   close: ->
     # closes view
+    Backbone.$('body').removeClass 'open-modal'
     Backbone.$('body').off 'keyup', @checkKey
     Backbone.$('body').off 'click', @clickOutside
 
