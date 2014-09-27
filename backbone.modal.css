@@ -11,7 +11,7 @@
   height: 100%;
   z-index: 100;
   padding: 50px 10px;
-  overflow: visible; }
+  overflow: scroll; }
   .bbm-wrapper * {
     box-sizing: border-box; }
 
