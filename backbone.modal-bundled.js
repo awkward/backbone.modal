@@ -27,10 +27,10 @@
         this.triggerView = __bind(this.triggerView, this);
         this.clickOutside = __bind(this.clickOutside, this);
         this.checkKey = __bind(this.checkKey, this);
+        this.rendererCompleted = __bind(this.rendererCompleted, this);
         this.args = Array.prototype.slice.apply(arguments);
         Backbone.View.prototype.constructor.apply(this, this.args);
         this.setUIElements();
-        this.delegateModalEvents();
       }
 
       Modal.prototype.render = function(options) {
@@ -42,21 +42,20 @@
           this.modalEl.html(this.template(data));
         }
         this.$el.html(this.modalEl);
-        Backbone.$('body').on('keyup', this.checkKey);
-        Backbone.$('body').on('click', this.clickOutside);
         if (this.viewContainer) {
           this.viewContainerEl = this.modalEl.find(this.viewContainer);
           this.viewContainerEl.addClass("" + this.prefix + "-modal__views");
         } else {
           this.viewContainerEl = this.modalEl;
         }
-        this.$el.show();
+        $(':focus').blur();
         if (((_ref = this.views) != null ? _ref.length : void 0) > 0) {
           this.openAt(options || 0);
         }
         if (typeof this.onRender === "function") {
           this.onRender();
         }
+        this.delegateModalEvents();
         animate = this.getOption('animate');
         if (this.$el.fadeIn && animate) {
           this.modalEl.css({
@@ -64,23 +63,25 @@
           });
           this.$el.fadeIn({
             duration: 100,
-            complete: (function(_this) {
-              return function() {
-                var _ref1;
-                _this.modalEl.css({
-                  opacity: 1
-                }).addClass("" + _this.prefix + "-modal--open");
-                if (typeof _this.onShow === "function") {
-                  _this.onShow();
-                }
-                return (_ref1 = _this.currentView) != null ? typeof _ref1.onShow === "function" ? _ref1.onShow() : void 0 : void 0;
-              };
-            })(this)
+            complete: this.rendererCompleted
           });
         } else {
-          this.modalEl.addClass("" + this.prefix + "-modal--open");
+          this.rendererCompleted();
         }
         return this;
+      };
+
+      Modal.prototype.rendererCompleted = function() {
+        var _ref;
+        Backbone.$('body').on('keyup', this.checkKey);
+        Backbone.$('body').on('click', this.clickOutside);
+        this.modalEl.css({
+          opacity: 1
+        }).addClass("" + this.prefix + "-modal--open");
+        if (typeof this.onShow === "function") {
+          this.onShow();
+        }
+        return (_ref = this.currentView) != null ? typeof _ref.onShow === "function" ? _ref.onShow() : void 0 : void 0;
       };
 
       Modal.prototype.setUIElements = function() {
@@ -188,7 +189,7 @@
 
       Modal.prototype.clickOutside = function(e) {
         if (Backbone.$(e.target).hasClass("" + this.prefix + "-wrapper") && this.active) {
-          return this.triggerCancel(null, true);
+          return this.triggerCancel();
         }
       };
 
@@ -314,7 +315,7 @@
       };
 
       Modal.prototype.triggerSubmit = function(e) {
-        var _ref;
+        var _ref, _ref1;
         if (e != null) {
           e.preventDefault();
         }
@@ -328,9 +329,12 @@
             return;
           }
         }
-        if ((_ref = this.currentView) != null) {
-          if (typeof _ref.submit === "function") {
-            _ref.submit();
+        if (!(this.submit && ((_ref = this.currentView) != null ? _ref.submit : void 0) && this.getOption('submitEl'))) {
+          return this.triggerCancel();
+        }
+        if ((_ref1 = this.currentView) != null) {
+          if (typeof _ref1.submit === "function") {
+            _ref1.submit();
           }
         }
         if (typeof this.submit === "function") {

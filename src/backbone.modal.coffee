@@ -20,7 +20,6 @@
       Backbone.View::constructor.apply(this, @args)
 
       @setUIElements()
-      @delegateModalEvents()
 
     render: (options) ->
       # use openAt or overwrite this with your own functionality
@@ -31,19 +30,19 @@
       @modalEl.html @template(data) if @template
       @$el.html @modalEl
 
-      # global events for key and click outside the modal
-      Backbone.$('body').on 'keyup', @checkKey
-      Backbone.$('body').on 'click', @clickOutside
-
       if @viewContainer
         @viewContainerEl = @modalEl.find(@viewContainer)
         @viewContainerEl.addClass("#{@prefix}-modal__views")
       else
         @viewContainerEl = @modalEl
 
-      @$el.show()
+      # Blur links to prevent double keystroke events
+      $(':focus').blur()
+
       @openAt(options or 0) if @views?.length > 0
       @onRender?()
+
+      @delegateModalEvents()
 
       animate = @getOption('animate')
 
@@ -51,14 +50,20 @@
         @modalEl.css(opacity: 0)
         @$el.fadeIn
           duration: 100
-          complete: =>
-            @modalEl.css(opacity: 1).addClass("#{@prefix}-modal--open")
-            @onShow?()
-            @currentView?.onShow?()
+          complete: @rendererCompleted
       else
-        @modalEl.addClass("#{@prefix}-modal--open")
+        @rendererCompleted()
 
       return this
+
+    rendererCompleted: =>
+      # global events for key and click outside the modal
+      Backbone.$('body').on('keyup', @checkKey)
+      Backbone.$('body').on('click', @clickOutside)
+
+      @modalEl.css(opacity: 1).addClass("#{@prefix}-modal--open")
+      @onShow?()
+      @currentView?.onShow?()
 
     setUIElements: ->
       # get modal options
@@ -137,7 +142,7 @@
           when 13 then @triggerSubmit(e)
 
     clickOutside: (e) =>
-      @triggerCancel(null, true) if Backbone.$(e.target).hasClass("#{@prefix}-wrapper") and @active
+      @triggerCancel() if Backbone.$(e.target).hasClass("#{@prefix}-wrapper") and @active
 
     buildView: (viewType, options) ->
       # returns a Backbone.View instance, a function or an object
@@ -221,6 +226,8 @@
       return if @beforeSubmit() is false if @beforeSubmit
       return if @currentView.beforeSubmit() is false if @currentView and @currentView.beforeSubmit
 
+      return @triggerCancel() unless @submit and @currentView?.submit and @getOption('submitEl')
+
       @currentView?.submit?()
       @submit?()
 
@@ -241,9 +248,8 @@
         @destroy()
 
     destroy: ->
-      # destroys view
-      Backbone.$('body').off 'keyup', @checkKey
-      Backbone.$('body').off 'click', @clickOutside
+      Backbone.$('body').off('keyup', @checkKey)
+      Backbone.$('body').off('click', @clickOutside)
 
       @onDestroy?()
 
