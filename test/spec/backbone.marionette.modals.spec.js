@@ -19,13 +19,13 @@
       layout.prototype.regions = {
         modals: {
           selector: '#modals',
-          regionType: Backbone.Marionette.Modals
+          regionClass: Backbone.Marionette.Modals
         }
       };
 
       return layout;
 
-    })(Backbone.Marionette.Layout);
+    })(Backbone.Marionette.LayoutView);
     modal = (function(_super) {
       __extends(modal, _super);
 
@@ -35,12 +35,12 @@
 
       modal.prototype.viewContainer = 'div';
 
-      modal.prototype.cancelEl = '.close';
+      modal.prototype.cancelEl = '.destroy';
 
       modal.prototype.submitEl = '.submit';
 
       modal.prototype.template = function() {
-        return '<a id="id"></a><div></div><a class="close"></a><a class="submit"></a>';
+        return '<a id="id"></a><div></div><a class="destroy"></a><a class="submit"></a>';
       };
 
       modal.prototype.views = {
@@ -59,6 +59,7 @@
 
     })(Backbone.Modal);
     myLayout = new layout();
+    $('body').append(myLayout.render().el);
     describe('#show', function() {
       it('should stack a modal view', function() {
         myLayout.modals.show(new modal());
@@ -66,17 +67,17 @@
       });
       return it('should disable modals with zIndex < modal', function() {});
     });
-    describe('#close', function() {
-      it('should only close the last modal', function() {
-        myLayout.modals.close();
+    describe('#destroy', function() {
+      it('should only destroy the last modal', function() {
+        myLayout.modals.destroy();
         return expect(myLayout.modals.zIndex).toBe(0);
       });
       return it('should enable the last modal', function() {});
     });
-    return describe('#closeAll', function() {
-      return it('should close all the modals', function() {
+    return describe('#destroyAll', function() {
+      return it('should destroy all the modals', function() {
         myLayout.modals.show(new modal());
-        myLayout.modals.closeAll();
+        myLayout.modals.destroyAll();
         return expect(myLayout.modals.modals.length).toBe(0);
       });
     });

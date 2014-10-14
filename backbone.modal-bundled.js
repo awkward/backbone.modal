@@ -290,7 +290,7 @@
           if (typeof (_base = this.currentView).onShow === "function") {
             _base.onShow();
           }
-          return (_ref = this.previousView) != null ? typeof _ref.close === "function" ? _ref.close() : void 0 : void 0;
+          return (_ref = this.previousView) != null ? typeof _ref.destroy === "function" ? _ref.destroy() : void 0 : void 0;
         } else {
           this.$(this.viewContainerEl).css({
             opacity: 0
@@ -307,7 +307,7 @@
               if (typeof (_base1 = _this.currentView).onShow === "function") {
                 _base1.onShow();
               }
-              return (_ref1 = _this.previousView) != null ? typeof _ref1.close === "function" ? _ref1.close() : void 0 : void 0;
+              return (_ref1 = _this.previousView) != null ? typeof _ref1.destroy === "function" ? _ref1.destroy() : void 0 : void 0;
             };
           })(this));
         }
@@ -337,9 +337,9 @@
           this.submit();
         }
         if (this.regionEnabled) {
-          return this.trigger('modal:close');
+          return this.trigger('modal:destroy');
         } else {
-          return this.close();
+          return this.destroy();
         }
       };
 
@@ -356,21 +356,21 @@
           this.cancel();
         }
         if (this.regionEnabled) {
-          return this.trigger('modal:close');
+          return this.trigger('modal:destroy');
         } else {
-          return this.close();
+          return this.destroy();
         }
       };
 
-      Modal.prototype.close = function() {
+      Modal.prototype.destroy = function() {
         var animate, removeViews;
         Backbone.$('body').off('keyup', this.checkKey);
         Backbone.$('body').off('click', this.clickOutside);
-        if (typeof this.onClose === "function") {
-          this.onClose();
+        if (typeof this.onDestroy === "function") {
+          this.onDestroy();
         }
         this.shouldAnimate = false;
-        this.modalEl.addClass("" + this.prefix + "-modal--close");
+        this.modalEl.addClass("" + this.prefix + "-modal--destroy");
         removeViews = (function(_this) {
           return function() {
             var _ref;
@@ -478,7 +478,7 @@
       __extends(Modals, _super);
 
       function Modals() {
-        this.close = __bind(this.close, this);
+        this.destroy = __bind(this.destroy, this);
         return Modals.__super__.constructor.apply(this, arguments);
       }
 
@@ -486,58 +486,60 @@
 
       Modals.prototype.zIndex = 0;
 
-      Modals.prototype.show = function(modal, options) {
-        var lastModal, m, secondLastModal, view, _i, _j, _len, _len1, _ref, _ref1;
-        this.ensureEl();
+      Modals.prototype.show = function(view, options) {
+        var lastModal, modalView, secondLastModal, _i, _j, _len, _len1, _ref, _ref1;
+        if (options == null) {
+          options = {};
+        }
+        this._ensureElement();
         if (this.modals.length > 0) {
           lastModal = _.last(this.modals);
-          lastModal.modalEl.addClass("" + lastModal.prefix + "-modal--stacked");
+          lastModal.modalEl.addClass("" + lastModal.prefix + "-view--stacked");
           secondLastModal = this.modals[this.modals.length - 1];
           if (secondLastModal != null) {
             secondLastModal.modalEl.removeClass("" + secondLastModal.prefix + "-modal--stacked-reverse");
           }
         }
-        modal.render(options);
-        modal.regionEnabled = true;
-        this.$el.show();
-        this.$el.append(modal.el);
+        view.render();
+        view.regionEnabled = true;
+        this.triggerMethod('before:swap', view);
+        this.triggerMethod('before:show', view);
+        Marionette.triggerMethodOn(view, 'before:show');
+        this.triggerMethod('swapOut', this.currentView);
+        this.$el.append(view.el);
+        this.currentView = view;
+        this.triggerMethod('swap', view);
+        this.triggerMethod('show', view);
+        Marionette.triggerMethodOn(view, 'show');
         if (this.modals.length > 0) {
           _ref = this.modals;
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            view = _ref[_i];
-            view.$el.css({
+            modalView = _ref[_i];
+            modalView.$el.css({
               background: 'none'
             });
           }
         }
-        Marionette.triggerMethod.call(modal, "show");
-        Marionette.triggerMethod.call(this, "show", modal);
-        this.currentView = modal;
         _ref1 = this.modals;
         for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-          m = _ref1[_j];
-          m.undelegateModalEvents();
+          modalView = _ref1[_j];
+          modalView.undelegateModalEvents();
         }
-        modal.on('modal:close', this.close);
-        this.modals.push(modal);
+        view.on('modal:destroy', this.destroy);
+        this.modals.push(view);
         return this.zIndex++;
       };
 
-      Modals.prototype.close = function() {
-        var lastModal, modal;
-        modal = this.currentView;
-        if (!modal || modal.isClosed) {
-          return;
+      Modals.prototype.destroy = function() {
+        var lastModal, view;
+        view = this.currentView;
+        if (view.destroy && !view.isDestroyed) {
+          view.destroy();
+        } else if (view.remove) {
+          view.remove();
         }
-        if (modal.close) {
-          modal.close();
-        } else if (modal.remove) {
-          modal.remove();
-        }
-        Marionette.triggerMethod.call(modal, "close");
-        Marionette.triggerMethod.call(this, "close", modal);
-        modal.off('modal:close', this.close);
-        this.modals.splice(_.indexOf(this.modals, modal), 1);
+        view.off('modal:destroy', this.destroy);
+        this.modals.splice(_.indexOf(this.modals, view), 1);
         this.zIndex--;
         this.currentView = this.modals[this.zIndex - 1];
         lastModal = _.last(this.modals);
@@ -555,13 +557,13 @@
         }
       };
 
-      Modals.prototype.closeAll = function() {
-        var modal, _i, _len, _ref, _results;
+      Modals.prototype.destroyAll = function() {
+        var view, _i, _len, _ref, _results;
         _ref = this.modals;
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          modal = _ref[_i];
-          _results.push(this.close());
+          view = _ref[_i];
+          _results.push(this.destroy());
         }
         return _results;
       };

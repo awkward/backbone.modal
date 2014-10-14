@@ -6,9 +6,9 @@ describe 'Backbone.Modal', ->
 
     class modal extends Backbone.Modal
       viewContainer: 'div'
-      cancelEl: '.close'
+      cancelEl: '.destroy'
       submitEl: '.submit'
-      template: -> '<a class="class"></a><a id="id"></a><div></div><a data-event="true"></a><a class="close"></a><a class="submit"></a>'
+      template: -> '<a class="class"></a><a id="id"></a><div></div><a data-event="true"></a><a class="destroy"></a><a class="submit"></a>'
       views:
         'click .class':
           view: new backboneView
@@ -102,17 +102,17 @@ describe 'Backbone.Modal', ->
 
     it 'stops the cancel when it returns false', ->
       view = new modal()
-      spyOn(view, 'close')
+      spyOn(view, 'destroy')
       view._shouldCancel = false
       view.render().triggerCancel()
-      expect(view.close.calls.length).toEqual(0)
+      expect(view.destroy).not.toHaveBeenCalled()
 
   describe '#cancel', ->
     it 'should be called when cancelEl is triggered', ->
       view = new modal()
       spyOn(view, 'cancel')
       view.render().$(view.cancelEl).click()
-      expect(view.cancel.calls.length).toEqual(1)
+      expect(view.cancel).toHaveBeenCalled()
 
   describe '#beforeSubmit', ->
     it "should call this method when it's defined", ->
@@ -126,14 +126,14 @@ describe 'Backbone.Modal', ->
       spyOn(view, 'submit')
       view._shouldSubmit = false
       view.render().triggerSubmit({preventDefault: ->})
-      expect(view.submit.calls.length).toEqual(0)
+      expect(view.submit).not.toHaveBeenCalled()
 
   describe '#submit', ->
     it 'should be called when submitEl is triggered', ->
       view = new modal()
       spyOn(view, 'submit')
       view.render().$(view.submitEl).click()
-      expect(view.submit.calls.length).toEqual(1)
+      expect(view.submit).toHaveBeenCalled()
 
   describe '#animate', ->
     it 'should do all the animation work', ->

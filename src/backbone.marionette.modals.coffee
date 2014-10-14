@@ -15,55 +15,52 @@
     modals: []
     zIndex: 0
 
-    show: (modal, options) ->
-      @ensureEl()
+    show: (view, options = {}) ->
+      @_ensureElement()
 
       if @modals.length > 0
         lastModal = _.last(@modals)
-        lastModal.modalEl.addClass("#{lastModal.prefix}-modal--stacked")
+        lastModal.modalEl.addClass("#{lastModal.prefix}-view--stacked")
         secondLastModal = @modals[@modals.length-1]
         secondLastModal?.modalEl.removeClass("#{secondLastModal.prefix}-modal--stacked-reverse")
 
-      modal.render(options)
-      modal.regionEnabled = true
+      view.render()
+      view.regionEnabled = true
 
-      @$el.show()
-      @$el.append modal.el
+      @triggerMethod('before:swap', view)
+      @triggerMethod('before:show', view)
+      Marionette.triggerMethodOn(view, 'before:show')
+      @triggerMethod('swapOut', @currentView)
 
-      view.$el.css(background: 'none') for view in @modals if @modals.length > 0
+      @$el.append view.el
+      @currentView = view
 
-      Marionette.triggerMethod.call(modal, "show")
-      Marionette.triggerMethod.call(this, "show", modal)
+      @triggerMethod('swap', view)
+      @triggerMethod('show', view)
+      Marionette.triggerMethodOn(view, 'show')
 
-      @currentView = modal
+      modalView.$el.css(background: 'none') for modalView in @modals if @modals.length > 0
+      modalView.undelegateModalEvents() for modalView in @modals
 
-      m.undelegateModalEvents() for m in @modals
-
-      modal.on('modal:close', @close)
-
-      @modals.push(modal)
+      view.on('modal:destroy', @destroy)
+      @modals.push(view)
       @zIndex++
 
-    close: =>
-      modal = @currentView
-      return if !modal or modal.isClosed
+    destroy: =>
+      view = @currentView
 
-      if modal.close
-        modal.close()
-      else if modal.remove
-        modal.remove()
+      if view.destroy and !view.isDestroyed
+        view.destroy()
+      else if view.remove
+        view.remove()
 
-      Marionette.triggerMethod.call(modal, "close")
-      Marionette.triggerMethod.call(this, "close", modal)
+      view.off('modal:destroy', @destroy)
 
-      modal.off('modal:close', @close)
-
-      @modals.splice(_.indexOf(@modals, modal), 1)
+      @modals.splice(_.indexOf(@modals, view), 1)
 
       @zIndex--
 
       @currentView  = @modals[@zIndex-1]
-
       lastModal     = _.last(@modals)
 
       if lastModal
@@ -75,5 +72,5 @@
 
         lastModal.delegateModalEvents() if @zIndex isnt 0
 
-    closeAll: ->
-      @close() for modal in @modals
+    destroyAll: ->
+      @destroy() for view in @modals

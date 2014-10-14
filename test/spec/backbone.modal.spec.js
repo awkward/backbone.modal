@@ -26,12 +26,12 @@
 
         modal.prototype.viewContainer = 'div';
 
-        modal.prototype.cancelEl = '.close';
+        modal.prototype.cancelEl = '.destroy';
 
         modal.prototype.submitEl = '.submit';
 
         modal.prototype.template = function() {
-          return '<a class="class"></a><a id="id"></a><div></div><a data-event="true"></a><a class="close"></a><a class="submit"></a>';
+          return '<a class="class"></a><a id="id"></a><div></div><a data-event="true"></a><a class="destroy"></a><a class="submit"></a>';
         };
 
         modal.prototype.views = {
@@ -169,10 +169,10 @@
       return it('stops the cancel when it returns false', function() {
         var view;
         view = new modal();
-        spyOn(view, 'close');
+        spyOn(view, 'destroy');
         view._shouldCancel = false;
         view.render().triggerCancel();
-        return expect(view.close.calls.length).toEqual(0);
+        return expect(view.destroy).not.toHaveBeenCalled();
       });
     });
     describe('#cancel', function() {
@@ -181,7 +181,7 @@
         view = new modal();
         spyOn(view, 'cancel');
         view.render().$(view.cancelEl).click();
-        return expect(view.cancel.calls.length).toEqual(1);
+        return expect(view.cancel).toHaveBeenCalled();
       });
     });
     describe('#beforeSubmit', function() {
@@ -202,7 +202,7 @@
         view.render().triggerSubmit({
           preventDefault: function() {}
         });
-        return expect(view.submit.calls.length).toEqual(0);
+        return expect(view.submit).not.toHaveBeenCalled();
       });
     });
     describe('#submit', function() {
@@ -211,7 +211,7 @@
         view = new modal();
         spyOn(view, 'submit');
         view.render().$(view.submitEl).click();
-        return expect(view.submit.calls.length).toEqual(1);
+        return expect(view.submit).toHaveBeenCalled();
       });
     });
     return describe('#animate', function() {

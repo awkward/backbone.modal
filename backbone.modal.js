@@ -290,7 +290,7 @@
           if (typeof (_base = this.currentView).onShow === "function") {
             _base.onShow();
           }
-          return (_ref = this.previousView) != null ? typeof _ref.close === "function" ? _ref.close() : void 0 : void 0;
+          return (_ref = this.previousView) != null ? typeof _ref.destroy === "function" ? _ref.destroy() : void 0 : void 0;
         } else {
           this.$(this.viewContainerEl).css({
             opacity: 0
@@ -307,7 +307,7 @@
               if (typeof (_base1 = _this.currentView).onShow === "function") {
                 _base1.onShow();
               }
-              return (_ref1 = _this.previousView) != null ? typeof _ref1.close === "function" ? _ref1.close() : void 0 : void 0;
+              return (_ref1 = _this.previousView) != null ? typeof _ref1.destroy === "function" ? _ref1.destroy() : void 0 : void 0;
             };
           })(this));
         }
@@ -337,9 +337,9 @@
           this.submit();
         }
         if (this.regionEnabled) {
-          return this.trigger('modal:close');
+          return this.trigger('modal:destroy');
         } else {
-          return this.close();
+          return this.destroy();
         }
       };
 
@@ -356,21 +356,21 @@
           this.cancel();
         }
         if (this.regionEnabled) {
-          return this.trigger('modal:close');
+          return this.trigger('modal:destroy');
         } else {
-          return this.close();
+          return this.destroy();
         }
       };
 
-      Modal.prototype.close = function() {
+      Modal.prototype.destroy = function() {
         var animate, removeViews;
         Backbone.$('body').off('keyup', this.checkKey);
         Backbone.$('body').off('click', this.clickOutside);
-        if (typeof this.onClose === "function") {
-          this.onClose();
+        if (typeof this.onDestroy === "function") {
+          this.onDestroy();
         }
         this.shouldAnimate = false;
-        this.modalEl.addClass("" + this.prefix + "-modal--close");
+        this.modalEl.addClass("" + this.prefix + "-modal--destroy");
         removeViews = (function(_this) {
           return function() {
             var _ref;

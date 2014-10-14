@@ -3,13 +3,13 @@
 <head>
     <meta content="text/html;charset=UTF-8" http-equiv="Content-Type"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-    
+
     <title>Stacked modal with Marionette</title>
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/backbone.marionette/1.4.1-bundled/backbone.marionette.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/backbone.marionette/2.2.1/backbone.marionette.js"></script>
 
     <!-- Adding Backbone.Modal extension here -->
     <link type="text/css" rel="stylesheet" href="/backbone.modal.css">
@@ -59,14 +59,14 @@
 
   <script>
     jQuery(function($) {
-
+      
       // Create a layout class
-      var Layout = Backbone.Marionette.Layout.extend({
+      var Layout = Backbone.Marionette.LayoutView.extend({
         template: _.template($('#modals-template').html()),
         regions: {
           modals: {
             selector:   '.modals-container',
-            regionType: Backbone.Marionette.Modals
+            regionClass: Backbone.Marionette.Modals
           }
         }
       });

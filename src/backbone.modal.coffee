@@ -205,7 +205,7 @@
       if previousHeight is newHeight
         @$(@viewContainerEl).html view
         @currentView.onShow?()
-        @previousView?.close?()
+        @previousView?.destroy?()
       else
         @$(@viewContainerEl).css(opacity: 0)
 
@@ -213,7 +213,7 @@
           @$(@viewContainerEl).css(opacity: 1).removeAttr('style')
           @$(@viewContainerEl).html view
           @currentView.onShow?()
-          @previousView?.close?()
+          @previousView?.destroy?()
 
     triggerSubmit: (e) =>
       e?.preventDefault()
@@ -225,9 +225,9 @@
       @submit?()
 
       if @regionEnabled
-        @trigger('modal:close')
+        @trigger('modal:destroy')
       else
-        @close()
+        @destroy()
 
     triggerCancel: (e) =>
       e?.preventDefault()
@@ -236,19 +236,19 @@
       @cancel?()
 
       if @regionEnabled
-        @trigger('modal:close')
+        @trigger('modal:destroy')
       else
-        @close()
+        @destroy()
 
-    close: ->
-      # closes view
+    destroy: ->
+      # destroys view
       Backbone.$('body').off 'keyup', @checkKey
       Backbone.$('body').off 'click', @clickOutside
 
-      @onClose?()
+      @onDestroy?()
 
       @shouldAnimate = false
-      @modalEl.addClass("#{@prefix}-modal--close")
+      @modalEl.addClass("#{@prefix}-modal--destroy")
 
       removeViews = =>
         @currentView?.remove?()
