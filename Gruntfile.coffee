@@ -80,3 +80,4 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'build', ['concurrent', 'uglify', 'jasmine:all:build']
   grunt.registerTask 'default', ['connect', 'build', 'open', 'watch']
+  grunt.registerTask 'test', ['jasmine']
