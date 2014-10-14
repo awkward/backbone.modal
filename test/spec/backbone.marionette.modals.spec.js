@@ -3,14 +3,13 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   describe('Backbone.Marionette.Modals', function() {
-    var layout, modal, myLayout, _ref, _ref1;
+    var layout, modal, myLayout;
     myLayout = {};
     layout = (function(_super) {
       __extends(layout, _super);
 
       function layout() {
-        _ref = layout.__super__.constructor.apply(this, arguments);
-        return _ref;
+        return layout.__super__.constructor.apply(this, arguments);
       }
 
       layout.prototype.template = function() {
@@ -31,8 +30,7 @@
       __extends(modal, _super);
 
       function modal() {
-        _ref1 = modal.__super__.constructor.apply(this, arguments);
-        return _ref1;
+        return modal.__super__.constructor.apply(this, arguments);
       }
 
       modal.prototype.viewContainer = 'div';

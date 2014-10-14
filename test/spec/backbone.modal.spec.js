@@ -6,13 +6,12 @@
     var modal;
     modal = {};
     beforeEach(function() {
-      var backboneView, _ref, _ref1;
+      var backboneView;
       backboneView = (function(_super) {
         __extends(backboneView, _super);
 
         function backboneView() {
-          _ref = backboneView.__super__.constructor.apply(this, arguments);
-          return _ref;
+          return backboneView.__super__.constructor.apply(this, arguments);
         }
 
         return backboneView;
@@ -22,8 +21,7 @@
         __extends(modal, _super);
 
         function modal() {
-          _ref1 = modal.__super__.constructor.apply(this, arguments);
-          return _ref1;
+          return modal.__super__.constructor.apply(this, arguments);
         }
 
         modal.prototype.viewContainer = 'div';

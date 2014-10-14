@@ -12,24 +12,10 @@ module.exports = (grunt) ->
       default:
         options:
           base: './'
-          middleware: (connect, options) ->
-            [connect.static(options.base), (req, res, next) ->
-              fs.readFile "#{options.base}/test/spec.html", (err, data) ->
-                res.writeHead(200)
-                res.end(data)
-            ]
-      examples:
-        options:
-          port: 5000
-          base: './'
-          middleware: (connect, options) ->
-            [connect.static(options.base), (req, res, next) ->
-              fs.readFile "#{options.base}/examples/2_tab_based.html", (err, data) ->
-                res.writeHead(200)
-                res.end(data)
-            ]
 
     uglify:
+      options:
+        sourceMap: false
       modal:
         src: 'backbone.modal.js'
         dest: 'backbone.modal-min.js'
@@ -47,7 +33,7 @@ module.exports = (grunt) ->
           specs: 'test/spec/**/*.js'
           outfile: 'test/spec.html'
           host: 'http://127.0.0.1:8000/'
-          vendor: ['http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js', 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js', 'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min.js', 'http://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/1.4.1-bundled/backbone.marionette.min.js']
+          vendor: ['http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js', 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js', 'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js', 'http://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/2.2.0-bundled/backbone.marionette.min.js']
 
     coffee:
       all:
@@ -55,9 +41,6 @@ module.exports = (grunt) ->
           'backbone.modal.js': 'src/backbone.modal.coffee'
           'backbone.marionette.modals.js': 'src/backbone.marionette.modals.coffee'
           'backbone.modal-bundled.js': ['src/backbone.modal.coffee', 'src/backbone.marionette.modals.coffee']
-
-          'examples/vendor/backbone.modal.js': 'src/backbone.modal.coffee'
-          'examples/vendor/backbone.marionette.modals.js': 'src/backbone.marionette.modals.coffee'
       specs:
         files:
           grunt.file.expandMapping(['test/src/**/*.coffee'], 'test/spec/',
@@ -66,18 +49,21 @@ module.exports = (grunt) ->
           )
 
     sass:
+      options:
+        sourcemap: 'none'
       compile:
         files:
           'backbone.modal.css': 'src/backbone.modal.sass'
           'backbone.modal.theme.css': 'src/backbone.modal.theme.sass'
-          'examples/vendor/backbone.modal.css': 'src/backbone.modal.sass'
-          'examples/vendor/backbone.modal.theme.css': 'src/backbone.modal.theme.sass'
-          'examples/style.css': 'src/style.sass'
 
     concurrent:
       compile: ['coffee', 'sass']
 
     watch:
+      examples:
+        files: ['examples/**/*']
+        options:
+          livereload: true
       sass:
         files: ['src/**/*.sass']
         tasks: ['sass']
