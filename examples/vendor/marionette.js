@@ -897,7 +897,7 @@ _.extend(Marionette.Region.prototype, Backbone.Events, {
   // or just before closing the view, respectively.
   show: function(view){
 
-    this.ensureEl();
+    this._ensureElement();
 
     if (view !== this.currentView) {
       this.close();
@@ -913,7 +913,7 @@ _.extend(Marionette.Region.prototype, Backbone.Events, {
     this.currentView = view;
   },
 
-  ensureEl: function(){
+  _ensureElement: function(){
     if (!this.$el || this.$el.length === 0){
       this.$el = this.getEl(this.el);
     }
