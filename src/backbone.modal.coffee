@@ -37,6 +37,7 @@ class Backbone.Modal extends Backbone.View
     @$el.fadeIn
       duration: 100
       complete: =>
+        @afterRender?()
         @modalEl.css(opacity: 1).addClass("#{@prefix}-modal--open")
 
     return this
