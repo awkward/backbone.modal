@@ -8,6 +8,9 @@
     "type": "git",
     "url": "git://github.com/awkward/backbone.modal.git"
   },
+  "scripts": {
+    "test": "grunt test"
+  },
   "bugs": "https://github.com/awkward/backbone.modal/issues",
   "engines": {
     "node": "0.8.x",
