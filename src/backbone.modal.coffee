@@ -226,8 +226,8 @@
       return if @beforeSubmit() is false if @beforeSubmit
       return if @currentView.beforeSubmit() is false if @currentView and @currentView.beforeSubmit
 
-      return @triggerCancel() unless @submit and @currentView?.submit and @getOption('submitEl')
-
+      return @triggerCancel() if !@submit and !@currentView?.submit and !@getOption('submitEl')
+      
       @currentView?.submit?()
       @submit?()
 

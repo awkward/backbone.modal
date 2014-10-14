@@ -329,7 +329,7 @@
             return;
           }
         }
-        if (!(this.submit && ((_ref = this.currentView) != null ? _ref.submit : void 0) && this.getOption('submitEl'))) {
+        if (!this.submit && !((_ref = this.currentView) != null ? _ref.submit : void 0) && !this.getOption('submitEl')) {
           return this.triggerCancel();
         }
         if ((_ref1 = this.currentView) != null) {
