@@ -3,24 +3,25 @@
 <head>
     <meta content="text/html;charset=UTF-8" http-equiv="Content-Type"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
     <title>Stacked modal with Marionette</title>
 
-    <script type="text/javascript" src="vendor/jquery-1.9.1.js"></script>
-    <script type="text/javascript" src="vendor/underscore.js"></script>
-    <script type="text/javascript" src="vendor/backbone.js"></script>
-    <script type="text/javascript" src="vendor/marionette.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/backbone.marionette/2.2.1/backbone.marionette.js"></script>
 
     <!-- Adding Backbone.Modal extension here -->
-    <link type="text/css" rel="stylesheet" href="vendor/backbone.modal.css">
-    <link type="text/css" rel="stylesheet" href="vendor/backbone.modal.theme.css">
+    <link type="text/css" rel="stylesheet" href="/backbone.modal.css">
+    <link type="text/css" rel="stylesheet" href="/backbone.modal.theme.css">
+    <script type="text/javascript" src="/backbone.modal.js"></script>
 
-    <script type="text/javascript" src="vendor/backbone.modal.js"></script>
-    <script type="text/javascript" src="vendor/backbone.marionette.modals.js"></script>
+    <script type="text/javascript" src="/backbone.marionette.modals.js"></script>
 
     <!-- Custom style -->
-    <link type="text/css" rel="stylesheet" href="css/style.css">
-
+    <link type="text/css" rel="stylesheet" href="/examples/css/style.css">
 </head>
+
 <body>
   <a href="#" class="open-1">Open modal</a>
 
@@ -58,14 +59,14 @@
 
   <script>
     jQuery(function($) {
-
+      
       // Create a layout class
-      var Layout = Backbone.Marionette.Layout.extend({
+      var Layout = Backbone.Marionette.LayoutView.extend({
         template: _.template($('#modals-template').html()),
         regions: {
           modals: {
             selector:   '.modals-container',
-            regionType: Backbone.Marionette.Modals
+            regionClass: Backbone.Marionette.Modals
           }
         }
       });
@@ -101,5 +102,9 @@
 
     });
   </script>
+
+
+  <!-- Do not include in your page -->
+  <script src="//localhost:35729/livereload.js"></script>
 </body>
 </html>

@@ -1,67 +1,77 @@
-unless Backbone?
-  throw new Error("Backbone is not defined. Please include the latest version from http://documentcloud.github.com/backbone/backbone.js") 
+((root, factory) ->
+  if typeof define is "function" and define.amd
+    define [
+      "exports"
+      "underscore"
+      "backbone"
+      "backbone.marionette"
+    ], factory
+  else if typeof exports is "object"
+    factory(exports, require("underscore"), require("backbone"), require("backbone.marionette"))
+  else
+    root.Backbone.Marionette.Modals = factory((root.commonJsStrict = {}), root._, root.Backbone, root.Backbone.Marionette)
+) this, (exports, _, Backbone, Marionette) ->
+  class Modals extends Marionette.Region
+    modals: []
+    zIndex: 0
 
-class Backbone.Marionette.Modals extends Backbone.Marionette.Region
-  modals: []
-  zIndex: 0
+    show: (view, options = {}) ->
+      @_ensureElement()
 
-  show: (modal, options = {}) ->
-    @_ensureElement()
+      if @modals.length > 0
+        lastModal = _.last(@modals)
+        lastModal.modalEl.addClass("#{lastModal.prefix}-view--stacked")
+        secondLastModal = @modals[@modals.length-1]
+        secondLastModal?.modalEl.removeClass("#{secondLastModal.prefix}-modal--stacked-reverse")
 
-    if @modals.length > 0
-      lastModal = _.last(@modals)
-      lastModal.modalEl.addClass("#{lastModal.prefix}-modal--stacked")
-      secondLastModal = @modals[@modals.length-1]
-      secondLastModal?.modalEl.removeClass("#{secondLastModal.prefix}-modal--stacked-reverse")
+      view.render()
+      view.regionEnabled = true
 
-    modal.render()
-    modal.regionEnabled = true
-    
-    @$el.show()
-    @$el.append modal.el
+      @triggerMethod('before:swap', view)
+      @triggerMethod('before:show', view)
+      Marionette.triggerMethodOn(view, 'before:show')
+      @triggerMethod('swapOut', @currentView)
 
-    modal.$el.css(background: 'none') if @modals.length > 0
-    
-    Marionette.triggerMethod.call(modal, "show")
-    Marionette.triggerMethod.call(this, "show", modal)
+      @$el.append view.el
+      @currentView = view
 
-    @currentView = modal
+      @triggerMethod('swap', view)
+      @triggerMethod('show', view)
+      Marionette.triggerMethodOn(view, 'show')
 
-    m.undelegateModalEvents() for m in @modals
+      modalView.$el.css(background: 'none') for modalView in @modals if @modals.length > 0
+      modalView.undelegateModalEvents() for modalView in @modals
 
-    modal.on('modal:close', @close)
+      view.on('modal:destroy', @destroy)
+      @modals.push(view)
+      @zIndex++
 
-    @modals.push(modal)
-    @zIndex++
+    destroy: =>
+      view = @currentView
+      return unless view
 
-  close: =>
-    modal = @currentView
-    return if !modal or modal.isClosed
+      if view.destroy and !view.isDestroyed
+        view.destroy()
+      else if view.remove
+        view.remove()
 
-    if modal.close
-      modal.close()
-    else if modal.remove
-      modal.remove()
+      view.off('modal:destroy', @destroy)
 
-    modal.off('modal:close', @close)
+      @modals.splice(_.indexOf(@modals, view), 1)
 
-    @modals.splice(_.indexOf(@modals, modal), 1)
+      @zIndex--
 
-    @zIndex--
+      @currentView  = @modals[@zIndex-1]
+      lastModal     = _.last(@modals)
 
-    @currentView  = @modals[@zIndex-1]
+      if lastModal
+        lastModal.$el.removeAttr('style')
+        lastModal.modalEl.addClass("#{lastModal.prefix}-modal--stacked-reverse")
+        _.delay =>
+          lastModal.modalEl.removeClass("#{lastModal.prefix}-modal--stacked")
+        , 300
 
-    lastModal     = _.last(@modals)
+        lastModal.delegateModalEvents() if @zIndex isnt 0
 
-    if lastModal
-      lastModal.modalEl.addClass("#{lastModal.prefix}-modal--stacked-reverse")
-      _.delay =>
-        lastModal.modalEl.removeClass("#{lastModal.prefix}-modal--stacked")
-      , 300
-
-      lastModal.delegateModalEvents() if @zIndex isnt 0
-      
-    Marionette.triggerMethod.call(this, "close")
-
-  closeAll: ->
-    @close() for modal in @modals
+    destroyAll: ->
+      @destroy() for view in @modals

@@ -6,13 +6,12 @@
     var modal;
     modal = {};
     beforeEach(function() {
-      var backboneView, _ref, _ref1;
+      var backboneView;
       backboneView = (function(_super) {
         __extends(backboneView, _super);
 
         function backboneView() {
-          _ref = backboneView.__super__.constructor.apply(this, arguments);
-          return _ref;
+          return backboneView.__super__.constructor.apply(this, arguments);
         }
 
         return backboneView;
@@ -22,18 +21,17 @@
         __extends(modal, _super);
 
         function modal() {
-          _ref1 = modal.__super__.constructor.apply(this, arguments);
-          return _ref1;
+          return modal.__super__.constructor.apply(this, arguments);
         }
 
         modal.prototype.viewContainer = 'div';
 
-        modal.prototype.cancelEl = '.close';
+        modal.prototype.cancelEl = '.destroy';
 
         modal.prototype.submitEl = '.submit';
 
         modal.prototype.template = function() {
-          return '<a class="class"></a><a id="id"></a><div></div><a data-event="true"></a><a class="close"></a><a class="submit"></a>';
+          return '<a class="class"></a><a id="id"></a><div></div><a data-event="true"></a><a class="destroy"></a><a class="submit"></a>';
         };
 
         modal.prototype.views = {
@@ -104,19 +102,6 @@
         view.render();
         return expect(view.triggerView).toHaveBeenCalled();
       });
-      it("#buildView: checks if it's a Backbone.View or just a HTML template that is passed along", function() {
-        var key, v, _results;
-        _results = [];
-        for (key in view.views) {
-          v = view.buildView(view.views[key].view);
-          if (_.isFunction(v)) {
-            _results.push(expect(_.isString(v.render().el)));
-          } else {
-            _results.push(expect(_.isString(v)));
-          }
-        }
-        return _results;
-      });
       return it("#length should return the length of the total views", function() {
         return expect(view.views.length).toEqual(3);
       });
@@ -157,7 +142,7 @@
       return it('renders the modal and internal views', function() {
         var view;
         view = new modal();
-        return expect(_.isString(view.render().el));
+        return expect(view.render().el instanceof HTMLElement).toBeTruthy();
       });
     });
     describe('#beforeCancel', function() {
@@ -171,10 +156,10 @@
       return it('stops the cancel when it returns false', function() {
         var view;
         view = new modal();
-        spyOn(view, 'close');
+        spyOn(view, 'destroy');
         view._shouldCancel = false;
         view.render().triggerCancel();
-        return expect(view.close.calls.length).toEqual(0);
+        return expect(view.destroy).not.toHaveBeenCalled();
       });
     });
     describe('#cancel', function() {
@@ -183,7 +168,7 @@
         view = new modal();
         spyOn(view, 'cancel');
         view.render().$(view.cancelEl).click();
-        return expect(view.cancel.calls.length).toEqual(1);
+        return expect(view.cancel).toHaveBeenCalled();
       });
     });
     describe('#beforeSubmit', function() {
@@ -204,20 +189,17 @@
         view.render().triggerSubmit({
           preventDefault: function() {}
         });
-        return expect(view.submit.calls.length).toEqual(0);
+        return expect(view.submit).not.toHaveBeenCalled();
       });
     });
-    describe('#submit', function() {
+    return describe('#submit', function() {
       return it('should be called when submitEl is triggered', function() {
         var view;
         view = new modal();
         spyOn(view, 'submit');
         view.render().$(view.submitEl).click();
-        return expect(view.submit.calls.length).toEqual(1);
+        return expect(view.submit).toHaveBeenCalled();
       });
-    });
-    return describe('#animate', function() {
-      return it('should do all the animation work', function() {});
     });
   });
 

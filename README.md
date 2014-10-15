@@ -1,5 +1,8 @@
 ## Backbone.Modal
 
+[![Build Status](https://travis-ci.org/awkward/backbone.modal.svg?branch=1.1.0-beta)](https://travis-ci.org/awkward/backbone.modal)
+[![Coverage Status](https://img.shields.io/coveralls/awkward/backbone.modal.svg)](https://coveralls.io/r/awkward/backbone.modal)
+
 A plugin for Backbone.js that simplifies creating modals for your application.
 
 Backbone.Modal.js removes boilerplate code and adds default behaviors and interactions. You can create a simple dialog modal or complex wizards with stacked modals on top of each other in a few lines of code.
@@ -22,7 +25,7 @@ There's default style, and you can use our theme to make things look pretty.
 
 ### How to contribute
 
-To get started `grunt install` to install all dependencies. If you have any requests, please create an issue. If you're working on something yourself, make a pull request and we'll make sure to check it out to get in into the next release.
+To get started `grunt` to get everything running. If you have any requests, please create an issue. If you're working on something yourself, make a pull request and we'll make sure to check it out to get in into the next release.
 
 ### Tests
 

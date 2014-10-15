@@ -306,7 +306,7 @@
   -webkit-backface-visibility: hidden
 
 
-/* Close a stacked modal */
+/* destroy a stacked modal */
 @-webkit-keyframes bbm-stacked-reverse
   0%
     -webkit-transform: matrix(0.99123, 0, 0, 0.99123, 0, 43.86266)
@@ -396,8 +396,8 @@
   -webkit-backface-visibility: hidden
 
 
-/* Close a modal */
-@-webkit-keyframes bbm-close
+/* destroy a modal */
+@-webkit-keyframes bbm-destroy
   0%
     -webkit-transform: matrix(0.99874, 0, 0, 0.99874, 0, 49.1187)
     opacity: 0.8741
@@ -477,9 +477,9 @@
     -webkit-transform: matrix(0.99, 0, 0, 0.99, 0, 43)
     opacity: 0
 
-.bbm-modal--close
+.bbm-modal--destroy
   -webkit-animation-duration: 0.43333333333333335s
-  -webkit-animation-name: bbm-close
+  -webkit-animation-name: bbm-destroy
   -webkit-animation-timing-function: linear
   -webkit-animation-fill-mode: both
   -webkit-transform-origin: 50% 50%

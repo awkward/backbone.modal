@@ -1,8 +1,9 @@
 module.exports = (grunt) ->
-module.exports = (grunt) ->
   fs = require('fs')
 
   grunt.initConfig
+    pkg: grunt.file.readJSON('package.json')
+
     open:
       default:
         url: 'http://localhost:8000'
@@ -11,24 +12,10 @@ module.exports = (grunt) ->
       default:
         options:
           base: './'
-          middleware: (connect, options) ->
-            [connect.static(options.base), (req, res, next) ->
-              fs.readFile "#{options.base}/test/spec.html", (err, data) ->
-                res.writeHead(200)
-                res.end(data)
-            ]
-      examples:
-        options:
-          port: 5000
-          base: './examples/'
-          middleware: (connect, options) ->
-            [connect.static(options.base), (req, res, next) ->
-              fs.readFile "#{options.base}/1_single_view.html", (err, data) ->
-                res.writeHead(200)
-                res.end(data)
-            ]
 
     uglify:
+      options:
+        sourceMap: false
       modal:
         src: 'backbone.modal.js'
         dest: 'backbone.modal-min.js'
@@ -45,8 +32,7 @@ module.exports = (grunt) ->
         options:
           specs: 'test/spec/**/*.js'
           outfile: 'test/spec.html'
-          host: 'http://127.0.0.1:8000/'
-          vendor: ['examples/vendor/jquery-1.9.1.js', 'examples/vendor/underscore.js', 'examples/vendor/backbone.js', 'examples/vendor/marionette.js']
+          vendor: ['http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js', 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js', 'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js', 'http://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/2.2.1/backbone.marionette.js', 'http://localhost:35729/livereload.js']
 
     coffee:
       all:
@@ -54,9 +40,6 @@ module.exports = (grunt) ->
           'backbone.modal.js': 'src/backbone.modal.coffee'
           'backbone.marionette.modals.js': 'src/backbone.marionette.modals.coffee'
           'backbone.modal-bundled.js': ['src/backbone.modal.coffee', 'src/backbone.marionette.modals.coffee']
-
-          'examples/vendor/backbone.modal.js': 'src/backbone.modal.coffee'
-          'examples/vendor/backbone.marionette.modals.js': 'src/backbone.marionette.modals.coffee'
       specs:
         files:
           grunt.file.expandMapping(['test/src/**/*.coffee'], 'test/spec/',
@@ -65,40 +48,35 @@ module.exports = (grunt) ->
           )
 
     sass:
+      options:
+        sourcemap: 'none'
       compile:
         files:
           'backbone.modal.css': 'src/backbone.modal.sass'
           'backbone.modal.theme.css': 'src/backbone.modal.theme.sass'
-          'examples/vendor/backbone.modal.css': 'src/backbone.modal.sass'
-          'examples/vendor/backbone.modal.theme.css': 'src/backbone.modal.theme.sass'
-          'examples/style.css': 'src/style.sass'
 
     concurrent:
       compile: ['coffee', 'sass']
 
-    regarde:
-      livereloadJS:
-        files: ['test/**/*.js', 'examples/vendor/*.js']
-        tasks: ['livereload']
-      livereloadCSS:
-        files: ['examples/vendor/backbone.modal.css', 'examples/vendor/backbone.modal.theme.css', 'examples/style.css']
-        tasks: ['livereload:backbone.modal.css', 'livereload:examples/vendor/backbone.modal.theme.css', 'livereload:examples/style.css']
+    watch:
+      examples:
+        files: ['examples/**/*']
+        options:
+          livereload: true
       sass:
         files: ['src/**/*.sass']
         tasks: ['sass']
+        options:
+          livereload: true
       coffee:
         files: ['src/**/*.coffee', 'test/src/**/*.coffee']
         tasks: ['uglify', 'coffee']
+        options:
+          livereload: true
 
-  grunt.loadNpmTasks 'grunt-contrib-coffee'
-  grunt.loadNpmTasks 'grunt-regarde'
-  grunt.loadNpmTasks 'grunt-open'
-  grunt.loadNpmTasks 'grunt-contrib-connect'
-  grunt.loadNpmTasks 'grunt-contrib-livereload'
-  grunt.loadNpmTasks 'grunt-contrib-jasmine'
-  grunt.loadNpmTasks 'grunt-contrib-uglify'
-  grunt.loadNpmTasks 'grunt-contrib-sass'
-  grunt.loadNpmTasks 'grunt-concurrent'
+  # Auto include Grunt tasks
+  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks)
 
   grunt.registerTask 'build', ['concurrent', 'uglify', 'jasmine:all:build']
-  grunt.registerTask 'watch', ['connect', 'build', 'livereload-start', 'open', 'regarde']
+  grunt.registerTask 'default', ['connect', 'build', 'open', 'watch']
+  grunt.registerTask 'test', ['jasmine']
