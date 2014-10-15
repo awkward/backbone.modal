@@ -68,6 +68,7 @@
             complete: this.rendererCompleted
           });
         } else {
+          this.$el.show();
           this.rendererCompleted();
         }
         return this;

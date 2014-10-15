@@ -53,6 +53,7 @@
           duration: 100
           complete: @rendererCompleted
       else
+        @$el.show()
         @rendererCompleted()
 
       return this
