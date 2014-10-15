@@ -5,6 +5,7 @@ $green: #5bbdae
 $purple: #5a536c
 $purple-gray: #535158
 $orange: #ff7448
+$line: #E3E3E3
 
 // Tweet button
 
@@ -91,7 +92,8 @@ h3+h4
 
 
 // Modules
-p
+p,
+li
   color: $purple-gray
   font:
     size: 1.3em
@@ -118,6 +120,10 @@ p
     &:hover
       text:
         decoration: underline
+
+em
+  font-weight: bold
+  font-style: normal
 
 code
   background: #f0f0f0
@@ -226,9 +232,9 @@ code
 
 
   >section
-    padding: 3em 50px
+    padding: 36px 50px
     border:
-      top: 1px solid rgba(0,0,0,.1)
+      top: 1px solid $line
 
     +mobile-only
       padding: 3em 25px
@@ -329,6 +335,11 @@ code
   padding:
     top: 11px
     bottom: 9px
+
+.changelog
+  ul
+    padding: 0
+      left: 20px
 
 // Gist styling inspired by Michiel de Graaf (michieldegraaf.com)
 

@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta http-equiv="x-ua-compatible" content="ie=edge, chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge, chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
 
 
-<link rel="stylesheet" href="stylesheets/backbone.modal.css">
-<link rel="stylesheet" href="stylesheets/backbone.modal.theme.css">
-<link rel="stylesheet" href="stylesheets/s.css?1377531995">
+  <link rel="stylesheet" href="stylesheets/backbone.modal.css">
+  <link rel="stylesheet" href="stylesheets/backbone.modal.theme.css">
+  <link rel="stylesheet" href="stylesheets/s.css?1377531995">
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/backbone.marionette/1.0.4-bundled/backbone.marionette.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.marionette/1.0.4-bundled/backbone.marionette.js"></script>
 
-<script src="scripts/gists.js"></script>
-<script src="scripts/backbone.modal-bundled-min.js"></script>
-<script src="scripts/main.js"></script>
+  <script src="scripts/gists.js"></script>
+  <script src="scripts/backbone.modal-bundled-min.js"></script>
+  <script src="scripts/main.js"></script>
 
-<script type="text/javascript">
-  var analytics=analytics||[];(function(){var e=["identify","track","trackLink","trackForm","trackClick","trackSubmit","page","pageview","ab","alias","ready","group"],t=function(e){return function(){analytics.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var n=0;n<e.length;n++)analytics[e[n]]=t(e[n])})(),analytics.load=function(e){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=("https:"===document.location.protocol?"https://":"http://")+"d2dq2ahtl5zl1z.cloudfront.net/analytics.js/v1/"+e+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)};
-  analytics.load("4of96dwo0g");
-</script>
+  <script type="text/javascript">
+    var analytics=analytics||[];(function(){var e=["identify","track","trackLink","trackForm","trackClick","trackSubmit","page","pageview","ab","alias","ready","group"],t=function(e){return function(){analytics.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var n=0;n<e.length;n++)analytics[e[n]]=t(e[n])})(),analytics.load=function(e){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=("https:"===document.location.protocol?"https://":"http://")+"d2dq2ahtl5zl1z.cloudfront.net/analytics.js/v1/"+e+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)};
+    analytics.load("4of96dwo0g");
+  </script>
 
-<title>Backbone.Modal</title>
+  <title>Backbone.Modal</title>
 </head>
 <body>
   <div class="app"></div>
@@ -39,7 +39,7 @@
       </div>
 
       <div class="source">
-        <a class="download" href="https://github.com/awkward/backbone.modal/archive/v1.0.0.zip">Download <b>v1.0.0</b></a>
+        <a class="download" href="https://github.com/awkward/backbone.modal/archive/v1.1.0.zip">Download <b>v1.1.0</b></a>
         <a class="github" href="https://github.com/awkward/backbone.modal"><b>Source on</b> Github</a>
       </div>
 
@@ -56,11 +56,14 @@
       </p>
 
       <h3>Backbone.Modal</h3>
+
+      <p>Options can be added when extending from Backbone.Modal like: <code>prefix</code> (for classnames), <code>animate</code> and <code>keyControl</code> (disable enter/esc events).</p>
+
       <h4>views <code>modal.views</code></h4>
 
       <code data-gist="https://gist.github.com/6219705.json"></code>
 
-      <p>You can bind your views by adding an event handler, just like you would define events in a Backbone.View. You can add additional options to pass along the callbacks. You can add a template or actual Backbone.View by setting <code>view</code> (this part is required). By using the onActive callback, you can see whenever a view is active.</p>
+      <p>You can bind your views by adding an event handler, just like you would define events in a Backbone.View. You can add additional options to pass along: <code>view</code> (as Backbone.View or template which is required), <code>viewOptions</code> (for specific options for that view). By using the <code>onActive</code> callback, you can see whenever a view is active.</p>
 
       <h4>views.length <code>modal.views.length</code></h4>
       <p>Get the amount of views in a modal.</p>
@@ -86,40 +89,49 @@
       <h4>previous <code>modal.previous()</code></h4>
       <p>Similar to <code>next()</code>, but will open the previous view from <code>views</code>.</p>
 
-      <h4>onRender <code>modal.onRender()</code></h4>
-      <p> Useful when you want to do some custom work while it's rendering the modal.</p>
+      <h4>onRender <code>modal.onRender()</code> (callback)</h4>
+      <p>Useful when you want to do some custom work while it's rendering the modal.</p>
 
-      <h4>beforeCancel <code>modal.beforeCancel()</code></h4>
+      <h4>onShow <code>modal.onShow()</code></h4>
+      <p>Triggered whenever the animation has ended and the modal is displayed.</p>
+
+      <h4>beforeCancel <code>modal.beforeCancel()</code> (callback)</h4>
       <p>This will be called when the user hits ESC, clicking on the <code>cancelEl</code> or clicking outside the modal and before <code>cancel</code> is called. It expects <code>true</code> or <code>false</code>.</p>
 
       <h4>cancel <code>modal.cancel()</code></h4>
       <p>This method is called when the user canceled the modal.</p>
 
-      <h4>beforeSubmit <code>modal.beforeSubmit()</code></h4>
+      <h4>beforeSubmit <code>modal.beforeSubmit()</code> (callback)</h4>
       <p>This will be called when the user hits ENTER or clicking on the <code>submitEl</code>. It expects <code>true</code> or <code>false</code>, so you can do any validation for example.</p>
 
-      <h4>submit <code>modal.submit()</code></h4>
+      <h4>submit <code>modal.submit()</code> (callback)</h4>
       <p>This method is called when the user submitted the modal.</p>
 
       <h4>currentIndex <code>modal.currentIndex</code></h4>
       <p>Returns the index of the current view that is visible.</p>
 
+      <h4>destroy <code>modal.destroy()</code></h4>
+      <p>Call this method to remove all events listerners, modal and internal views.</p>
+
+      <h4>onDestroy <code>modal.onDestroy()</code> (callback)</h4>
+      <p>This method is called when the modal view is destroyed.</p>
+
     </section>
     <section id="marionette" class="marionette">
       <h3>Backbone.Marionette.Modals</h3>
 
-      <p>When you're using <a href="http://marionettejs.com">Marionette</a>, you can set a Marionette.Region type as modal region: <code>Backbone.Marionette.Modals</code>. When showing views in this region, it will behave like you would expect. Adding multiple modals, will result in stacked modals. You can close them individually, or all at once.</p>
+      <p>When you're using <a href="http://marionettejs.com">Marionette</a>, you can set a Marionette.Region class as modal region: <code>Backbone.Marionette.Modals</code>. When showing views in this region, it will behave like you would expect. Adding multiple modals, will result in stacked modals. You can close them individually, or all at once.</p>
 
       <code data-gist="https://gist.github.com/6291339.json"></code>
 
       <h4>show <code>modals.show(modal)</code></h4>
       <p>Like you'd expect from a region, to render a view. When you already have a modal in there, it will animate differently and stack the modal.</p>
 
-      <h4>close <code>modals.close()</code></h4>
-      <p>This will close the last modal you have in the region.</p>
+      <h4>destroy <code>modals.destroy()</code></h4>
+      <p>This will destroy the last modal you have in the region.</p>
 
-      <h4>closeAll <code>modals.closeAll()</code></h4>
-      <p>Useful when you want to close all modals at once in this region.</p>
+      <h4>destroyAll <code>modals.destroyAll()</code></h4>
+      <p>Useful when you want to destroy all modals at once in this region.</p>
 
       <h4>zIndex <code>modals.zIndex</code></h4>
       <p>This will let you know how many modals are stacked.</p>
@@ -132,6 +144,24 @@
         <a href="https://github.com/awkward/backbone.modal/blob/master/examples/3_stacked_modal_with_marionette.html">Stacked modal with Marionette</a><br/>
         <a href="https://github.com/awkward/backbone.modal/blob/master/examples/4_wizard.html">Wizard</a><br/>
       </p>
+    </section>
+    <section class="changelog">
+      <h3>Changelog</h3>
+
+      <h4>1.1.0</h4>
+      <ul>
+        <li><em>Breaking change</em>: Changed handlers to comply with all Marionette (2.x.x) changes (changes <code>close</code> to <code>destroy</code>).</li>
+        <li>Add <code>viewOptions</code> fo  <code>views</code>.</li>
+        <li>Zepto support</li>
+        <li>Possibility to disable animations and keyboard events</li>
+        <li>CommonJS and AMD support</li>
+        <li>Bugfixes</li>
+      </ul>
+
+      <h4>1.0.0</h4>
+      <ul>
+        <li>First release supporting Backbone and Backbone.Marionette.</li>
+      </ul>
     </section>
   </div>
 
@@ -158,9 +188,11 @@
   </script>
 
 
+  <!-- MODALS -->
+
   <!-- Tab based modal -->
 
-  <!-- The modal structure, with an container element that will contain all tabs -->
+  <!-- The modal structure, with a container element that will contain all tabs -->
   <script type="text/template" id="tab-modal-template">
     <div class="bbm-modal__topbar">
       <ul>
@@ -190,7 +222,6 @@
       <p>Some account details</p>
     </div>
   </script>
-
 
 
   <!-- Wizard based modal -->
