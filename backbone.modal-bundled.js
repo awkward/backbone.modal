@@ -21,6 +21,8 @@
 
       Modal.prototype.animate = true;
 
+      Modal.prototype.keyControl = true;
+
       function Modal() {
         this.triggerCancel = __bind(this.triggerCancel, this);
         this.triggerSubmit = __bind(this.triggerSubmit, this);
@@ -73,8 +75,10 @@
 
       Modal.prototype.rendererCompleted = function() {
         var _ref;
-        Backbone.$('body').on('keyup', this.checkKey);
-        Backbone.$('body').on('click', this.clickOutside);
+        if (this.keyControl) {
+          Backbone.$('body').on('keyup', this.checkKey);
+          Backbone.$('body').on('click', this.clickOutside);
+        }
         this.modalEl.css({
           opacity: 1
         }).addClass("" + this.prefix + "-modal--open");

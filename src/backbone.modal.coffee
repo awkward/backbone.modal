@@ -14,6 +14,7 @@
   class Modal extends Backbone.View
     prefix: 'bbm'
     animate: true
+    keyControl: true
 
     constructor: ->
       @args = Array::slice.apply(arguments)
@@ -57,9 +58,10 @@
       return this
 
     rendererCompleted: =>
-      # global events for key and click outside the modal
-      Backbone.$('body').on('keyup', @checkKey)
-      Backbone.$('body').on('click', @clickOutside)
+      if @keyControl
+        # global events for key and click outside the modal
+        Backbone.$('body').on('keyup', @checkKey)
+        Backbone.$('body').on('click', @clickOutside)
 
       @modalEl.css(opacity: 1).addClass("#{@prefix}-modal--open")
       @onShow?()
@@ -148,7 +150,7 @@
       # returns a Backbone.View instance, a function or an object
       return unless viewType
       options = options() if options and _.isFunction(options)
-      
+
       if _.isFunction(viewType)
         view = new viewType(options or @args[0])
 
