@@ -2,6 +2,11 @@
   "title": "Backbone.Modal",
   "name": "backbone.modal",
   "version": "1.1.0",
+  "main": "backbone.modal-bundled.js",
+  "ignore": [
+    "test/",
+    "examples/"
+  ],
   "description": "A plugin for Backbone.js that simplifies creating modals for your application.",
   "author": "Awkward",
   "repository": {
