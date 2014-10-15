@@ -91,7 +91,7 @@ li {
     li a:hover {
       text-decoration: underline; }
 
-..modals-container li {
+.modals-container li {
   font-size: 1em; }
 
 em {
