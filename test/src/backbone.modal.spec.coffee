@@ -53,14 +53,6 @@ describe 'Backbone.Modal', ->
 
       expect(view.triggerView).toHaveBeenCalled()
 
-    it "#buildView: checks if it's a Backbone.View or just a HTML template that is passed along", ->
-      for key of view.views
-        v = view.buildView(view.views[key].view)
-        if _.isFunction(v)
-          expect(_.isString(v.render().el))
-        else
-          expect(_.isString(v))
-
     it "#length should return the length of the total views", ->
       expect(view.views.length).toEqual(3)
 
@@ -91,7 +83,7 @@ describe 'Backbone.Modal', ->
   describe '#render', ->
     it 'renders the modal and internal views', ->
       view = new modal()
-      expect(_.isString(view.render().el))
+      expect((view.render().el instanceof HTMLElement)).toBeTruthy()
 
   describe '#beforeCancel', ->
     it "should call this method when it's defined", ->
@@ -134,6 +126,3 @@ describe 'Backbone.Modal', ->
       spyOn(view, 'submit')
       view.render().$(view.submitEl).click()
       expect(view.submit).toHaveBeenCalled()
-
-  describe '#animate', ->
-    it 'should do all the animation work', ->

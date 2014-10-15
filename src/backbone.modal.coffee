@@ -148,7 +148,7 @@
       # returns a Backbone.View instance, a function or an object
       return unless viewType
       options = options() if options and _.isFunction(options)
-
+      
       if _.isFunction(viewType)
         view = new viewType(options or @args[0])
 
@@ -227,7 +227,7 @@
       return if @currentView.beforeSubmit() is false if @currentView and @currentView.beforeSubmit
 
       return @triggerCancel() if !@submit and !@currentView?.submit and !@getOption('submitEl')
-      
+
       @currentView?.submit?()
       @submit?()
 

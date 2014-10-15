@@ -102,19 +102,6 @@
         view.render();
         return expect(view.triggerView).toHaveBeenCalled();
       });
-      it("#buildView: checks if it's a Backbone.View or just a HTML template that is passed along", function() {
-        var key, v, _results;
-        _results = [];
-        for (key in view.views) {
-          v = view.buildView(view.views[key].view);
-          if (_.isFunction(v)) {
-            _results.push(expect(_.isString(v.render().el)));
-          } else {
-            _results.push(expect(_.isString(v)));
-          }
-        }
-        return _results;
-      });
       return it("#length should return the length of the total views", function() {
         return expect(view.views.length).toEqual(3);
       });
@@ -155,7 +142,7 @@
       return it('renders the modal and internal views', function() {
         var view;
         view = new modal();
-        return expect(_.isString(view.render().el));
+        return expect(view.render().el instanceof HTMLElement).toBeTruthy();
       });
     });
     describe('#beforeCancel', function() {
@@ -205,7 +192,7 @@
         return expect(view.submit).not.toHaveBeenCalled();
       });
     });
-    describe('#submit', function() {
+    return describe('#submit', function() {
       return it('should be called when submitEl is triggered', function() {
         var view;
         view = new modal();
@@ -213,9 +200,6 @@
         view.render().$(view.submitEl).click();
         return expect(view.submit).toHaveBeenCalled();
       });
-    });
-    return describe('#animate', function() {
-      return it('should do all the animation work', function() {});
     });
   });
 

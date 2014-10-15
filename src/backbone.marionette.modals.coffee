@@ -48,6 +48,7 @@
 
     destroy: =>
       view = @currentView
+      return unless view
 
       if view.destroy and !view.isDestroyed
         view.destroy()

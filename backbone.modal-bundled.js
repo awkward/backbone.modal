@@ -537,6 +537,9 @@
       Modals.prototype.destroy = function() {
         var lastModal, view;
         view = this.currentView;
+        if (!view) {
+          return;
+        }
         if (view.destroy && !view.isDestroyed) {
           view.destroy();
         } else if (view.remove) {
