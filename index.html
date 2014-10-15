@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta http-equiv="x-ua-compatible" content="ie=edge, chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge, chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
 
 
-<link rel="stylesheet" href="stylesheets/backbone.modal.css">
-<link rel="stylesheet" href="stylesheets/backbone.modal.theme.css">
-<link rel="stylesheet" href="stylesheets/s.css?1377531995">
+  <link rel="stylesheet" href="stylesheets/backbone.modal.css">
+  <link rel="stylesheet" href="stylesheets/backbone.modal.theme.css">
+  <link rel="stylesheet" href="stylesheets/s.css?1377531995">
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/backbone.marionette/1.0.4-bundled/backbone.marionette.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.marionette/1.0.4-bundled/backbone.marionette.js"></script>
 
-<script src="scripts/gists.js"></script>
-<script src="scripts/backbone.modal-bundled-min.js"></script>
-<script src="scripts/main.js"></script>
+  <script src="scripts/gists.js"></script>
+  <script src="scripts/backbone.modal-bundled-min.js"></script>
+  <script src="scripts/main.js"></script>
 
-<script type="text/javascript">
-  var analytics=analytics||[];(function(){var e=["identify","track","trackLink","trackForm","trackClick","trackSubmit","page","pageview","ab","alias","ready","group"],t=function(e){return function(){analytics.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var n=0;n<e.length;n++)analytics[e[n]]=t(e[n])})(),analytics.load=function(e){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=("https:"===document.location.protocol?"https://":"http://")+"d2dq2ahtl5zl1z.cloudfront.net/analytics.js/v1/"+e+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)};
-  analytics.load("4of96dwo0g");
-</script>
+  <script type="text/javascript">
+    var analytics=analytics||[];(function(){var e=["identify","track","trackLink","trackForm","trackClick","trackSubmit","page","pageview","ab","alias","ready","group"],t=function(e){return function(){analytics.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var n=0;n<e.length;n++)analytics[e[n]]=t(e[n])})(),analytics.load=function(e){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=("https:"===document.location.protocol?"https://":"http://")+"d2dq2ahtl5zl1z.cloudfront.net/analytics.js/v1/"+e+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)};
+    analytics.load("4of96dwo0g");
+  </script>
 
-<title>Backbone.Modal</title>
+  <title>Backbone.Modal</title>
 </head>
 <body>
   <div class="app"></div>
@@ -133,6 +133,25 @@
         <a href="https://github.com/awkward/backbone.modal/blob/master/examples/4_wizard.html">Wizard</a><br/>
       </p>
     </section>
+    <section class="changelog">
+      <h3>Changelog</h3>
+
+      <h4>1.1.0</h4>
+      <ul>
+        <li>Change 1</li>
+        <li>Change 2</li>
+        <li>Change 3</li>
+        <li>Change 4</li>
+      </ul>
+
+      <h4>1.0.4</h4>
+      <ul>
+        <li><em>Breaking Change</em>: Removed manual event configuration/handling (no <code>keyup</code>, <code>submit</code>, etc, in binding <a href="#">configurations</a>).</li>
+        <li>Change 2</li>
+        <li>Change 3</li>
+        <li>Change 4</li>
+      </ul>
+    </section>
   </div>
 
   <script type="text/template" id="modals-template">
@@ -158,9 +177,11 @@
   </script>
 
 
+  <!-- MODALS -->
+
   <!-- Tab based modal -->
 
-  <!-- The modal structure, with an container element that will contain all tabs -->
+  <!-- The modal structure, with a container element that will contain all tabs -->
   <script type="text/template" id="tab-modal-template">
     <div class="bbm-modal__topbar">
       <ul>
@@ -190,7 +211,6 @@
       <p>Some account details</p>
     </div>
   </script>
-
 
 
   <!-- Wizard based modal -->

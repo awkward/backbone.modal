@@ -67,33 +67,42 @@ h4 + p {
 h3 + h4 {
   margin-top: 1.125em; }
 
-p {
+p,
+li {
   color: #535158;
   font-size: 1.3em;
   line-height: 1.75em;
   padding: 0;
   margin: 0; }
-  p code {
+  p code,
+  li code {
     font-size: 14px;
     padding: 0 5px; }
-  p.intro {
+  p.intro,
+  li.intro {
     font-size: 1.5em;
     line-height: 1.8em;
     margin-top: 1em; }
-  p a {
+  p a,
+  li a {
     color: #ff7448;
     text-decoration: none; }
-    p a:hover {
+    p a:hover,
+    li a:hover {
       text-decoration: underline; }
+
+em {
+  font-weight: bold;
+  font-style: normal; }
 
 code {
   background: #f0f0f0;
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   border-radius: 2px;
   padding: 1px 5px;
   font-weight: normal;
   font-size: 1em;
-  color: #666666; }
+  color: #666; }
   code[data-gist] {
     background: none;
     border: none;
@@ -140,7 +149,7 @@ code {
     .download {
       padding: 0; } }
   .download:active {
-    background: #f86536;
+    background: #F86536;
     background-image: -o-linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
     background-image: -moz-linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
     background-image: -webkit-linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
@@ -180,8 +189,8 @@ code {
       width: 100%;
       position: static; } }
   .container > section {
-    padding: 3em 50px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1); }
+    padding: 36px 50px;
+    border-top: 1px solid #E3E3E3; }
     @media (max-width: 480px) {
       .container > section {
         padding: 3em 25px; } }
@@ -264,6 +273,10 @@ code {
   padding-top: 11px;
   padding-bottom: 9px; }
 
+.changelog ul {
+  padding: 0;
+    padding-left: 20px; }
+
 .gist {
   color: #535158;
   margin-top: 1.5em; }
@@ -288,7 +301,7 @@ code {
       .gist .gist-file .gist-data .line-numbers {
         padding: 0.6em;
         font-size: 0.688em;
-        color: #bbbbbb;
+        color: #bbb;
         border: 0 none;
         -webkit-border-top-left-radius: 3px;
         -moz-border-top-left-radius: 3px;
@@ -319,7 +332,7 @@ code {
 .gist .gist-syntax .nv {
   color: #fb8a95; }
 .gist .gist-syntax .nd, .gist .gist-syntax .o {
-  color: #333333; }
+  color: #333; }
 .gist .gist-syntax .na, .gist .gist-syntax .k, .gist .gist-syntax .kt, .gist .gist-syntax .m, .gist .gist-syntax .mi, .gist .gist-syntax .no, .gist .gist-syntax .n, .gist .gist-syntax .s1, .gist .gist-syntax .s2, .gist .gist-syntax .sx, .gist .gist-syntax .nc, .gist .gist-syntax .nt, .gist .gist-syntax .nd, .gist .gist-syntax .nf, .gist .gist-syntax .nv, .gist .gist-syntax .nd, .gist .gist-syntax .o {
   font-weight: normal !important; }
 .gist .gist-syntax .c, .gist .gist-syntax .c1 {
@@ -327,3 +340,5 @@ code {
 
 .gist-meta {
   display: none; }
+
+/*# sourceMappingURL=s.css.map */
