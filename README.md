@@ -1,6 +1,6 @@
 ## Backbone.Modal
 
-[![Build Status](https://travis-ci.org/awkward/backbone.modal.svg?branch=1.1.0-beta)](https://travis-ci.org/awkward/backbone.modal)
+[![Build Status](https://travis-ci.org/awkward/backbone.modal.svg?branch=master)](https://travis-ci.org/awkward/backbone.modal)
 [![Coverage Status](https://img.shields.io/coveralls/awkward/backbone.modal.svg)](https://coveralls.io/r/awkward/backbone.modal)
 
 A plugin for Backbone.js that simplifies creating modals for your application.
