@@ -17,6 +17,8 @@
     return Modal = (function(_super) {
       __extends(Modal, _super);
 
+      Backbone.Modal = Modal;
+
       Modal.prototype.prefix = 'bbm';
 
       Modal.prototype.animate = true;
