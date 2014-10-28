@@ -63,7 +63,7 @@
 
       <code data-gist="https://gist.github.com/6219705.json"></code>
 
-      <p>You can bind your views by adding an event handler, just like you would define events in a Backbone.View. You can add additional options to pass along: <code>view</code> (as Backbone.View or template which is required), <code>viewOptions</code> (for specific options for that view). By using the <code>onActive</code> callback, you can see whenever a view is active.</p>
+      <p>You can bind your views by adding an event handler, just like you would define events in a Backbone.View. You can add additional options to pass along: <code>view</code> (as Backbone.View, function or template which is required), <code>viewOptions</code> (for specific options for that view). By using the <code>onActive</code> callback, you can see whenever a view is active.</p>
 
       <h4>views.length <code>modal.views.length</code></h4>
       <p>Get the amount of views in a modal.</p>
@@ -140,18 +140,26 @@
       <h3>Examples</h3>
       <p>
         <a href="https://github.com/awkward/backbone.modal/blob/master/examples/1_single_view.html">Single view/template</a><br/>
+        <a href="https://github.com/awkward/backbone.modal/blob/master/examples/1_single_view_amd.html">Single view/template (AMD)</a><br/>
         <a href="https://github.com/awkward/backbone.modal/blob/master/examples/2_tab_based.html">Tab based</a><br/>
         <a href="https://github.com/awkward/backbone.modal/blob/master/examples/3_stacked_modal_with_marionette.html">Stacked modal with Marionette</a><br/>
+        <a href="https://github.com/awkward/backbone.modal/blob/master/examples/3_stacked_modal_with_marionette_amd.html">Stacked modal with Marionette (AMD)</a><br/>
         <a href="https://github.com/awkward/backbone.modal/blob/master/examples/4_wizard.html">Wizard</a><br/>
       </p>
     </section>
     <section class="changelog">
       <h3>Changelog</h3>
 
+      <h4>1.1.1</h4>
+      <ul>
+        <li>Fix AMD support and add it to <code>Backbone</code> and <code>Backbone.Marionette</code></li>
+        <li>Add examples of how to use AMD with Backbone.Modal</li>
+      </ul>
+
       <h4>1.1.0</h4>
       <ul>
-        <li><em>Breaking change</em>: Changed handlers to comply with all Marionette (2.x.x) changes (changes <code>close</code> to <code>destroy</code>).</li>
-        <li>Add <code>viewOptions</code> fo  <code>views</code>.</li>
+        <li><em>Breaking change</em>: Changed handlers to comply with all Marionette (2.x.x) changes (changes <code>close</code> to <code>destroy</code>)</li>
+        <li>Add <code>viewOptions</code> for <code>views</code></li>
         <li>Zepto support</li>
         <li>Possibility to disable animations and keyboard events</li>
         <li>CommonJS and AMD support</li>
