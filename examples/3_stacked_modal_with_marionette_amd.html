@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta content="text/html;charset=UTF-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>Stacked modal with Marionette</title>
+
+    <!-- Adding Backbone.Modal extension here -->
+    <link type="text/css" rel="stylesheet" href="/backbone.modal.css">
+    <link type="text/css" rel="stylesheet" href="/backbone.modal.theme.css">
+
+    <!-- Require.JS -->
+    <script data-main="scripts/3-main" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.15/require.min.js"></script>
+
+    <!-- Custom style -->
+    <link type="text/css" rel="stylesheet" href="/examples/css/style.css">
+</head>
+
+<body>
+  <a href="#" class="open-1">Open modal</a>
+
+  <div class="app"></div>
+
+  <!-- Region container -->
+  <script type="text/template" id="modals-template">
+    <div class="modals-container"></div>
+  </script>
+
+  <!-- Modal templates  -->
+  <script type="text/template" id="modal-template1">
+    <div class="bbm-modal__topbar">
+      <h3 class="bbm-modal__title">Stacked modals with Backbone.Marionette</h3>
+    </div>
+    <div class="bbm-modal__section">
+      <p>Go ahead and open the <a href="#" class="open-2">second modal</a>.</p>
+    </div>
+    <div class="bbm-modal__bottombar">
+      <a href="#" class="bbm-button">Done</a>
+    </div>
+  </script>
+
+  <script type="text/template" id="modal-template2">
+    <div class="bbm-modal__topbar">
+      <h3 class="bbm-modal__title">The stacked modal</h3>
+    </div>
+    <div class="bbm-modal__section">
+      <p>By using Backbone.Marionette, your code stays simple and clean. So now we can create stacked modals, without doing any complex work.</p>
+    </div>
+    <div class="bbm-modal__bottombar">
+      <a href="#" class="bbm-button">Done</a>
+    </div>
+  </script>
+
+  <!-- Do not include in your page -->
+  <script src="//localhost:35729/livereload.js"></script>
+</body>
+</html>

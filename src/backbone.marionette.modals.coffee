@@ -1,16 +1,12 @@
-((root, factory) ->
+((factory) ->
   if typeof define is "function" and define.amd
-    define [
-      "exports"
-      "underscore"
-      "backbone"
-      "backbone.marionette"
-    ], factory
+    define(["underscore", "backbone", "backbone.marionette", "exports"], factory)
   else if typeof exports is "object"
-    factory(exports, require("underscore"), require("backbone"), require("backbone.marionette"))
+    factory(require("underscore"), require("backbone"), require("backbone.marionette"), exports)
   else
-    root.Backbone.Marionette.Modals = factory((root.commonJsStrict = {}), root._, root.Backbone, root.Backbone.Marionette)
-) this, (exports, _, Backbone, Marionette) ->
+    factory(_, Backbone, Backbone.Marionette, {})
+) (_, Backbone, Marionette, Modals) ->
+
   class Modals extends Marionette.Region
     modals: []
     zIndex: 0
@@ -75,3 +71,7 @@
 
     destroyAll: ->
       @destroy() for view in @modals
+
+
+  Marionette.Modals = Modals
+  return Marionette.Modals

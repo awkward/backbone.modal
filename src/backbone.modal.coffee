@@ -1,16 +1,12 @@
-((root, factory) ->
+((factory) ->
   if typeof define is "function" and define.amd
-    define [
-      "exports"
-      "underscore"
-      "backbone"
-    ], factory
+    define(["underscore", "backbone", "exports"], factory)
   else if typeof exports is "object"
-    factory(exports, require("underscore"), require("backbone"))
+    factory(require("underscore"), require("backbone"), exports)
   else
-    root.Backbone.Modal = factory((root.commonJsStrict = {}), root._, root.Backbone)
-) this, (exports, _, Backbone) ->
-
+    factory(_, Backbone, {})
+) (_, Backbone, Modal) ->
+  
   class Modal extends Backbone.View
     prefix: 'bbm'
     animate: true
@@ -301,3 +297,7 @@
 
     previous: (options = {}) ->
       @openAt(_.extend(options, {_index: @currentIndex-1})) if @currentIndex-1 < @views.length-1
+
+
+  Backbone.Modal = Modal
+  return Backbone.Modal

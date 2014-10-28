@@ -4,17 +4,16 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  (function(root, factory) {
+  (function(factory) {
     if (typeof define === "function" && define.amd) {
-      return define(["exports", "underscore", "backbone"], factory);
+      return define(["underscore", "backbone", "exports"], factory);
     } else if (typeof exports === "object") {
-      return factory(exports, require("underscore"), require("backbone"));
+      return factory(require("underscore"), require("backbone"), exports);
     } else {
-      return root.Backbone.Modal = factory((root.commonJsStrict = {}), root._, root.Backbone);
+      return factory(_, Backbone, {});
     }
-  })(this, function(exports, _, Backbone) {
-    var Modal;
-    return Modal = (function(_super) {
+  })(function(_, Backbone, Modal) {
+    Modal = (function(_super) {
       __extends(Modal, _super);
 
       Modal.prototype.prefix = 'bbm';
@@ -464,6 +463,8 @@
       return Modal;
 
     })(Backbone.View);
+    Backbone.Modal = Modal;
+    return Backbone.Modal;
   });
 
 }).call(this);

@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta content="text/html;charset=UTF-8" http-equiv="Content-Type"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+  <title>Single view modal</title>
+
+  <!-- Adding Backbone.Modal extension here -->
+  <link type="text/css" rel="stylesheet" href="/backbone.modal.css">
+  <link type="text/css" rel="stylesheet" href="/backbone.modal.theme.css">
+
+  <!-- Require.JS -->
+  <script data-main="scripts/1-main" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.15/require.min.js"></script>
+
+  <!-- Custom style -->
+  <link type="text/css" rel="stylesheet" href="/examples/css/style.css">
+</head>
+
+<body>
+  <a href="#" class="open">Open modal</a>
+
+  <div class="app"></div>
+
+  <script type="text/template" id="modal-template">
+    <div class="bbm-modal__topbar">
+      <h3 class="bbm-modal__title">Backbone.Modal</h3>
+    </div>
+    <div class="bbm-modal__section">
+      <p>With Backbone.Modal you can create a modal in a few lines of code.</p>
+      <p>Some features are:</p>
+      <ul>
+        <li>Really flexible and easy to set up.</li>
+        <li>Default behaviors like ESC or clicking outside a modal.</li>
+        <li>Some awesome animations that make them feel robust.</li>
+        <li>Responsive and usable on mobile devices.</li>
+      </ul>
+    </div>
+    <div class="bbm-modal__bottombar">
+      <a href="#" class="bbm-button">close</a>
+    </div>
+  </script>
+
+  <!-- Do not include in your page -->
+  <script src="//localhost:35729/livereload.js"></script>
+</body>
+</html>
