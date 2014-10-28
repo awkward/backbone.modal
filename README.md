@@ -6,6 +6,8 @@ A plugin for Backbone.js that simplifies creating modals for your application.
 
 Backbone.Modal.js removes boilerplate code and adds default behaviors and interactions. You can create a simple dialog modal or complex wizards with stacked modals on top of each other in a few lines of code.
 
+`bower install backbone-modal`
+
 For a complete overview of the documentation visit: [http://awkward.github.io/backbone.modal/](http://awkward.github.io/backbone.modal/)
 
 #### Bundled version
