@@ -1,6 +1,6 @@
 ## Backbone.Modal
 
-[![Build Status](https://travis-ci.org/awkward/backbone.modal.svg?branch=1.1.0-beta)](https://travis-ci.org/awkward/backbone.modal)
+[![Build Status](https://travis-ci.org/awkward/backbone.modal.svg)](https://travis-ci.org/awkward/backbone.modal)
 [![Coverage Status](https://img.shields.io/coveralls/awkward/backbone.modal.svg)](https://coveralls.io/r/awkward/backbone.modal)
 
 A plugin for Backbone.js that simplifies creating modals for your application.
@@ -11,17 +11,17 @@ For a complete overview of the documentation visit: [http://awkward.github.io/ba
 
 #### Bundled version
 If you're using Backbone and Marionette.
-* [backbone.modal-bundled-min.js](https://raw.github.com/awkward/backbone.modal/master/backbone.modal-bundled-min.js)
+* [backbone.modal-bundled-min.js](https://raw.github.com/awkward/backbone.modal/tree/v1.1.1/backbone.modal-bundled-min.js)
 
 #### Backbone.Modals.js and Backbone.Marionette.Modals.js separate
 If you just want to use the Backbone version without Marionette.
-* [backbone.modal-min.js](https://raw.github.com/awkward/backbone.modal/master/backbone.modal-min.js)
-* [backbone.marionette.modals-min.js](https://raw.github.com/awkward/backbone.modal/master/backbone.marionette.modals-min.js)
+* [backbone.modal-min.js](https://raw.github.com/awkward/backbone.modal/tree/v1.1.1/backbone.modal-min.js)
+* [backbone.marionette.modals-min.js](https://raw.github.com/awkward/backbone.modal/tree/v1.1.1/backbone.marionette.modals-min.js)
 
 #### CSS files
 There's default style, and you can use our theme to make things look pretty.
-* [backbone.modal.css](https://raw.github.com/awkward/backbone.modal/master/backbone.modal.css)
-* [backbone.modal.theme.css](https://raw.github.com/awkward/backbone.modal/master/backbone.modal.theme.css)
+* [backbone.modal.css](https://raw.github.com/awkward/backbone.modal/tree/v1.1.1/backbone.modal.css)
+* [backbone.modal.theme.css](https://raw.github.com/awkward/backbone.modal/tree/v1.1.1/backbone.modal.theme.css)
 
 ### How to contribute
 

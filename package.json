@@ -1,7 +1,7 @@
 {
   "title": "Backbone.Modal",
   "name": "backbone.modal",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "backbone.modal-bundled.js",
   "ignore": [
     "test/",
