@@ -38,7 +38,7 @@
             secondLastModal.modalEl.removeClass("" + secondLastModal.prefix + "-modal--stacked-reverse");
           }
         }
-        view.render();
+        view.render(options);
         view.regionEnabled = true;
         this.triggerMethod('before:swap', view);
         this.triggerMethod('before:show', view);

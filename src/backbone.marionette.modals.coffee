@@ -20,7 +20,7 @@
         secondLastModal = @modals[@modals.length-1]
         secondLastModal?.modalEl.removeClass("#{secondLastModal.prefix}-modal--stacked-reverse")
 
-      view.render()
+      view.render(options)
       view.regionEnabled = true
 
       @triggerMethod('before:swap', view)
