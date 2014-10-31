@@ -37,6 +37,9 @@
       Modal.prototype.render = function(options) {
         var animate, data, _ref;
         data = this.serializeData();
+        if (!options || _.isEmpty(options)) {
+          options = 0;
+        }
         this.$el.addClass("" + this.prefix + "-wrapper");
         this.modalEl = Backbone.$('<div />').addClass("" + this.prefix + "-modal");
         if (this.template) {
@@ -51,7 +54,7 @@
         }
         $(':focus').blur();
         if (((_ref = this.views) != null ? _ref.length : void 0) > 0) {
-          this.openAt(options || 0);
+          this.openAt(options);
         }
         if (typeof this.onRender === "function") {
           this.onRender();

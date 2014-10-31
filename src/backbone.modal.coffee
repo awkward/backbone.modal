@@ -6,7 +6,7 @@
   else
     factory(_, Backbone, {})
 ) (_, Backbone, Modal) ->
-  
+
   class Modal extends Backbone.View
     prefix: 'bbm'
     animate: true
@@ -20,7 +20,8 @@
 
     render: (options) ->
       # use openAt or overwrite this with your own functionality
-      data = @serializeData()
+      data    = @serializeData()
+      options = 0 if !options or _.isEmpty(options)
 
       @$el.addClass("#{@prefix}-wrapper")
       @modalEl = Backbone.$('<div />').addClass("#{@prefix}-modal")
@@ -36,7 +37,7 @@
       # Blur links to prevent double keystroke events
       $(':focus').blur()
 
-      @openAt(options or 0) if @views?.length > 0
+      @openAt(options) if @views?.length > 0
       @onRender?()
 
       @delegateModalEvents()
