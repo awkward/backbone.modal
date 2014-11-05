@@ -1,15 +1,14 @@
 /* Modal positioning */
 .bbm-wrapper {
   box-sizing: border-box;
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   z-index: 100;
   padding: 50px 10px;
-  overflow-x: auto;
-  overflow-y: scroll; }
+  overflow: auto; }
   .bbm-wrapper * {
     box-sizing: border-box; }
 

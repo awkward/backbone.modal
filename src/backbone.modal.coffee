@@ -11,11 +11,13 @@
     prefix: 'bbm'
     animate: true
     keyControl: true
+    showViewOnRender: true
 
     constructor: ->
       @args = Array::slice.apply(arguments)
       Backbone.View::constructor.apply(this, @args)
 
+      # get all options
       @setUIElements()
 
     render: (options) ->
@@ -26,7 +28,7 @@
       @$el.addClass("#{@prefix}-wrapper")
       @modalEl = Backbone.$('<div />').addClass("#{@prefix}-modal")
       @modalEl.html @template(data) if @template
-      @$el.html @modalEl
+      @$el.html(@modalEl)
 
       if @viewContainer
         @viewContainerEl = @modalEl.find(@viewContainer)
@@ -34,23 +36,21 @@
       else
         @viewContainerEl = @modalEl
 
-      # Blur links to prevent double keystroke events
+      # blur links to prevent double keystroke events
       $(':focus').blur()
 
-      @openAt(options) if @views?.length > 0
+      @openAt(options) if @views?.length > 0 and @showViewOnRender
       @onRender?()
 
       @delegateModalEvents()
 
-      animate = @getOption('animate')
-
-      if @$el.fadeIn and animate
+      # show modal
+      if @$el.fadeIn and @animate
         @modalEl.css(opacity: 0)
         @$el.fadeIn
           duration: 100
           complete: @rendererCompleted
       else
-        @$el.show()
         @rendererCompleted()
 
       return this
@@ -71,10 +71,9 @@
       @views          = @getOption('views')
       @views?.length  = _.size(@views)
       @viewContainer  = @getOption('viewContainer')
+      @animate        = @getOption('animate')
 
-      # hide modal
-      @$el.hide()
-
+      # check if everything is right
       throw new Error('No template or views defined for Backbone.Modal') if _.isUndefined(@template) and _.isUndefined(@views)
       throw new Error('No viewContainer defined for Backbone.Modal') if @template and @views and _.isUndefined(@viewContainer)
 
@@ -208,17 +207,19 @@
       newHeight       = container.outerHeight()
 
       if previousHeight is newHeight
-        @$(@viewContainerEl).html view
+        @$(@viewContainerEl).html(view)
         @currentView.onShow?()
         @previousView?.destroy?()
       else
-        @$(@viewContainerEl).css(opacity: 0)
-
-        @$(@viewContainerEl).animate {height: newHeight}, 100, =>
-          @$(@viewContainerEl).css(opacity: 1).removeAttr('style')
-          @$(@viewContainerEl).html view
-          @currentView.onShow?()
-          @previousView?.destroy?()
+        if @animate
+          @$(@viewContainerEl).css(opacity: 0)
+          @$(@viewContainerEl).animate {height: newHeight}, 100, =>
+            @$(@viewContainerEl).css(opacity: 1).removeAttr('style')
+            @$(@viewContainerEl).html view
+            @currentView.onShow?()
+            @previousView?.destroy?()
+        else
+          @$(@viewContainerEl).css(height: newHeight).html(view)
 
     triggerSubmit: (e) =>
       e?.preventDefault()
@@ -260,8 +261,7 @@
         @currentView?.remove?()
         @remove()
 
-      animate = @getOption('animate')
-      if @$el.fadeOut and animate
+      if @$el.fadeOut and @animate
         @$el.fadeOut(duration: 200)
         _.delay ->
           removeViews()
@@ -278,11 +278,11 @@
       i = 0
       for key of @views
         unless key is 'length'
-          # Go to specific index in views[]
+          # go to specific index in views[]
           if _.isNumber(atIndex)
             view = @views[key] if i is atIndex
             i++
-          # Use attributes to find a view in views[]
+          # use attributes to find a view in views[]
           else if _.isObject(options)
             for attr of @views[key]
               view = @views[key] if options[attr] is @views[key][attr]

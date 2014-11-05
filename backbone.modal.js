@@ -22,6 +22,8 @@
 
       Modal.prototype.keyControl = true;
 
+      Modal.prototype.showViewOnRender = true;
+
       function Modal() {
         this.triggerCancel = __bind(this.triggerCancel, this);
         this.triggerSubmit = __bind(this.triggerSubmit, this);
@@ -35,7 +37,7 @@
       }
 
       Modal.prototype.render = function(options) {
-        var animate, data, _ref;
+        var data, _ref;
         data = this.serializeData();
         if (!options || _.isEmpty(options)) {
           options = 0;
@@ -53,15 +55,14 @@
           this.viewContainerEl = this.modalEl;
         }
         $(':focus').blur();
-        if (((_ref = this.views) != null ? _ref.length : void 0) > 0) {
+        if (((_ref = this.views) != null ? _ref.length : void 0) > 0 && this.showViewOnRender) {
           this.openAt(options);
         }
         if (typeof this.onRender === "function") {
           this.onRender();
         }
         this.delegateModalEvents();
-        animate = this.getOption('animate');
-        if (this.$el.fadeIn && animate) {
+        if (this.$el.fadeIn && this.animate) {
           this.modalEl.css({
             opacity: 0
           });
@@ -70,7 +71,6 @@
             complete: this.rendererCompleted
           });
         } else {
-          this.$el.show();
           this.rendererCompleted();
         }
         return this;
@@ -99,7 +99,7 @@
           _ref.length = _.size(this.views);
         }
         this.viewContainer = this.getOption('viewContainer');
-        this.$el.hide();
+        this.animate = this.getOption('animate');
         if (_.isUndefined(this.template) && _.isUndefined(this.views)) {
           throw new Error('No template or views defined for Backbone.Modal');
         }
@@ -300,24 +300,30 @@
           }
           return (_ref = this.previousView) != null ? typeof _ref.destroy === "function" ? _ref.destroy() : void 0 : void 0;
         } else {
-          this.$(this.viewContainerEl).css({
-            opacity: 0
-          });
-          return this.$(this.viewContainerEl).animate({
-            height: newHeight
-          }, 100, (function(_this) {
-            return function() {
-              var _base1, _ref1;
-              _this.$(_this.viewContainerEl).css({
-                opacity: 1
-              }).removeAttr('style');
-              _this.$(_this.viewContainerEl).html(view);
-              if (typeof (_base1 = _this.currentView).onShow === "function") {
-                _base1.onShow();
-              }
-              return (_ref1 = _this.previousView) != null ? typeof _ref1.destroy === "function" ? _ref1.destroy() : void 0 : void 0;
-            };
-          })(this));
+          if (this.animate) {
+            this.$(this.viewContainerEl).css({
+              opacity: 0
+            });
+            return this.$(this.viewContainerEl).animate({
+              height: newHeight
+            }, 100, (function(_this) {
+              return function() {
+                var _base1, _ref1;
+                _this.$(_this.viewContainerEl).css({
+                  opacity: 1
+                }).removeAttr('style');
+                _this.$(_this.viewContainerEl).html(view);
+                if (typeof (_base1 = _this.currentView).onShow === "function") {
+                  _base1.onShow();
+                }
+                return (_ref1 = _this.previousView) != null ? typeof _ref1.destroy === "function" ? _ref1.destroy() : void 0 : void 0;
+              };
+            })(this));
+          } else {
+            return this.$(this.viewContainerEl).css({
+              height: newHeight
+            }).html(view);
+          }
         }
       };
 
@@ -374,7 +380,7 @@
       };
 
       Modal.prototype.destroy = function() {
-        var animate, removeViews;
+        var removeViews;
         Backbone.$('body').off('keyup', this.checkKey);
         Backbone.$('body').off('click', this.clickOutside);
         if (typeof this.onDestroy === "function") {
@@ -393,8 +399,7 @@
             return _this.remove();
           };
         })(this);
-        animate = this.getOption('animate');
-        if (this.$el.fadeOut && animate) {
+        if (this.$el.fadeOut && this.animate) {
           this.$el.fadeOut({
             duration: 200
           });

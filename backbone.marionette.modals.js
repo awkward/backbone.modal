@@ -30,6 +30,9 @@
           options = {};
         }
         this._ensureElement();
+        Backbone.$('body').css({
+          overflow: 'hidden'
+        });
         if (this.modals.length > 0) {
           lastModal = _.last(this.modals);
           lastModal.modalEl.addClass("" + lastModal.prefix + "-view--stacked");
@@ -49,19 +52,17 @@
         this.triggerMethod('swap', view);
         this.triggerMethod('show', view);
         Marionette.triggerMethodOn(view, 'show');
-        if (this.modals.length > 0) {
-          _ref = this.modals;
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            modalView = _ref[_i];
-            modalView.$el.css({
-              background: 'none'
-            });
-          }
+        _ref = this.modals;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          modalView = _ref[_i];
+          modalView.undelegateModalEvents();
         }
         _ref1 = this.modals;
         for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
           modalView = _ref1[_j];
-          modalView.undelegateModalEvents();
+          modalView.$el.css({
+            background: 'none'
+          });
         }
         view.on('modal:destroy', this.destroy);
         this.modals.push(view);
@@ -93,9 +94,15 @@
             };
           })(this), 300);
           if (this.zIndex !== 0) {
-            return lastModal.delegateModalEvents();
+            lastModal.delegateModalEvents();
           }
         }
+        if (this.zIndex === 0) {
+          Backbone.$('body').css({
+            overflow: 'visible'
+          });
+        }
+        return this.triggerMethod('modal:destroy', view);
       };
 
       Modals.prototype.destroyAll = function() {

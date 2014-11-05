@@ -14,6 +14,8 @@
     show: (view, options = {}) ->
       @_ensureElement()
 
+      Backbone.$('body').css(overflow: 'hidden')
+
       if @modals.length > 0
         lastModal = _.last(@modals)
         lastModal.modalEl.addClass("#{lastModal.prefix}-view--stacked")
@@ -35,8 +37,8 @@
       @triggerMethod('show', view)
       Marionette.triggerMethodOn(view, 'show')
 
-      modalView.$el.css(background: 'none') for modalView in @modals if @modals.length > 0
       modalView.undelegateModalEvents() for modalView in @modals
+      modalView.$el.css(background: 'none') for modalView in @modals
 
       view.on('modal:destroy', @destroy)
       @modals.push(view)
@@ -68,6 +70,9 @@
         , 300
 
         lastModal.delegateModalEvents() if @zIndex isnt 0
+
+      Backbone.$('body').css(overflow: 'visible') if @zIndex is 0
+      @triggerMethod('modal:destroy', view)
 
     destroyAll: ->
       @destroy() for view in @modals
