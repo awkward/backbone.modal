@@ -37,7 +37,7 @@
       }
 
       Modal.prototype.render = function(options) {
-        var data, _ref;
+        var data, templateFunc, _ref;
         data = this.serializeData();
         if (!options || _.isEmpty(options)) {
           options = 0;
@@ -45,9 +45,16 @@
         this.$el.addClass("" + this.prefix + "-wrapper");
         this.modalEl = Backbone.$('<div />').addClass("" + this.prefix + "-modal");
         if (this.template) {
-          this.modalEl.html(this.template(data));
+          templateFunc = void 0;
+          if (typeof this.template === "function") {
+            templateFunc = this.template;
+          } else if (!typeof Marionette === "undefined") {
+            templateFunc = Marionette.TemplateCache.get(this.template);
+          }
+          if (!templateFunc === "undefined") {
+            this.modalEl.html(templateFunc(data));
+          }
         }
-        this.$el.html(this.modalEl);
         if (this.viewContainer) {
           this.viewContainerEl = this.modalEl.find(this.viewContainer);
           this.viewContainerEl.addClass("" + this.prefix + "-modal__views");

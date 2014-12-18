@@ -27,8 +27,16 @@
 
       @$el.addClass("#{@prefix}-wrapper")
       @modalEl = Backbone.$('<div />').addClass("#{@prefix}-modal")
-      @modalEl.html @template(data) if @template
-      @$el.html(@modalEl)
+
+      # template can either be a function or a string template selector
+      if @template
+        templateFunc = undefined
+        if typeof @template is "function"
+          templateFunc = @template
+        else if not typeof Marionette is "undefined"
+          templateFunc = Marionette.TemplateCache.get(@template)
+        if not templateFunc is "undefined"
+          @modalEl.html templateFunc(data)
 
       if @viewContainer
         @viewContainerEl = @modalEl.find(@viewContainer)
