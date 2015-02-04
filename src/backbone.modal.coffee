@@ -37,7 +37,7 @@
         @viewContainerEl = @modalEl
 
       # blur links to prevent double keystroke events
-      $(':focus').blur()
+      Backbone.$(':focus').blur()
 
       @openAt(options) if @views?.length > 0 and @showViewOnRender
       @onRender?()

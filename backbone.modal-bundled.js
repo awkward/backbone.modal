@@ -54,7 +54,7 @@
         } else {
           this.viewContainerEl = this.modalEl;
         }
-        $(':focus').blur();
+        Backbone.$(':focus').blur();
         if (((_ref = this.views) != null ? _ref.length : void 0) > 0 && this.showViewOnRender) {
           this.openAt(options);
         }
