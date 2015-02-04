@@ -27,7 +27,7 @@
 
       @$el.addClass("#{@prefix}-wrapper")
       @modalEl = Backbone.$('<div />').addClass("#{@prefix}-modal")
-      @modalEl.html @template(data) if @template
+      @modalEl.html @buildTemplate(@template, data) if @template
       @$el.html(@modalEl)
 
       if @viewContainer
@@ -142,6 +142,14 @@
 
     clickOutside: (e) =>
       @triggerCancel() if Backbone.$(e.target).hasClass("#{@prefix}-wrapper") and @active
+
+    buildTemplate: (template, data) ->
+      if typeof template is 'function'
+        templateFunction = template
+      else
+        templateFunction = _.template(Backbone.$(template).html())
+
+      return templateFunction(data)
 
     buildView: (viewType, options) ->
       # returns a Backbone.View instance, a function or an object

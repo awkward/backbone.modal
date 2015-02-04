@@ -45,7 +45,7 @@
         this.$el.addClass("" + this.prefix + "-wrapper");
         this.modalEl = Backbone.$('<div />').addClass("" + this.prefix + "-modal");
         if (this.template) {
-          this.modalEl.html(this.template(data));
+          this.modalEl.html(this.buildTemplate(this.template, data));
         }
         this.$el.html(this.modalEl);
         if (this.viewContainer) {
@@ -198,6 +198,16 @@
         if (Backbone.$(e.target).hasClass("" + this.prefix + "-wrapper") && this.active) {
           return this.triggerCancel();
         }
+      };
+
+      Modal.prototype.buildTemplate = function(template, data) {
+        var templateFunction;
+        if (typeof template === 'function') {
+          templateFunction = template;
+        } else {
+          templateFunction = _.template(Backbone.$(template).html());
+        }
+        return templateFunction(data);
       };
 
       Modal.prototype.buildView = function(viewType, options) {
