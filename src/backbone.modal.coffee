@@ -58,8 +58,8 @@
     rendererCompleted: =>
       if @keyControl
         # global events for key and click outside the modal
-        Backbone.$('body').on('keyup', @checkKey)
-        Backbone.$('body').on('click', @clickOutside)
+        Backbone.$('body').on('keyup.bbm', @checkKey)
+        Backbone.$('body').on('mouseup.bbm', @clickOutside)
 
       @modalEl.css(opacity: 1).addClass("#{@prefix}-modal--open")
       @onShow?()
@@ -249,8 +249,8 @@
         @destroy()
 
     destroy: ->
-      Backbone.$('body').off('keyup', @checkKey)
-      Backbone.$('body').off('click', @clickOutside)
+      Backbone.$('body').off('keyup.bbm', @checkKey)
+      Backbone.$('body').off('mouseup.bbm', @clickOutside)
 
       Backbone.$('tester').remove()
 

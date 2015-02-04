@@ -79,8 +79,8 @@
       Modal.prototype.rendererCompleted = function() {
         var _ref;
         if (this.keyControl) {
-          Backbone.$('body').on('keyup', this.checkKey);
-          Backbone.$('body').on('click', this.clickOutside);
+          Backbone.$('body').on('keyup.bbm', this.checkKey);
+          Backbone.$('body').on('mouseup.bbm', this.clickOutside);
         }
         this.modalEl.css({
           opacity: 1
@@ -381,8 +381,8 @@
 
       Modal.prototype.destroy = function() {
         var removeViews;
-        Backbone.$('body').off('keyup', this.checkKey);
-        Backbone.$('body').off('click', this.clickOutside);
+        Backbone.$('body').off('keyup.bbm', this.checkKey);
+        Backbone.$('body').off('mouseup.bbm', this.clickOutside);
         Backbone.$('tester').remove();
         if (typeof this.onDestroy === "function") {
           this.onDestroy();
