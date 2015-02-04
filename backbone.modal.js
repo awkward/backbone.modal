@@ -39,13 +39,10 @@
       Modal.prototype.render = function(options) {
         var data, _ref;
         data = this.serializeData();
-        if (!options || _.isEmpty(options)) {
-          options = 0;
-        }
         this.$el.addClass("" + this.prefix + "-wrapper");
         this.modalEl = Backbone.$('<div />').addClass("" + this.prefix + "-modal");
         if (this.template) {
-          this.modalEl.html(this.template(data));
+          this.modalEl.html(this.buildTemplate(this.template, data));
         }
         this.$el.html(this.modalEl);
         if (this.viewContainer) {
@@ -54,7 +51,7 @@
         } else {
           this.viewContainerEl = this.modalEl;
         }
-        $(':focus').blur();
+        Backbone.$(':focus').blur();
         if (((_ref = this.views) != null ? _ref.length : void 0) > 0 && this.showViewOnRender) {
           this.openAt(options);
         }
@@ -79,8 +76,8 @@
       Modal.prototype.rendererCompleted = function() {
         var _ref;
         if (this.keyControl) {
-          Backbone.$('body').on('keyup', this.checkKey);
-          Backbone.$('body').on('click', this.clickOutside);
+          Backbone.$('body').on('keyup.bbm', this.checkKey);
+          Backbone.$('body').on('mouseup.bbm', this.clickOutside);
         }
         this.modalEl.css({
           opacity: 1
@@ -198,6 +195,16 @@
         if (Backbone.$(e.target).hasClass("" + this.prefix + "-wrapper") && this.active) {
           return this.triggerCancel();
         }
+      };
+
+      Modal.prototype.buildTemplate = function(template, data) {
+        var templateFunction;
+        if (typeof template === 'function') {
+          templateFunction = template;
+        } else {
+          templateFunction = _.template(Backbone.$(template).html());
+        }
+        return templateFunction(data);
       };
 
       Modal.prototype.buildView = function(viewType, options) {
@@ -381,8 +388,9 @@
 
       Modal.prototype.destroy = function() {
         var removeViews;
-        Backbone.$('body').off('keyup', this.checkKey);
-        Backbone.$('body').off('click', this.clickOutside);
+        Backbone.$('body').off('keyup.bbm', this.checkKey);
+        Backbone.$('body').off('mouseup.bbm', this.clickOutside);
+        Backbone.$('tester').remove();
         if (typeof this.onDestroy === "function") {
           this.onDestroy();
         }
@@ -413,6 +421,9 @@
 
       Modal.prototype.openAt = function(options) {
         var atIndex, attr, i, key, view;
+        if (options == null) {
+          options = 0;
+        }
         if (_.isNumber(options)) {
           atIndex = options;
         } else if (_.isNumber(options._index)) {

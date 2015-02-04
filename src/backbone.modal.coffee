@@ -22,12 +22,11 @@
 
     render: (options) ->
       # use openAt or overwrite this with your own functionality
-      data    = @serializeData()
-      options = 0 if !options or _.isEmpty(options)
+      data = @serializeData()
 
       @$el.addClass("#{@prefix}-wrapper")
       @modalEl = Backbone.$('<div />').addClass("#{@prefix}-modal")
-      @modalEl.html @template(data) if @template
+      @modalEl.html @buildTemplate(@template, data) if @template
       @$el.html(@modalEl)
 
       if @viewContainer
@@ -37,7 +36,7 @@
         @viewContainerEl = @modalEl
 
       # blur links to prevent double keystroke events
-      $(':focus').blur()
+      Backbone.$(':focus').blur()
 
       @openAt(options) if @views?.length > 0 and @showViewOnRender
       @onRender?()
@@ -58,8 +57,8 @@
     rendererCompleted: =>
       if @keyControl
         # global events for key and click outside the modal
-        Backbone.$('body').on('keyup', @checkKey)
-        Backbone.$('body').on('click', @clickOutside)
+        Backbone.$('body').on('keyup.bbm', @checkKey)
+        Backbone.$('body').on('mouseup.bbm', @clickOutside)
 
       @modalEl.css(opacity: 1).addClass("#{@prefix}-modal--open")
       @onShow?()
@@ -142,6 +141,14 @@
 
     clickOutside: (e) =>
       @triggerCancel() if Backbone.$(e.target).hasClass("#{@prefix}-wrapper") and @active
+
+    buildTemplate: (template, data) ->
+      if typeof template is 'function'
+        templateFunction = template
+      else
+        templateFunction = _.template(Backbone.$(template).html())
+
+      return templateFunction(data)
 
     buildView: (viewType, options) ->
       # returns a Backbone.View instance, a function or an object
@@ -249,8 +256,10 @@
         @destroy()
 
     destroy: ->
-      Backbone.$('body').off('keyup', @checkKey)
-      Backbone.$('body').off('click', @clickOutside)
+      Backbone.$('body').off('keyup.bbm', @checkKey)
+      Backbone.$('body').off('mouseup.bbm', @clickOutside)
+
+      Backbone.$('tester').remove()
 
       @onDestroy?()
 
@@ -269,7 +278,7 @@
       else
         removeViews()
 
-    openAt: (options) ->
+    openAt: (options = 0) ->
       if _.isNumber(options)
         atIndex = options
       else if _.isNumber(options._index)
