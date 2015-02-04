@@ -39,9 +39,6 @@
       Modal.prototype.render = function(options) {
         var data, _ref;
         data = this.serializeData();
-        if (!options || _.isEmpty(options)) {
-          options = 0;
-        }
         this.$el.addClass("" + this.prefix + "-wrapper");
         this.modalEl = Backbone.$('<div />').addClass("" + this.prefix + "-modal");
         if (this.template) {
@@ -424,6 +421,9 @@
 
       Modal.prototype.openAt = function(options) {
         var atIndex, attr, i, key, view;
+        if (options == null) {
+          options = 0;
+        }
         if (_.isNumber(options)) {
           atIndex = options;
         } else if (_.isNumber(options._index)) {
