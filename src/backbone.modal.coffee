@@ -23,6 +23,7 @@
     render: (options) ->
       # use openAt or overwrite this with your own functionality
       data = @serializeData()
+      options = 0 if !options or _.isEmpty(options)
 
       @$el.addClass("#{@prefix}-wrapper")
       @modalEl = Backbone.$('<div />').addClass("#{@prefix}-modal")
@@ -278,7 +279,7 @@
       else
         removeViews()
 
-    openAt: (options = 0) ->
+    openAt: (options) ->
       if _.isNumber(options)
         atIndex = options
       else if _.isNumber(options._index)
