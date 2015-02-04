@@ -252,6 +252,8 @@
       Backbone.$('body').off('keyup', @checkKey)
       Backbone.$('body').off('click', @clickOutside)
 
+      Backbone.$('tester').remove()
+
       @onDestroy?()
 
       @shouldAnimate = false

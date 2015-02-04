@@ -383,6 +383,7 @@
         var removeViews;
         Backbone.$('body').off('keyup', this.checkKey);
         Backbone.$('body').off('click', this.clickOutside);
+        Backbone.$('tester').remove();
         if (typeof this.onDestroy === "function") {
           this.onDestroy();
         }
