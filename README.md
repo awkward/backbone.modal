@@ -12,17 +12,17 @@ For a complete overview of the documentation visit: [http://awkward.github.io/ba
 
 #### Bundled version
 If you're using Backbone and Marionette.
-* [backbone.modal-bundled-min.js](https://raw.githubusercontent.com/awkward/backbone.modal/v1.1.3/backbone.modal-bundled-min.js)
+* [backbone.modal-bundled-min.js](https://raw.githubusercontent.com/awkward/backbone.modal/v1.1.4/backbone.modal-bundled-min.js)
 
 #### Backbone.Modals.js and Backbone.Marionette.Modals.js separate
 If you just want to use the Backbone version without Marionette.
-* [backbone.modal-min.js](https://raw.githubusercontent.com/awkward/backbone.modal/v1.1.3/backbone.modal-min.js)
-* [backbone.marionette.modals-min.js](https://raw.githubusercontent.com/awkward/backbone.modal/v1.1.3/backbone.marionette.modals-min.js)
+* [backbone.modal-min.js](https://raw.githubusercontent.com/awkward/backbone.modal/v1.1.4/backbone.modal-min.js)
+* [backbone.marionette.modals-min.js](https://raw.githubusercontent.com/awkward/backbone.modal/v1.1.4/backbone.marionette.modals-min.js)
 
 #### CSS files
 There's default style, and you can use our theme to make things look pretty.
-* [backbone.modal.css](https://raw.githubusercontent.com/awkward/backbone.modal/v1.1.3/backbone.modal.css)
-* [backbone.modal.theme.css](https://raw.githubusercontent.com/awkward/backbone.modal/v1.1.3/backbone.modal.theme.css)
+* [backbone.modal.css](https://raw.githubusercontent.com/awkward/backbone.modal/v1.1.4/backbone.modal.css)
+* [backbone.modal.theme.css](https://raw.githubusercontent.com/awkward/backbone.modal/v1.1.4/backbone.modal.theme.css)
 
 ### How to contribute
 
@@ -34,6 +34,6 @@ When you run the project by doing `grunt watch`. This will watch the tests, src 
 
 ### Legal stuff (MIT License)
 
-Copyright (c) 2014 Awkward.
+Copyright (c) 2015 Awkward.
 
 Distributed under MIT license.

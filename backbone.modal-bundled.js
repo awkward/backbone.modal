@@ -28,6 +28,7 @@
         this.triggerCancel = __bind(this.triggerCancel, this);
         this.triggerSubmit = __bind(this.triggerSubmit, this);
         this.triggerView = __bind(this.triggerView, this);
+        this.clickOutsideElement = __bind(this.clickOutsideElement, this);
         this.clickOutside = __bind(this.clickOutside, this);
         this.checkKey = __bind(this.checkKey, this);
         this.rendererCompleted = __bind(this.rendererCompleted, this);
@@ -80,7 +81,8 @@
         var _ref;
         if (this.keyControl) {
           Backbone.$('body').on('keyup.bbm', this.checkKey);
-          Backbone.$('body').on('mouseup.bbm', this.clickOutside);
+          Backbone.$('body').on('mouseup.bbm', this.clickOutsideElement);
+          Backbone.$('body').on('click.bbm', this.clickOutside);
         }
         this.modalEl.css({
           opacity: 1
@@ -195,9 +197,13 @@
       };
 
       Modal.prototype.clickOutside = function(e) {
-        if (Backbone.$(e.target).hasClass("" + this.prefix + "-wrapper") && this.active) {
+        if (this.outsideElement.hasClass("" + this.prefix + "-wrapper") && this.active) {
           return this.triggerCancel();
         }
+      };
+
+      Modal.prototype.clickOutsideElement = function(e) {
+        return this.outsideElement = Backbone.$(e.target);
       };
 
       Modal.prototype.buildTemplate = function(template, data) {
@@ -342,6 +348,9 @@
         if (e != null) {
           e.preventDefault();
         }
+        if (Backbone.$(e.target).is('textarea')) {
+          return;
+        }
         if (this.beforeSubmit) {
           if (this.beforeSubmit() === false) {
             return;
@@ -392,7 +401,8 @@
       Modal.prototype.destroy = function() {
         var removeViews;
         Backbone.$('body').off('keyup.bbm', this.checkKey);
-        Backbone.$('body').off('mouseup.bbm', this.clickOutside);
+        Backbone.$('body').off('mouseup.bbm', this.clickOutsideElement);
+        Backbone.$('body').off('click.bbm', this.clickOutside);
         Backbone.$('tester').remove();
         if (typeof this.onDestroy === "function") {
           this.onDestroy();

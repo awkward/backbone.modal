@@ -2,10 +2,10 @@
 require.config({
   baseUrl: '../../',
     paths: {
-      jquery: 'http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min',
-      underscore: 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore',
+      jquery: 'http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min',
+      underscore: 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.2/underscore',
       backbone: 'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone',
-      'backbone.marionette': 'http://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/2.2.2/backbone.marionette'
+      'backbone.marionette': 'http://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/2.4.1/backbone.marionette'
     }
 });
 
