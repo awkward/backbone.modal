@@ -342,6 +342,9 @@
         if (e != null) {
           e.preventDefault();
         }
+        if ($(e.target).is('textarea')) {
+          return;
+        }
         if (this.beforeSubmit) {
           if (this.beforeSubmit() === false) {
             return;
