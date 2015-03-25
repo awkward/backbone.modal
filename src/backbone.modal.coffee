@@ -59,7 +59,8 @@
       if @keyControl
         # global events for key and click outside the modal
         Backbone.$('body').on('keyup.bbm', @checkKey)
-        Backbone.$('body').on('mouseup.bbm', @clickOutside)
+        Backbone.$('body').on('mouseup.bbm', @clickOutsideElement)
+        Backbone.$('body').on('click.bbm', @clickOutside)
 
       @modalEl.css(opacity: 1).addClass("#{@prefix}-modal--open")
       @onShow?()
@@ -140,8 +141,11 @@
           when 27 then @triggerCancel(e)
           when 13 then @triggerSubmit(e)
 
+    # check if the element on mouseup is not the modal itself
     clickOutside: (e) =>
-      @triggerCancel() if Backbone.$(e.target).hasClass("#{@prefix}-wrapper") and @active
+      @triggerCancel() if @outsideElement.hasClass("#{@prefix}-wrapper") and @active
+
+    clickOutsideElement: (e) => @outsideElement = Backbone.$(e.target)
 
     buildTemplate: (template, data) ->
       if typeof template is 'function'
@@ -232,7 +236,7 @@
     triggerSubmit: (e) =>
       e?.preventDefault()
 
-      return if $(e.target).is('textarea')
+      return if Backbone.$(e.target).is('textarea')
 
       return if @beforeSubmit() is false if @beforeSubmit
       return if @currentView.beforeSubmit() is false if @currentView and @currentView.beforeSubmit
@@ -260,7 +264,8 @@
 
     destroy: ->
       Backbone.$('body').off('keyup.bbm', @checkKey)
-      Backbone.$('body').off('mouseup.bbm', @clickOutside)
+      Backbone.$('body').off('mouseup.bbm', @clickOutsideElement)
+      Backbone.$('body').off('click.bbm', @clickOutside)
 
       Backbone.$('tester').remove()
 
