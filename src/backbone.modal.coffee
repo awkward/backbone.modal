@@ -236,7 +236,7 @@
     triggerSubmit: (e) =>
       e?.preventDefault()
 
-      return if Backbone.$(e.target).is('textarea')
+      return if Backbone.$(e?.target).is('textarea')
 
       return if @beforeSubmit() is false if @beforeSubmit
       return if @currentView.beforeSubmit() is false if @currentView and @currentView.beforeSubmit

@@ -348,7 +348,7 @@
         if (e != null) {
           e.preventDefault();
         }
-        if (Backbone.$(e.target).is('textarea')) {
+        if (Backbone.$(e != null ? e.target : void 0).is('textarea')) {
           return;
         }
         if (this.beforeSubmit) {
