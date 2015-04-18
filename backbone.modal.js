@@ -197,7 +197,8 @@
       };
 
       Modal.prototype.clickOutside = function(e) {
-        if (this.outsideElement.hasClass("" + this.prefix + "-wrapper") && this.active) {
+        var _ref;
+        if (((_ref = this.outsideElement) != null ? _ref.hasClass("" + this.prefix + "-wrapper") : void 0) && this.active) {
           return this.triggerCancel();
         }
       };
