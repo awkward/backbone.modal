@@ -143,7 +143,7 @@
 
     # check if the element on mouseup is not the modal itself
     clickOutside: (e) =>
-      @triggerCancel() if @outsideElement.hasClass("#{@prefix}-wrapper") and @active
+      @triggerCancel() if @outsideElement?.hasClass("#{@prefix}-wrapper") and @active
 
     clickOutsideElement: (e) => @outsideElement = Backbone.$(e.target)
 

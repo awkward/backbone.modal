@@ -192,13 +192,20 @@
         return expect(view.submit).not.toHaveBeenCalled();
       });
     });
-    return describe('#submit', function() {
+    describe('#submit', function() {
       return it('should be called when submitEl is triggered', function() {
         var view;
         view = new modal();
         spyOn(view, 'submit');
         view.render().$(view.submitEl).click();
         return expect(view.submit).toHaveBeenCalled();
+      });
+    });
+    return describe('#clickOutside', function() {
+      return it('should not throw when outsideElement is undefined', function() {
+        var view;
+        view = new modal();
+        return expect(view.clickOutside).not.toThrow();
       });
     });
   });

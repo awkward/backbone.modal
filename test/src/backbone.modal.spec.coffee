@@ -126,3 +126,8 @@ describe 'Backbone.Modal', ->
       spyOn(view, 'submit')
       view.render().$(view.submitEl).click()
       expect(view.submit).toHaveBeenCalled()
+
+  describe '#clickOutside', ->
+    it 'should not throw when outsideElement is undefined', ->
+      view = new modal()
+      expect(view.clickOutside).not.toThrow();
