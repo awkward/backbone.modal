@@ -179,7 +179,7 @@
       if @currentView
         @previousView = @currentView
         unless options.openOptions?.skipSubmit
-          return if @previousView.beforeSubmit?() is false
+          return if @previousView.beforeSubmit?(e) is false
           @previousView.submit?()
 
       @currentView = instance.view || instance.el
@@ -238,8 +238,8 @@
 
       return if Backbone.$(e.target).is('textarea')
 
-      return if @beforeSubmit() is false if @beforeSubmit
-      return if @currentView.beforeSubmit() is false if @currentView and @currentView.beforeSubmit
+      return if @beforeSubmit(e) is false if @beforeSubmit
+      return if @currentView.beforeSubmit(e) is false if @currentView and @currentView.beforeSubmit
 
       return @triggerCancel() if !@submit and !@currentView?.submit and !@getOption('submitEl')
 

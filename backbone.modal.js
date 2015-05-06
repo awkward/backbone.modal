@@ -256,7 +256,7 @@
         if (this.currentView) {
           this.previousView = this.currentView;
           if (!((_ref = options.openOptions) != null ? _ref.skipSubmit : void 0)) {
-            if ((typeof (_base = this.previousView).beforeSubmit === "function" ? _base.beforeSubmit() : void 0) === false) {
+            if ((typeof (_base = this.previousView).beforeSubmit === "function" ? _base.beforeSubmit(e) : void 0) === false) {
               return;
             }
             if (typeof (_base1 = this.previousView).submit === "function") {
@@ -353,12 +353,12 @@
           return;
         }
         if (this.beforeSubmit) {
-          if (this.beforeSubmit() === false) {
+          if (this.beforeSubmit(e) === false) {
             return;
           }
         }
         if (this.currentView && this.currentView.beforeSubmit) {
-          if (this.currentView.beforeSubmit() === false) {
+          if (this.currentView.beforeSubmit(e) === false) {
             return;
           }
         }
