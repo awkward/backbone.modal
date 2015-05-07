@@ -77,6 +77,15 @@
         events: {
           'click .open-2': 'openModal'
         },
+        onShow: function() {
+          console.log('open');
+        },
+        onDestroy: function() {
+          console.log('close');
+        },
+        onRender: function() {
+          console.log('render');
+        },
         openModal: function(e) {
           e.preventDefault();
            myLayout.modals.show(new Modal2());

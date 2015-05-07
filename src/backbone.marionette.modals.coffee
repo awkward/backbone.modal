@@ -34,8 +34,6 @@
       @currentView = view
 
       @triggerMethod('swap', view)
-      @triggerMethod('show', view)
-      Marionette.triggerMethodOn(view, 'show')
 
       modalView.undelegateModalEvents() for modalView in @modals
       modalView.$el.css(background: 'none') for modalView in @modals

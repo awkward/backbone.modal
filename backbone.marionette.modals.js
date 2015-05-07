@@ -50,8 +50,6 @@
         this.$el.append(view.el);
         this.currentView = view;
         this.triggerMethod('swap', view);
-        this.triggerMethod('show', view);
-        Marionette.triggerMethodOn(view, 'show');
         _ref = this.modals;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           modalView = _ref[_i];
