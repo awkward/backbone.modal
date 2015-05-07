@@ -454,3 +454,7 @@
   -webkit-animation-fill-mode: both;
   -webkit-transform-origin: 50% 50%;
   -webkit-backface-visibility: hidden; }
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  .bbm-modal--open, .bbm-modal--stacked, .bbm-modal--stacked-reverse, .bbm-modal--destroy {
+    -webkit-animation: none !important; } }

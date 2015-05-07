@@ -215,7 +215,6 @@
   -webkit-transform-origin: 50% 50%
   -webkit-backface-visibility: hidden
 
-
 /* Open a stacked modal */
 @-webkit-keyframes bbm-stacked
   0%
@@ -484,3 +483,9 @@
   -webkit-animation-fill-mode: both
   -webkit-transform-origin: 50% 50%
   -webkit-backface-visibility: hidden
+
+// Fix for iPad safari bug (-webkit-animation-fill-mode and click events)
+// Reference: https://github.com/awkward/backbone.modal/issues/77
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px)
+  .bbm-modal--open, .bbm-modal--stacked, .bbm-modal--stacked-reverse, .bbm-modal--destroy
+    -webkit-animation: none !important
