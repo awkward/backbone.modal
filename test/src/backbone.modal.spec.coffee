@@ -81,9 +81,19 @@ describe 'Backbone.Modal', ->
       expect(view.currentIndex).toBe(2)
 
   describe '#render', ->
+    view = null
+
     it 'renders the modal and internal views', ->
       view = new modal()
       expect((view.render().el instanceof HTMLElement)).toBeTruthy()
+
+    describe 'when called again', ->
+      it 're-renders without animation or event delegation', ->
+        spyOn(view, 'delegateModalEvents')
+        spyOn(view, 'rendererCompleted')
+        view.render()
+        expect(view.delegateModalEvents).not.toHaveBeenCalled()
+        expect(view.rendererCompleted).not.toHaveBeenCalled()
 
   describe '#beforeCancel', ->
     it "should call this method when it's defined", ->
