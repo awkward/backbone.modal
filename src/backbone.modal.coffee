@@ -36,8 +36,10 @@
       else
         @viewContainerEl = @modalEl
 
+      $focusEl = Backbone.$(document.activeElement)
+      @previousFocus = $focusEl unless @previousFocus
       # blur links to prevent double keystroke events
-      Backbone.$(':focus').blur()
+      $focusEl.blur()
 
       @openAt(options) if @views?.length > 0 and @showViewOnRender
       @onRender?()
@@ -277,6 +279,7 @@
       removeViews = =>
         @currentView?.remove?()
         @remove()
+        @previousFocus?.focus?()
 
       if @$el.fadeOut and @animate
         @$el.fadeOut(duration: 200)
