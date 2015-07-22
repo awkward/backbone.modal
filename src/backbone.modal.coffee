@@ -7,6 +7,20 @@
     factory(_, Backbone, {})
 ) (_, Backbone, Modal) ->
 
+  focusableElements = [
+    'a[href]'
+    'area[href]'
+    'input:not([disabled])'
+    'select:not([disabled])'
+    'textarea:not([disabled])'
+    'button:not([disabled])'
+    'iframe'
+    'object'
+    'embed'
+    '*[tabindex]'
+    '*[contenteditable]'
+  ].join(', ')
+
   class Modal extends Backbone.View
     prefix: 'bbm'
     animate: true
@@ -63,8 +77,15 @@
         @$el.on('click.bbm', @clickOutside)
 
       @modalEl.css(opacity: 1).addClass("#{@prefix}-modal--open")
+      @setInitialFocus()
       @onShow?()
       @currentView?.onShow?()
+
+    setInitialFocus: ->
+      if @autofocus
+        @$(@autofocus).focus()
+      else
+        @$('*').filter(focusableElements).filter(':visible').first().focus()
 
     setUIElements: ->
       # get modal options

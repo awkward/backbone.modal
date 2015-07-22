@@ -8,7 +8,7 @@ describe 'Backbone.Modal', ->
       viewContainer: 'div'
       cancelEl: '.destroy'
       submitEl: '.submit'
-      template: -> '<a class="class"></a><a id="id"></a><div></div><a data-event="true"></a><a class="destroy"></a><a class="submit"></a>'
+      template: -> '<a href="#" class="class">link</a><a href="#" id="id"></a><div></div><a data-event="true"></a><a class="destroy"></a><a class="submit"></a>'
       views:
         'click .class':
           view: new backboneView
@@ -84,6 +84,29 @@ describe 'Backbone.Modal', ->
     it 'renders the modal and internal views', ->
       view = new modal()
       expect((view.render().el instanceof HTMLElement)).toBeTruthy()
+    it 'should set initial focus', ->
+      view = new modal()
+      spyOn(view, 'setInitialFocus')
+      view.animate = false
+      view.render()
+      expect(view.setInitialFocus).toHaveBeenCalled()
+
+  describe '#setInitialFocus', ->
+    it 'should set focus to first focusable element', ->
+      view = new modal()
+      view.animate = false
+      Backbone.$('body').append(view.render().el)
+      view.setInitialFocus()
+      expect(document.activeElement).toBe(document.querySelector('.class'))
+      view.destroy()
+    it 'should be overridable with autofocus option', ->
+      view = new modal()
+      view.autofocus = '#id'
+      view.animate = false
+      Backbone.$('body').append(view.render().el)
+      view.setInitialFocus()
+      expect(document.activeElement).toBe(document.querySelector('#id'))
+      view.destroy()
 
   describe '#beforeCancel', ->
     it "should call this method when it's defined", ->
