@@ -218,15 +218,17 @@
       };
 
       Modal.prototype.buildView = function(viewType, options) {
-        var view;
+        var data, view;
         if (!viewType) {
           return;
         }
-        if (options && _.isFunction(options)) {
-          options = options();
+        if (options) {
+          data = _.isFunction(options) ? options() : options;
+        } else {
+          data = this.serializeData();
         }
         if (_.isFunction(viewType)) {
-          view = new viewType(options || this.args[0]);
+          view = new viewType(data);
           if (view instanceof Backbone.View) {
             return {
               el: view.render().$el,
@@ -234,7 +236,7 @@
             };
           } else {
             return {
-              el: viewType(options || this.args[0])
+              el: viewType(data)
             };
           }
         }

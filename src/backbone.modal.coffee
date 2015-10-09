@@ -158,15 +158,18 @@
     buildView: (viewType, options) ->
       # returns a Backbone.View instance, a function or an object
       return unless viewType
-      options = options() if options and _.isFunction(options)
+      if (options)
+        data = if _.isFunction(options) then options() else options
+      else
+        data = this.serializeData();
 
       if _.isFunction(viewType)
-        view = new viewType(options or @args[0])
+        view = new viewType(data)
 
         if view instanceof Backbone.View
           return {el: view.render().$el, view: view}
         else
-          return {el: viewType(options or @args[0])}
+          return {el: viewType(data)}
 
       return {view: viewType, el: viewType.$el}
 
