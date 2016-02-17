@@ -246,10 +246,7 @@
       @currentView?.submit?()
       @submit?()
 
-      if @regionEnabled
-        @trigger('modal:destroy')
-      else
-        @destroy()
+      @destroy()
 
     triggerCancel: (e) =>
       e?.preventDefault()
@@ -257,12 +254,10 @@
       return if @beforeCancel() is false if @beforeCancel
       @cancel?()
 
-      if @regionEnabled
-        @trigger('modal:destroy')
-      else
-        @destroy()
+      @destroy()
 
     destroy: ->
+      @undelegateModalEvents()
       Backbone.$('body').off('keyup.bbm', @checkKey)
       @$el.off('mouseup.bbm', @clickOutsideElement)
       @$el.off('click.bbm', @clickOutside)

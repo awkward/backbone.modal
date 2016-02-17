@@ -373,11 +373,7 @@
         if (typeof this.submit === "function") {
           this.submit();
         }
-        if (this.regionEnabled) {
-          return this.trigger('modal:destroy');
-        } else {
-          return this.destroy();
-        }
+        return this.destroy();
       };
 
       Modal.prototype.triggerCancel = function(e) {
@@ -392,15 +388,12 @@
         if (typeof this.cancel === "function") {
           this.cancel();
         }
-        if (this.regionEnabled) {
-          return this.trigger('modal:destroy');
-        } else {
-          return this.destroy();
-        }
+        return this.destroy();
       };
 
       Modal.prototype.destroy = function() {
         var removeViews;
+        this.undelegateModalEvents();
         Backbone.$('body').off('keyup.bbm', this.checkKey);
         this.$el.off('mouseup.bbm', this.clickOutsideElement);
         this.$el.off('click.bbm', this.clickOutside);
