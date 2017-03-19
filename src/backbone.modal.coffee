@@ -58,6 +58,8 @@
       @openAt(options) if @views?.length > 0 and @showViewOnRender
       @onRender?()
 
+      return true if @active
+
       @delegateModalEvents()
 
       # show modal
