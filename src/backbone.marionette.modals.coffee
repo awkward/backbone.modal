@@ -12,7 +12,7 @@
     zIndex: 0
 
     show: (view, options = {}) ->
-      @_ensureElement()
+      return unless @_ensureElement(options)
 
       Backbone.$('body').css(overflow: 'hidden')
 
@@ -25,15 +25,10 @@
       view.render(options)
       view.regionEnabled = true
 
-      @triggerMethod('before:swap', view)
-      @triggerMethod('before:show', view)
-      Marionette.triggerMethodOn(view, 'before:show')
-      @triggerMethod('swapOut', @currentView)
+      @triggerMethod('before:show', @, view, options)
 
       @$el.append view.el
       @currentView = view
-
-      @triggerMethod('swap', view)
 
       modalView.undelegateModalEvents() for modalView in @modals
       modalView.$el.css(background: 'none') for modalView in @modals

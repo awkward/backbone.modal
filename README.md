@@ -34,6 +34,6 @@ When you run the project by doing `grunt watch`. This will watch the tests, src 
 
 ### Legal stuff (MIT License)
 
-Copyright (c) 2015 Awkward.
+Copyright (c) 2017 Awkward.
 
 Distributed under MIT license.

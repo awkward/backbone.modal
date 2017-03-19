@@ -1,14 +1,14 @@
 (function() {
-  var __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
   describe('Backbone.Modal', function() {
     var modal;
     modal = {};
     beforeEach(function() {
       var backboneView;
-      backboneView = (function(_super) {
-        __extends(backboneView, _super);
+      backboneView = (function(superClass) {
+        extend(backboneView, superClass);
 
         function backboneView() {
           return backboneView.__super__.constructor.apply(this, arguments);
@@ -17,8 +17,8 @@
         return backboneView;
 
       })(Backbone.View);
-      return modal = (function(_super) {
-        __extends(modal, _super);
+      return modal = (function(superClass) {
+        extend(modal, superClass);
 
         function modal() {
           return modal.__super__.constructor.apply(this, arguments);

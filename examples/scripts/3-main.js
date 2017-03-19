@@ -2,19 +2,20 @@
 require.config({
   baseUrl: '../../',
     paths: {
-      jquery: 'http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min',
-      underscore: 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.2/underscore',
-      backbone: 'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone',
-      'backbone.marionette': 'http://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/2.4.1/backbone.marionette'
+      jquery: 'http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min',
+      underscore: 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore',
+      backbone: 'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone',
+      'backbone.radio': 'http://cdnjs.cloudflare.com/ajax/libs/backbone.radio/2.0.0/backbone.radio',
+      'backbone.marionette': 'http://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/3.2.0/backbone.marionette'
     }
 });
 
 // Include backbone.modal and backbone.marionette.modals
-require(['jquery', 'backbone.modal', 'backbone.marionette.modals'], function($) {
+require(['jquery', 'backbone.modal', 'backbone.radio', 'backbone.marionette.modals'], function($) {
   $(function() {
 
     // Create a layout class
-    var Layout = Backbone.Marionette.LayoutView.extend({
+    var Layout = Backbone.Marionette.View.extend({
       template: _.template($('#modals-template').html()),
       regions: {
         modals: {
@@ -33,7 +34,7 @@ require(['jquery', 'backbone.modal', 'backbone.marionette.modals'], function($) 
       },
       openModal: function(e) {
         e.preventDefault();
-         myLayout.modals.show(new Modal2());
+         modalsRegion.show(new Modal2());
       }
     });
 
@@ -44,11 +45,12 @@ require(['jquery', 'backbone.modal', 'backbone.marionette.modals'], function($) 
 
     // Render the layout
     var myLayout = new Layout();
+    var modalsRegion = myLayout.getRegion('modals');
     $('body').append(myLayout.render().el);
 
     // Render modals on click
     $('body').on('click', '.open-1', function(){
-       myLayout.modals.show(new Modal1());
+       modalsRegion.show(new Modal1());
     });
 
     $('.open-1').click()

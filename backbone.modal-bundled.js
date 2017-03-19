@@ -1,8 +1,8 @@
 (function() {
-  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+  var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty,
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   (function(factory) {
     if (typeof define === "function" && define.amd) {
@@ -13,8 +13,8 @@
       return factory(_, Backbone, {});
     }
   })(function(_, Backbone, Modal) {
-    Modal = (function(_super) {
-      __extends(Modal, _super);
+    Modal = (function(superClass) {
+      extend(Modal, superClass);
 
       Modal.prototype.prefix = 'bbm';
 
@@ -25,38 +25,38 @@
       Modal.prototype.showViewOnRender = true;
 
       function Modal() {
-        this.triggerCancel = __bind(this.triggerCancel, this);
-        this.triggerSubmit = __bind(this.triggerSubmit, this);
-        this.triggerView = __bind(this.triggerView, this);
-        this.clickOutsideElement = __bind(this.clickOutsideElement, this);
-        this.clickOutside = __bind(this.clickOutside, this);
-        this.checkKey = __bind(this.checkKey, this);
-        this.rendererCompleted = __bind(this.rendererCompleted, this);
+        this.triggerCancel = bind(this.triggerCancel, this);
+        this.triggerSubmit = bind(this.triggerSubmit, this);
+        this.triggerView = bind(this.triggerView, this);
+        this.clickOutsideElement = bind(this.clickOutsideElement, this);
+        this.clickOutside = bind(this.clickOutside, this);
+        this.checkKey = bind(this.checkKey, this);
+        this.rendererCompleted = bind(this.rendererCompleted, this);
         this.args = Array.prototype.slice.apply(arguments);
         Backbone.View.prototype.constructor.apply(this, this.args);
         this.setUIElements();
       }
 
       Modal.prototype.render = function(options) {
-        var data, _ref;
+        var data, ref;
         data = this.serializeData();
         if (!options || _.isEmpty(options)) {
           options = 0;
         }
-        this.$el.addClass("" + this.prefix + "-wrapper");
-        this.modalEl = Backbone.$('<div />').addClass("" + this.prefix + "-modal");
+        this.$el.addClass(this.prefix + "-wrapper");
+        this.modalEl = Backbone.$('<div />').addClass(this.prefix + "-modal");
         if (this.template) {
           this.modalEl.html(this.buildTemplate(this.template, data));
         }
         this.$el.html(this.modalEl);
         if (this.viewContainer) {
           this.viewContainerEl = this.modalEl.find(this.viewContainer);
-          this.viewContainerEl.addClass("" + this.prefix + "-modal__views");
+          this.viewContainerEl.addClass(this.prefix + "-modal__views");
         } else {
           this.viewContainerEl = this.modalEl;
         }
         Backbone.$(':focus').blur();
-        if (((_ref = this.views) != null ? _ref.length : void 0) > 0 && this.showViewOnRender) {
+        if (((ref = this.views) != null ? ref.length : void 0) > 0 && this.showViewOnRender) {
           this.openAt(options);
         }
         if (typeof this.onRender === "function") {
@@ -78,7 +78,7 @@
       };
 
       Modal.prototype.rendererCompleted = function() {
-        var _ref;
+        var ref;
         if (this.keyControl) {
           Backbone.$('body').on('keyup.bbm', this.checkKey);
           this.$el.on('mouseup.bbm', this.clickOutsideElement);
@@ -86,19 +86,19 @@
         }
         this.modalEl.css({
           opacity: 1
-        }).addClass("" + this.prefix + "-modal--open");
+        }).addClass(this.prefix + "-modal--open");
         if (typeof this.onShow === "function") {
           this.onShow();
         }
-        return (_ref = this.currentView) != null ? typeof _ref.onShow === "function" ? _ref.onShow() : void 0 : void 0;
+        return (ref = this.currentView) != null ? typeof ref.onShow === "function" ? ref.onShow() : void 0 : void 0;
       };
 
       Modal.prototype.setUIElements = function() {
-        var _ref;
+        var ref;
         this.template = this.getOption('template');
         this.views = this.getOption('views');
-        if ((_ref = this.views) != null) {
-          _ref.length = _.size(this.views);
+        if ((ref = this.views) != null) {
+          ref.length = _.size(this.views);
         }
         this.viewContainer = this.getOption('viewContainer');
         this.animate = this.getOption('animate');
@@ -114,7 +114,7 @@
         if (!option) {
           return;
         }
-        if (this.options && __indexOf.call(this.options, option) >= 0 && (this.options[option] != null)) {
+        if (this.options && indexOf.call(this.options, option) >= 0 && (this.options[option] != null)) {
           return this.options[option];
         } else {
           return this[option];
@@ -136,7 +136,7 @@
       };
 
       Modal.prototype.delegateModalEvents = function() {
-        var cancelEl, key, match, selector, submitEl, trigger, _results;
+        var cancelEl, key, match, results, selector, submitEl, trigger;
         this.active = true;
         cancelEl = this.getOption('cancelEl');
         submitEl = this.getOption('submitEl');
@@ -146,22 +146,22 @@
         if (cancelEl) {
           this.$el.on('click', cancelEl, this.triggerCancel);
         }
-        _results = [];
+        results = [];
         for (key in this.views) {
           if (_.isString(key) && key !== 'length') {
             match = key.match(/^(\S+)\s*(.*)$/);
             trigger = match[1];
             selector = match[2];
-            _results.push(this.$el.on(trigger, selector, this.views[key], this.triggerView));
+            results.push(this.$el.on(trigger, selector, this.views[key], this.triggerView));
           } else {
-            _results.push(void 0);
+            results.push(void 0);
           }
         }
-        return _results;
+        return results;
       };
 
       Modal.prototype.undelegateModalEvents = function() {
-        var cancelEl, key, match, selector, submitEl, trigger, _results;
+        var cancelEl, key, match, results, selector, submitEl, trigger;
         this.active = false;
         cancelEl = this.getOption('cancelEl');
         submitEl = this.getOption('submitEl');
@@ -171,18 +171,18 @@
         if (cancelEl) {
           this.$el.off('click', cancelEl, this.triggerCancel);
         }
-        _results = [];
+        results = [];
         for (key in this.views) {
           if (_.isString(key) && key !== 'length') {
             match = key.match(/^(\S+)\s*(.*)$/);
             trigger = match[1];
             selector = match[2];
-            _results.push(this.$el.off(trigger, selector, this.views[key], this.triggerView));
+            results.push(this.$el.off(trigger, selector, this.views[key], this.triggerView));
           } else {
-            _results.push(void 0);
+            results.push(void 0);
           }
         }
-        return _results;
+        return results;
       };
 
       Modal.prototype.checkKey = function(e) {
@@ -197,8 +197,8 @@
       };
 
       Modal.prototype.clickOutside = function(e) {
-        var _ref;
-        if (((_ref = this.outsideElement) != null ? _ref.hasClass("" + this.prefix + "-wrapper") : void 0) && this.active) {
+        var ref;
+        if (((ref = this.outsideElement) != null ? ref.hasClass(this.prefix + "-wrapper") : void 0) && this.active) {
           return this.triggerCancel();
         }
       };
@@ -245,7 +245,7 @@
       };
 
       Modal.prototype.triggerView = function(e) {
-        var index, instance, key, options, _base, _base1, _ref;
+        var base, base1, index, instance, key, options, ref;
         if (e != null) {
           if (typeof e.preventDefault === "function") {
             e.preventDefault();
@@ -255,12 +255,12 @@
         instance = this.buildView(options.view, options.viewOptions);
         if (this.currentView) {
           this.previousView = this.currentView;
-          if (!((_ref = options.openOptions) != null ? _ref.skipSubmit : void 0)) {
-            if ((typeof (_base = this.previousView).beforeSubmit === "function" ? _base.beforeSubmit(e) : void 0) === false) {
+          if (!((ref = options.openOptions) != null ? ref.skipSubmit : void 0)) {
+            if ((typeof (base = this.previousView).beforeSubmit === "function" ? base.beforeSubmit(e) : void 0) === false) {
               return;
             }
-            if (typeof (_base1 = this.previousView).submit === "function") {
-              _base1.submit();
+            if (typeof (base1 = this.previousView).submit === "function") {
+              base1.submit();
             }
           }
         }
@@ -288,7 +288,7 @@
       };
 
       Modal.prototype.animateToView = function(view) {
-        var container, newHeight, previousHeight, style, tester, _base, _ref;
+        var base, container, newHeight, previousHeight, ref, style, tester;
         style = {
           position: 'relative',
           top: -9999,
@@ -312,10 +312,10 @@
         newHeight = container.outerHeight();
         if (previousHeight === newHeight) {
           this.$(this.viewContainerEl).html(view);
-          if (typeof (_base = this.currentView).onShow === "function") {
-            _base.onShow();
+          if (typeof (base = this.currentView).onShow === "function") {
+            base.onShow();
           }
-          return (_ref = this.previousView) != null ? typeof _ref.destroy === "function" ? _ref.destroy() : void 0 : void 0;
+          return (ref = this.previousView) != null ? typeof ref.destroy === "function" ? ref.destroy() : void 0 : void 0;
         } else {
           if (this.animate) {
             this.$(this.viewContainerEl).css({
@@ -325,15 +325,15 @@
               height: newHeight
             }, 100, (function(_this) {
               return function() {
-                var _base1, _ref1;
+                var base1, ref1;
                 _this.$(_this.viewContainerEl).css({
                   opacity: 1
                 }).removeAttr('style');
                 _this.$(_this.viewContainerEl).html(view);
-                if (typeof (_base1 = _this.currentView).onShow === "function") {
-                  _base1.onShow();
+                if (typeof (base1 = _this.currentView).onShow === "function") {
+                  base1.onShow();
                 }
-                return (_ref1 = _this.previousView) != null ? typeof _ref1.destroy === "function" ? _ref1.destroy() : void 0 : void 0;
+                return (ref1 = _this.previousView) != null ? typeof ref1.destroy === "function" ? ref1.destroy() : void 0 : void 0;
               };
             })(this));
           } else {
@@ -345,7 +345,7 @@
       };
 
       Modal.prototype.triggerSubmit = function(e) {
-        var _ref, _ref1;
+        var ref, ref1;
         if (e != null) {
           e.preventDefault();
         }
@@ -362,12 +362,12 @@
             return;
           }
         }
-        if (!this.submit && !((_ref = this.currentView) != null ? _ref.submit : void 0) && !this.getOption('submitEl')) {
+        if (!this.submit && !((ref = this.currentView) != null ? ref.submit : void 0) && !this.getOption('submitEl')) {
           return this.triggerCancel();
         }
-        if ((_ref1 = this.currentView) != null) {
-          if (typeof _ref1.submit === "function") {
-            _ref1.submit();
+        if ((ref1 = this.currentView) != null) {
+          if (typeof ref1.submit === "function") {
+            ref1.submit();
           }
         }
         if (typeof this.submit === "function") {
@@ -409,13 +409,13 @@
           this.onDestroy();
         }
         this.shouldAnimate = false;
-        this.modalEl.addClass("" + this.prefix + "-modal--destroy");
+        this.modalEl.addClass(this.prefix + "-modal--destroy");
         removeViews = (function(_this) {
           return function() {
-            var _ref;
-            if ((_ref = _this.currentView) != null) {
-              if (typeof _ref.remove === "function") {
-                _ref.remove();
+            var ref;
+            if ((ref = _this.currentView) != null) {
+              if (typeof ref.remove === "function") {
+                ref.remove();
               }
             }
             return _this.remove();
@@ -500,9 +500,9 @@
 }).call(this);
 
 (function() {
-  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+  var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
   (function(factory) {
     if (typeof define === "function" && define.amd) {
@@ -513,11 +513,11 @@
       return factory(_, Backbone, Backbone.Marionette, {});
     }
   })(function(_, Backbone, Marionette, Modals) {
-    Modals = (function(_super) {
-      __extends(Modals, _super);
+    Modals = (function(superClass) {
+      extend(Modals, superClass);
 
       function Modals() {
-        this.destroy = __bind(this.destroy, this);
+        this.destroy = bind(this.destroy, this);
         return Modals.__super__.constructor.apply(this, arguments);
       }
 
@@ -526,39 +526,37 @@
       Modals.prototype.zIndex = 0;
 
       Modals.prototype.show = function(view, options) {
-        var lastModal, modalView, secondLastModal, _i, _j, _len, _len1, _ref, _ref1;
+        var i, j, lastModal, len, len1, modalView, ref, ref1, secondLastModal;
         if (options == null) {
           options = {};
         }
-        this._ensureElement();
+        if (!this._ensureElement(options)) {
+          return;
+        }
         Backbone.$('body').css({
           overflow: 'hidden'
         });
         if (this.modals.length > 0) {
           lastModal = _.last(this.modals);
-          lastModal.modalEl.addClass("" + lastModal.prefix + "-view--stacked");
+          lastModal.modalEl.addClass(lastModal.prefix + "-view--stacked");
           secondLastModal = this.modals[this.modals.length - 1];
           if (secondLastModal != null) {
-            secondLastModal.modalEl.removeClass("" + secondLastModal.prefix + "-modal--stacked-reverse");
+            secondLastModal.modalEl.removeClass(secondLastModal.prefix + "-modal--stacked-reverse");
           }
         }
         view.render(options);
         view.regionEnabled = true;
-        this.triggerMethod('before:swap', view);
-        this.triggerMethod('before:show', view);
-        Marionette.triggerMethodOn(view, 'before:show');
-        this.triggerMethod('swapOut', this.currentView);
+        this.triggerMethod('before:show', this, view, options);
         this.$el.append(view.el);
         this.currentView = view;
-        this.triggerMethod('swap', view);
-        _ref = this.modals;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          modalView = _ref[_i];
+        ref = this.modals;
+        for (i = 0, len = ref.length; i < len; i++) {
+          modalView = ref[i];
           modalView.undelegateModalEvents();
         }
-        _ref1 = this.modals;
-        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-          modalView = _ref1[_j];
+        ref1 = this.modals;
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          modalView = ref1[j];
           modalView.$el.css({
             background: 'none'
           });
@@ -586,10 +584,10 @@
         lastModal = _.last(this.modals);
         if (lastModal) {
           lastModal.$el.removeAttr('style');
-          lastModal.modalEl.addClass("" + lastModal.prefix + "-modal--stacked-reverse");
+          lastModal.modalEl.addClass(lastModal.prefix + "-modal--stacked-reverse");
           _.delay((function(_this) {
             return function() {
-              return lastModal.modalEl.removeClass("" + lastModal.prefix + "-modal--stacked");
+              return lastModal.modalEl.removeClass(lastModal.prefix + "-modal--stacked");
             };
           })(this), 300);
           if (this.zIndex !== 0) {
@@ -605,14 +603,14 @@
       };
 
       Modals.prototype.destroyAll = function() {
-        var view, _i, _len, _ref, _results;
-        _ref = this.modals;
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          view = _ref[_i];
-          _results.push(this.destroy());
+        var i, len, ref, results, view;
+        ref = this.modals;
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          view = ref[i];
+          results.push(this.destroy());
         }
-        return _results;
+        return results;
       };
 
       return Modals;

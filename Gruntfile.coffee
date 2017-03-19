@@ -32,7 +32,7 @@ module.exports = (grunt) ->
         options:
           specs: 'test/spec/**/*.js'
           outfile: 'test/spec.html'
-          vendor: ['http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js', 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js', 'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js', 'http://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/2.2.1/backbone.marionette.js', 'http://localhost:35729/livereload.js']
+          vendor: ['http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js', 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js', 'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone-min.js', 'http://cdnjs.cloudflare.com/ajax/libs/backbone.radio/2.0.0/backbone.radio.js', 'http://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/3.2.0/backbone.marionette.js', 'http://localhost:35729/livereload.js']
 
     coffee:
       all:
