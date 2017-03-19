@@ -1,5 +1,9 @@
 ## Backbone.Modal
 
+**LOOKING FOR AN ACTIVE MAINTAINER**: Because we're not using Backbone for any of our products anymore, we're not actively supporting this library. We'd rather have someone maintaining it that does use it actively in production.
+
+---
+
 [![Build Status](https://travis-ci.org/awkward/backbone.modal.svg)](https://travis-ci.org/awkward/backbone.modal)
 
 A plugin for Backbone.js that simplifies creating modals for your application.
