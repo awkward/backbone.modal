@@ -95,11 +95,12 @@ describe 'Backbone.Modal', ->
       expect(view.currentIndex).toBe(2)
 
   describe '#render', ->
-    view = null
+    view = {}
 
     it 'renders the modal and internal views', ->
       view = new modal()
       expect((view.render().el instanceof HTMLElement)).toBeTruthy()
+
     it 'should set initial focus', ->
       view = new modal()
       spyOn(view, 'setInitialFocus')
@@ -115,6 +116,7 @@ describe 'Backbone.Modal', ->
       view.setInitialFocus()
       expect(document.activeElement).toBe(document.querySelector('.class'))
       view.destroy()
+
     it 'should be overridable with autofocus option', ->
       view = new modal()
       view.autofocus = '#id'
@@ -130,13 +132,14 @@ describe 'Backbone.Modal', ->
       view.render()
       expect(view.previousFocus).toEqual(expected)
 
-    describe 'when called again', ->
-      it 're-renders without animation or event delegation', ->
-        spyOn(view, 'delegateModalEvents')
-        spyOn(view, 'rendererCompleted')
-        view.render()
-        expect(view.delegateModalEvents).not.toHaveBeenCalled()
-        expect(view.rendererCompleted).not.toHaveBeenCalled()
+    it 'should re-renders without animation or event delegation when called again', ->
+      view = new modal()
+      view.render()
+      spyOn(view, 'delegateModalEvents')
+      spyOn(view, 'rendererCompleted')
+      view.render()
+      expect(view.delegateModalEvents).not.toHaveBeenCalled()
+      expect(view.rendererCompleted).not.toHaveBeenCalled()
 
   describe '#beforeCancel', ->
     it "should call this method when it's defined", ->

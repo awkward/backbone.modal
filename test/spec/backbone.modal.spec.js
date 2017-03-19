@@ -154,7 +154,7 @@
     });
     describe('#render', function() {
       var view;
-      view = null;
+      view = {};
       it('renders the modal and internal views', function() {
         view = new modal();
         return expect(view.render().el instanceof HTMLElement).toBeTruthy();
@@ -194,14 +194,15 @@
         view.render();
         return expect(view.previousFocus).toEqual(expected);
       });
-      return describe('when called again', function() {
-        return it('re-renders without animation or event delegation', function() {
-          spyOn(view, 'delegateModalEvents');
-          spyOn(view, 'rendererCompleted');
-          view.render();
-          expect(view.delegateModalEvents).not.toHaveBeenCalled();
-          return expect(view.rendererCompleted).not.toHaveBeenCalled();
-        });
+      return it('should re-renders without animation or event delegation when called again', function() {
+        var view;
+        view = new modal();
+        view.render();
+        spyOn(view, 'delegateModalEvents');
+        spyOn(view, 'rendererCompleted');
+        view.render();
+        expect(view.delegateModalEvents).not.toHaveBeenCalled();
+        return expect(view.rendererCompleted).not.toHaveBeenCalled();
       });
     });
     describe('#beforeCancel', function() {
