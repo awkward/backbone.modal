@@ -106,6 +106,12 @@ describe 'Backbone.Modal', ->
       view.render().$(view.cancelEl).click()
       expect(view.cancel).toHaveBeenCalled()
 
+  describe '#triggerSubmit', ->
+    it 'should not throw when called without an event', ->
+      view = new modal()
+      view.render()
+      expect(view.triggerSubmit).not.toThrow()
+
   describe '#beforeSubmit', ->
     it "should call this method when it's defined", ->
       view = new modal()

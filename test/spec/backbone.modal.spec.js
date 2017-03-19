@@ -171,6 +171,14 @@
         return expect(view.cancel).toHaveBeenCalled();
       });
     });
+    describe('#triggerSubmit', function() {
+      return it('should not throw when called without an event', function() {
+        var view;
+        view = new modal();
+        view.render();
+        return expect(view.triggerSubmit).not.toThrow();
+      });
+    });
     describe('#beforeSubmit', function() {
       it("should call this method when it's defined", function() {
         var view;
