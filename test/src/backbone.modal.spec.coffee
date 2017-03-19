@@ -56,6 +56,20 @@ describe 'Backbone.Modal', ->
     it "#length should return the length of the total views", ->
       expect(view.views.length).toEqual(3)
 
+  describe '#destroy', ->
+    it 'should restore focus to previously focused element', ->
+      $prevFocus = Backbone.$('<button id="prev-focus">')
+      Backbone.$('body').append($prevFocus)
+      Backbone.$('#prev-focus').focus()
+
+      view = new modal()
+      view.animate = false
+      view.render()
+      view.destroy()
+
+      expect(document.activeElement.id).toEqual('prev-focus')
+      Backbone.$('#prev-focus').remove()
+
   describe '#openAt', ->
     it 'opens a view at the specified index', ->
       view = new modal()
@@ -107,6 +121,12 @@ describe 'Backbone.Modal', ->
       view.setInitialFocus()
       expect(document.activeElement).toBe(document.querySelector('#id'))
       view.destroy()
+
+    it 'should save a reference to the previously focused element', ->
+      expected = Backbone.$(document.activeElement)
+      view = new modal()
+      view.render()
+      expect(view.previousFocus).toEqual(expected)
 
   describe '#beforeCancel', ->
     it "should call this method when it's defined", ->
