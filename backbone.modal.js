@@ -13,6 +13,8 @@
       return factory(_, Backbone, {});
     }
   })(function(_, Backbone, Modal) {
+    var focusableElements;
+    focusableElements = ['a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '*[tabindex]', '*[contenteditable]'].join(', ');
     Modal = (function(superClass) {
       extend(Modal, superClass);
 
@@ -38,7 +40,7 @@
       }
 
       Modal.prototype.render = function(options) {
-        var data, ref;
+        var $focusEl, data, ref;
         data = this.serializeData();
         if (!options || _.isEmpty(options)) {
           options = 0;
@@ -55,12 +57,19 @@
         } else {
           this.viewContainerEl = this.modalEl;
         }
-        Backbone.$(':focus').blur();
+        $focusEl = Backbone.$(document.activeElement);
+        if (!this.previousFocus) {
+          this.previousFocus = $focusEl;
+        }
+        $focusEl.blur();
         if (((ref = this.views) != null ? ref.length : void 0) > 0 && this.showViewOnRender) {
           this.openAt(options);
         }
         if (typeof this.onRender === "function") {
           this.onRender();
+        }
+        if (this.active) {
+          return true;
         }
         this.delegateModalEvents();
         if (this.$el.fadeIn && this.animate) {
@@ -87,10 +96,19 @@
         this.modalEl.css({
           opacity: 1
         }).addClass(this.prefix + "-modal--open");
+        this.setInitialFocus();
         if (typeof this.onShow === "function") {
           this.onShow();
         }
         return (ref = this.currentView) != null ? typeof ref.onShow === "function" ? ref.onShow() : void 0 : void 0;
+      };
+
+      Modal.prototype.setInitialFocus = function() {
+        if (this.autofocus) {
+          return this.$(this.autofocus).focus();
+        } else {
+          return this.$('*').filter(focusableElements).filter(':visible').first().focus();
+        }
       };
 
       Modal.prototype.setUIElements = function() {
@@ -412,13 +430,14 @@
         this.modalEl.addClass(this.prefix + "-modal--destroy");
         removeViews = (function(_this) {
           return function() {
-            var ref;
+            var ref, ref1;
             if ((ref = _this.currentView) != null) {
               if (typeof ref.remove === "function") {
                 ref.remove();
               }
             }
-            return _this.remove();
+            _this.remove();
+            return (ref1 = _this.previousFocus) != null ? typeof ref1.focus === "function" ? ref1.focus() : void 0 : void 0;
           };
         })(this);
         if (this.$el.fadeOut && this.animate) {

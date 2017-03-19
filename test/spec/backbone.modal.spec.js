@@ -31,7 +31,7 @@
         modal.prototype.submitEl = '.submit';
 
         modal.prototype.template = function() {
-          return '<a class="class"></a><a id="id"></a><div></div><a data-event="true"></a><a class="destroy"></a><a class="submit"></a>';
+          return '<a href="#" class="class">link</a><a href="#" id="id"></a><div></div><a data-event="true"></a><a class="destroy"></a><a class="submit"></a>';
         };
 
         modal.prototype.views = {
@@ -106,6 +106,20 @@
         return expect(view.views.length).toEqual(3);
       });
     });
+    describe('#destroy', function() {
+      return it('should restore focus to previously focused element', function() {
+        var $prevFocus, view;
+        $prevFocus = Backbone.$('<button id="prev-focus">');
+        Backbone.$('body').append($prevFocus);
+        Backbone.$('#prev-focus').focus();
+        view = new modal();
+        view.animate = false;
+        view.render();
+        view.destroy();
+        expect(document.activeElement.id).toEqual('prev-focus');
+        return Backbone.$('#prev-focus').remove();
+      });
+    });
     describe('#openAt', function() {
       return it('opens a view at the specified index', function() {
         var view;
@@ -139,10 +153,55 @@
       });
     });
     describe('#render', function() {
-      return it('renders the modal and internal views', function() {
-        var view;
+      var view;
+      view = null;
+      it('renders the modal and internal views', function() {
         view = new modal();
         return expect(view.render().el instanceof HTMLElement).toBeTruthy();
+      });
+      return it('should set initial focus', function() {
+        view = new modal();
+        spyOn(view, 'setInitialFocus');
+        view.animate = false;
+        view.render();
+        return expect(view.setInitialFocus).toHaveBeenCalled();
+      });
+    });
+    describe('#setInitialFocus', function() {
+      it('should set focus to first focusable element', function() {
+        var view;
+        view = new modal();
+        view.animate = false;
+        Backbone.$('body').append(view.render().el);
+        view.setInitialFocus();
+        expect(document.activeElement).toBe(document.querySelector('.class'));
+        return view.destroy();
+      });
+      it('should be overridable with autofocus option', function() {
+        var view;
+        view = new modal();
+        view.autofocus = '#id';
+        view.animate = false;
+        Backbone.$('body').append(view.render().el);
+        view.setInitialFocus();
+        expect(document.activeElement).toBe(document.querySelector('#id'));
+        return view.destroy();
+      });
+      it('should save a reference to the previously focused element', function() {
+        var expected, view;
+        expected = Backbone.$(document.activeElement);
+        view = new modal();
+        view.render();
+        return expect(view.previousFocus).toEqual(expected);
+      });
+      return describe('when called again', function() {
+        return it('re-renders without animation or event delegation', function() {
+          spyOn(view, 'delegateModalEvents');
+          spyOn(view, 'rendererCompleted');
+          view.render();
+          expect(view.delegateModalEvents).not.toHaveBeenCalled();
+          return expect(view.rendererCompleted).not.toHaveBeenCalled();
+        });
       });
     });
     describe('#beforeCancel', function() {
