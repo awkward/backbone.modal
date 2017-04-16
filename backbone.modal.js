@@ -18,6 +18,8 @@
     Modal = (function(superClass) {
       extend(Modal, superClass);
 
+      Backbone.Modal = Modal;
+
       Modal.prototype.prefix = 'bbm';
 
       Modal.prototype.animate = true;
