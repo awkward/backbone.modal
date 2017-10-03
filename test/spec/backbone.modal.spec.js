@@ -195,14 +195,16 @@
         return expect(view.previousFocus).toEqual(expected);
       });
       return it('should re-renders without animation or event delegation when called again', function() {
-        var view;
+        var returned, view;
         view = new modal();
-        view.render();
+        returned = view.render();
         spyOn(view, 'delegateModalEvents');
         spyOn(view, 'rendererCompleted');
-        view.render();
+        expect(returned).toBe(view);
+        returned = view.render();
         expect(view.delegateModalEvents).not.toHaveBeenCalled();
-        return expect(view.rendererCompleted).not.toHaveBeenCalled();
+        expect(view.rendererCompleted).not.toHaveBeenCalled();
+        return expect(returned).toBe(view);
       });
     });
     describe('#beforeCancel', function() {
